@@ -81,8 +81,8 @@ class BrandController extends Controller
             }
             return redirect()->route('brand.index')->with('success', true);
         } catch (Throwable $th) {
-            if (!empty($data['avatar']) && Storage::exists($data['avatar'])) {
-                Storage::delete($data['avatar']);
+            if (!empty($data['logo']) && Storage::exists($data['logo'])) {
+                Storage::delete($data['logo']);
             }
             return back()->with('success', false)->with('error', $th->getMessage());
         }
