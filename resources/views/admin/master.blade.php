@@ -2,26 +2,24 @@
 <html>
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>INSPINIA | Dashboard v.2</title>
 
-    @include('admin.dashboard.components.css')
+    @include('admin.components.css')
 </head>
 
 <body>
     <div id="wrapper">
-        @include('admin.dashboard.components.sidebar')
+        @include('admin.components.sidebar')
         <div id="page-wrapper" class="gray-bg">
-            @include('admin.dashboard.components.nav')
+            @include('admin.components.nav')
             @yield('content')
-            @include('admin.dashboard.components.footer')
+            @include('admin.components.footer')
         </div>
-    </div>
 
-    @include('admin.dashboard.components.js')
+        @include('admin.components.js')
 </body>
 
 </html>
