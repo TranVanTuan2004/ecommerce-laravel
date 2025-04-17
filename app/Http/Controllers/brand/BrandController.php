@@ -76,7 +76,7 @@ class BrandController extends Controller
 
             $brand->update($data);
 
-            if ($request->hasFile('logo') && Storage::exists($currentLogo)) {
+            if ($request->hasFile('logo') && !empty($currentLogo) && Storage::exists($currentLogo)) {
                 Storage::delete($currentLogo);
             }
             return redirect()->route('brand.index')->with('success', true);
