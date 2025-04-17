@@ -3,6 +3,7 @@
 use \App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,18 +25,22 @@ Route::group([
 
 Route::group([
     'prefix' => '/dashboard/user',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {
+], function () {});
 
-});
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/orders/tracking', [OrderController::class, 'tracking'])->name('orders.tracking');
+//     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+// });
+Route::get('user/orders/tracking', [OrderController::class, 'tracking'])->name('user.orders.tracking');
+Route::get('user/orders/{order}', [OrderController::class, 'show'])->name('user.orders.show');
+
+//Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
