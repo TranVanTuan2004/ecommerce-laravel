@@ -1,0 +1,10 @@
+1 user có nhiều post -- 1 post chỉ thuộc về 1 user
+public function posts()
+{
+    return $this->hasMany(Post::class);
+}
+
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
