@@ -1,11 +1,10 @@
 @extends('admin.master')
 
 @section('content')
-    <form method="post" action={{ route('users.update', $user->id) }} enctype="multipart/form-data"
+    <form method="post" action={{ route('users.store') }} enctype="multipart/form-data"
         style="max-width: 800px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); margin-top: 80px; padding: 40px;"
         class="container">
         @csrf
-        @method('PUT')
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -16,27 +15,30 @@
                 </ul>
             </div>
         @endif
-        <h1 class="text-center text-primary">Sửa Brand</h1>
+        <h1 class="text-center text-primary">Thêm Brand</h1>
         <div class="mb-3" style="margin-top: 12px">
             <label for="name" class="form-label">Name</label>
-            <input type="text" name="name" class="form-control" value="{{ $user->name }}" id="name">
+            <input type="text" name="name" class="form-control" id="name">
         </div>
         <div class="mb-3" style="margin-top: 12px">
             <label for="description" class="form-label">Email</label>
-            <input type="text" name="email" class="form-control" value="{{ $user->email }}" id="description">
+            <input type="text" name="email" class="form-control" id="email">
+        </div>
+        <div class="mb-3" style="margin-top: 12px">
+            <label for="description" class="form-label">Password</label>
+            <input type="text" name="password" class="form-control" id="password">
         </div>
         <div class="mb-3" style="margin-top: 12px">
             <label for="description" class="form-label">Phone</label>
-            <input type="text" name="phone" class="form-control" value="{{ $user->phone }}" id="description">
+            <input type="text" name="phone" class="form-control" id="phone">
         </div>
         <div class="mb-3" style="margin-top: 12px">
             <label for="description" class="form-label">Address</label>
-            <input type="text" name="address" class="form-control" value="{{ $user->address }}" id="description">
+            <input type="text" name="address" class="form-control" id="address">
         </div>
 
 
 
-
-        <button type="submit" class="btn btn-primary" style="display: block; margin: 20px auto 0 auto;">Cập nhật</button>
+        <button type="submit" class="btn btn-primary" style="display: block; margin: 20px auto 0 auto;">Thêm</button>
     </form>
 @endsection

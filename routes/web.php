@@ -2,6 +2,7 @@
 
 use \App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Cruduser\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -38,4 +39,19 @@ Route::group([
     'prefix' => '/dashboard/category',
 ], function () {
 
+});
+
+
+
+
+//hau chuc nang crud_user
+Route::group([
+    'prefix' => '/users',
+], function () {
+    Route::get('', [UserController::class, 'index'])->name('users.index');
+    Route::get('/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('dashboard/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
