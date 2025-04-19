@@ -22,15 +22,19 @@
             <input type="text" name="name" class="form-control" value="{{ $user->name }}" id="name">
         </div>
         <div class="mb-3" style="margin-top: 12px">
-            <label for="description" class="form-label">Email</label>
-            <input type="text" name="email" class="form-control" value="{{ $user->email }}" id="description">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" value="{{ $user->email }}" id="description">
         </div>
         <div class="mb-3" style="margin-top: 12px">
-            <label for="description" class="form-label">Phone</label>
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" value="" id="description">
+        </div>
+        <div class="mb-3" style="margin-top: 12px">
+            <label for="phone" class="form-label">Phone</label>
             <input type="text" name="phone" class="form-control" value="{{ $user->phone }}" id="description">
         </div>
         <div class="mb-3" style="margin-top: 12px">
-            <label for="description" class="form-label">Address</label>
+            <label for="Address" class="form-label">Address</label>
             <input type="text" name="address" class="form-control" value="{{ $user->address }}" id="description">
         </div>
 
