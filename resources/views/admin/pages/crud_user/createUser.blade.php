@@ -15,25 +15,25 @@
                 </ul>
             </div>
         @endif
-        <h1 class="text-center text-primary">Thêm Brand</h1>
+        <h1 class="text-center text-primary">Thêm User</h1>
         <div class="mb-3" style="margin-top: 12px">
             <label for="name" class="form-label">Name</label>
             <input type="text" name="name" class="form-control" id="name">
         </div>
         <div class="mb-3" style="margin-top: 12px">
-            <label for="description" class="form-label">Email</label>
-            <input type="text" name="email" class="form-control" id="email">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="email">
         </div>
         <div class="mb-3" style="margin-top: 12px">
-            <label for="description" class="form-label">Password</label>
-            <input type="text" name="password" class="form-control" id="password">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password">
         </div>
         <div class="mb-3" style="margin-top: 12px">
-            <label for="description" class="form-label">Phone</label>
+            <label for="phone" class="form-label">Phone</label>
             <input type="text" name="phone" class="form-control" id="phone">
         </div>
         <div class="mb-3" style="margin-top: 12px">
-            <label for="description" class="form-label">Address</label>
+            <label for="address" class="form-label">Address</label>
             <input type="text" name="address" class="form-control" id="address">
         </div>
 

@@ -42,7 +42,7 @@ class UserController extends Controller
             'role' => 1,
         ]);
 
-        return redirect()->route('users.index')->with('success', 'Hahaha');
+        return redirect()->route('users.index')->with('success', 'Thanh Cong');
     }
 
     public function destroy(Request $request)
@@ -51,7 +51,7 @@ class UserController extends Controller
             $id = $request->id;
             $user = User::query()->find($id);
             $user->delete();
-            return redirect()->route('users.index')->with('success', 'Hahaha');
+            return redirect()->route('users.index')->with('success', 'Thanh Cong');
         } catch (Throwable $th) {
             return back()->with('success', false)->with('error', $th->getMessage());
 
@@ -68,12 +68,18 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $id = $request->id;
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|min:10',
+            'address' => 'required|max:250'
+        ]);
         $user = User::query()->find($id);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->save();
-        return redirect()->route('users.index')->with('success', 'hahhaaa');
+        return redirect()->route('users.index')->with('success', 'Thanh Cong');
     }
 }
