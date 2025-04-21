@@ -11,11 +11,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('coupons', function (Blueprint $table) {
-            $table->id(); // id INT PRIMARY KEY IDENTITY(1,1)
-            $table->string('code', 50)->unique(); // code NVARCHAR(50) UNIQUE NOT NULL
-            $table->decimal('discount', 5, 2);    // discount DECIMAL(5,2) NOT NULL
-            $table->decimal('min_order_value', 10, 2)->nullable(); // min_order_value DECIMAL(10,2)
-            $table->date('expiration_date');      // expiration_date DATE NOT NULL
+            $table->id();
+            $table->string('code', 50)->unique();
+            $table->decimal('discount', 5, 2);
+            $table->decimal('min_order_value', 10, 2)->nullable();
+            $table->date('expiration_date');
             $table->timestamps();
 
         });

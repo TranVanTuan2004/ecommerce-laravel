@@ -24,16 +24,17 @@ class Order extends Model
     }
 
     // 1 order có nhiều chi tiết sản phẩm
-    public function orderDetails()
+    public function orderProducts()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderProduct::class);
     }
 
     // 1 order có nhiều sản phẩm (qua order_details)
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'order_details')
-            ->withPivot('quantity', 'price', 'created_at');
+        return $this->belongsToMany(Product::class, 'order_products')
+            ->withPivot('quantity', 'price')
+            ->withTimestamps();
     }
 
 

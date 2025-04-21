@@ -16,11 +16,13 @@ class Cart extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class); // cart thuộc về user
+        return $this->belongsTo(User::class);
     }
 
-    public function cartItems()
+    public function products()
     {
-        return $this->hasMany(CartItem::class);
+        return $this->belongsToMany(Product::class, 'cart_items')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
 }

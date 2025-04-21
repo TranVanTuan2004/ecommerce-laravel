@@ -16,6 +16,7 @@ class Product extends Model
         'price',
         'category_id',
         'brand_id',
+        'slide_id',
         'image'
     ];
     // 1 sản phẩm thuộc về 1 brand
@@ -33,19 +34,32 @@ class Product extends Model
     // 1 sản phẩm có nhiều đánh giá
     public function reviews()
     {
-        return $this->hasMany(Review::class);
+        return $this->belongsTo(Category::class);
+    }
+
+    public function slides()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     // 1 sản phẩm nằm trong nhiều đơn hàng
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'order_details')
-            ->withPivot('quantity', 'price', 'created_at');
+        return $this->belongsToMany(Order::class, 'order_products')
+            ->withPivot('quantity', 'price')
+            ->withTimestamps();
     }
 
     // 1 sản phẩm có thể được thêm vào nhiều wishlist
-    public function wishlists()
+    public function wishedByUsers()
     {
-        return $this->hasMany(Wishlist::class);
+        return $this->belongsToMany(User::class, 'wishlists')->withTimestamps();
+    }
+
+    public function carts()
+    {
+        return $this->belongsToMany(Cart::class, 'cart_items')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
 }
