@@ -4,11 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class OrderDetailSeeder extends Seeder
+class OrderProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +23,7 @@ class OrderDetailSeeder extends Seeder
             $selectedProducts = $products->random(rand(2, 5));
 
             foreach ($selectedProducts as $product) {
-                OrderDetail::firstOrCreate(
+                OrderProduct::firstOrCreate(
                     [
                         'order_id' => $order->id,
                         'product_id' => $product->id

@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->decimal('price', 10, 2);
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('brand_id')->constrained()->onDelete('cascade');
+            $table->foreignId('slide_id')->constrained()->onDelete('cascade');
             $table->string('image', 255)->nullable();
             $table->timestamps();
         });

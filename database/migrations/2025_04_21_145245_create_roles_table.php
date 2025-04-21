@@ -10,11 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('slides', function (Blueprint $table) {
-            $table->id(); // id INT PRIMARY KEY IDENTITY(1,1)
-            $table->string('name', 100)->nullable();
-            $table->string('image')->nullable();
-            $table->boolean('status')->default(true);
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -24,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('slides');
+        Schema::dropIfExists('roles');
     }
 };

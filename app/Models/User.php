@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'avatar',
         'address',
         'role',
     ];
@@ -61,21 +62,21 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-     // Quan hệ với bảng Reviews
-     public function reviews()
-     {
-         return $this->hasMany(Review::class);
-     }
+    // Quan hệ với bảng Reviews
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 
-     // Quan hệ với bảng Wishlists
-     public function wishlists()
-     {
-         return $this->hasMany(Wishlist::class);
-     }
+    // Quan hệ với bảng Wishlists
+    public function wishlist()
+    {
+        return $this->belongsToMany(Product::class, 'wishlists')->withTimestamps();
+    }
 
-     // Quan hệ với bảng Payments
-     public function payments()
-     {
-         return $this->hasMany(Payment::class);
-     }
+    // Quan hệ với bảng Payments
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }
