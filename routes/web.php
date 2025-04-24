@@ -3,16 +3,15 @@
 use \App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
+use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::group([
-    'prefix' => '/brand',
+    'prefix' => '/dashboard/brands',
 ], function () {
     Route::get('', [BrandController::class, 'index'])->name('brand.index');
     Route::get('/create', [BrandController::class, 'create'])->name('brand.create');
@@ -24,7 +23,7 @@ Route::group([
 
 
 Route::group([
-    'prefix' => '/dashboard/user',
+    'prefix' => '/user',
 ], function () {
 
 });
@@ -46,7 +45,7 @@ Route::group([
 
 //hau chuc nang crud_user
 Route::group([
-    'prefix' => '/users',
+    'prefix' => '/dashboard/users',
 ], function () {
     Route::get('', [UserController::class, 'index'])->name('users.index');
     Route::get('/create', [UserController::class, 'create'])->name('users.create');
