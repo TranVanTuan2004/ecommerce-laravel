@@ -1,13 +1,23 @@
 <?php
 
 use \App\Http\Controllers\Brand\BrandController;
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
 
+// Client
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
+
+
+
+
+
+
+// Admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::group([
@@ -54,3 +64,9 @@ Route::group([
     Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
+
+
+
+
+
+
