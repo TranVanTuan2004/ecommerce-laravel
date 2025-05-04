@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->integer('user_id');
             $table->decimal('total_price', 10, 2);
             $table->string('payment_method', 50);
             $table->string('status', 50)->default('pending');
