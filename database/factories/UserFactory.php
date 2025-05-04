@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'password' => Hash::make('password'),
             'phone' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
-            'role' => $this->faker->randomElement([0, 1]),
+            'role' => fake()->randomElement(['admin', 'user'])
         ];
     }
 

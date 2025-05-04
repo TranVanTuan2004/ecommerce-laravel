@@ -52,6 +52,11 @@
                     <span
                         class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
                 </a>
+                @if (Auth::check())
+                    <a href="{{ route('logout') }}">Logout</a>
+                @else
+                    <a href="{{ route('login') }}">Login</a>
+                @endif
             </div>
         </div>
 

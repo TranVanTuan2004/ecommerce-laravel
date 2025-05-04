@@ -11,12 +11,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('cart_items', function (Blueprint $table) {
-            $table->foreignId('cart_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->id();
+            $table->integer('cart_id');
+            $table->integer('product_id');
             $table->integer('quantity');
             $table->timestamps();
-
-            $table->primary(['cart_id', 'product_id']);
         });
     }
 

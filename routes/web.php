@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use \App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -12,16 +13,22 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
 
-
-
-
-
-
-// Admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+=======
+Route::group([
+    'prefix' => '/auth',
+], function () {
+    Route::get('/login', [AuthController::class, 'index'])->name('login');
+    Route::post('/login', [AuthController::class, 'postLogin'])->name('login.post');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('is_admin');
+
 
 Route::group([
     'prefix' => '/dashboard/brands',
+    'middleware' => 'is_admin'
 ], function () {
     Route::get('', [BrandController::class, 'index'])->name('brand.index');
     Route::get('/create', [BrandController::class, 'create'])->name('brand.create');
