@@ -14,7 +14,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart');
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-=======
+
 Route::group([
     'prefix' => '/auth',
 ], function () {
