@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('shippings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->integer('order_id');
             $table->string('carrier', 100)->nullable(); // carrier có thể null nếu chưa gán
             $table->string('status', 50)->default('pending'); // trạng thái vận chuyển
             $table->date('estimated_delivery')->nullable(); // ngày giao dự kiến

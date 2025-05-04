@@ -50,6 +50,12 @@ class User extends Authenticatable
         ];
     }
 
+    // quan hệ với role
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     // Quan hệ với bảng Cart
     public function cart()
     {
