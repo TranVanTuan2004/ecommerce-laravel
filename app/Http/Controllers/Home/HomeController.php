@@ -9,7 +9,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('client.pages.home.home');
+        $products = Product::latest()->paginate(10);
+        return view('client.pages.home.home', compact('products'));
     }
 
     public function showProduct()

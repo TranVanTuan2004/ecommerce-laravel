@@ -10,9 +10,20 @@ use Illuminate\Support\Facades\Route;
 
 // Client
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
+
+
+Route::group([
+    'prefix' => '/cart',
+], function () {
+    Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/addToCart', [CartController::class, 'addToCart'])->name('cart.addToCart');
+});
+
+
+
 Route::get('/home', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
+
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

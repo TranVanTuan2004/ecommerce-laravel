@@ -1,257 +1,222 @@
-<!DOCTYPE html>
-<html lang="en">
+<style>
+    body {
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        color: #111;
+    }
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shopping Cart</title>
-    <link rel="stylesheet" href="styles.css" />
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    header {
+        border-bottom: 1px solid #ddd;
+        padding: 20px 40px;
+    }
 
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            padding: 0;
-            background: #fff;
-            color: #111;
-        }
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+    .logo {
+        font-size: 22px;
+        font-weight: bold;
+    }
 
-        header {
-            border-bottom: 1px solid #ddd;
-            padding: 20px 40px;
-        }
+    .logo span {
+        font-size: 12px;
+        color: #888;
+    }
 
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    nav a {
+        margin: 0 12px;
+        font-size: 14px;
+    }
 
-        .logo {
-            font-size: 22px;
-            font-weight: bold;
-        }
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
 
-        .logo span {
-            font-size: 12px;
-            color: #888;
-        }
+    .cart-count {
+        background: black;
+        color: white;
+        padding: 2px 6px;
+        font-size: 12px;
+        border-radius: 50%;
+        margin-left: 4px;
+    }
 
-        nav a {
-            margin: 0 12px;
-            font-size: 14px;
-        }
+    .progress {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0 5px;
+        gap: 20px;
+        font-weight: 600;
+    }
 
-        .actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+    .step {
+        color: #aaa;
+    }
 
-        .cart-count {
-            background: black;
-            color: white;
-            padding: 2px 6px;
-            font-size: 12px;
-            border-radius: 50%;
-            margin-left: 4px;
-        }
+    .step.active {
+        color: #000;
+    }
 
-        .progress {
-            display: flex;
-            justify-content: center;
-            margin: 20px 0 5px;
-            gap: 20px;
-            font-weight: 600;
-        }
+    .timer {
+        text-align: center;
+        font-size: 14px;
+        color: #d84315;
+        margin-bottom: 20px;
+    }
 
-        .step {
-            color: #aaa;
-        }
+    main.cart-container {
+        display: flex;
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px 40px;
+        gap: 40px;
+    }
 
-        .step.active {
-            color: #000;
-        }
+    .cart-items {
+        flex: 2;
+    }
 
-        .timer {
-            text-align: center;
-            font-size: 14px;
-            color: #d84315;
-            margin-bottom: 20px;
-        }
+    .cart-items h3 {
+        margin-bottom: 10px;
+    }
 
-        main.cart-container {
-            display: flex;
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px 40px;
-            gap: 40px;
-        }
+    .cart-row {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        gap: 20px;
+    }
 
-        .cart-items {
-            flex: 2;
-        }
+    .cart-row img {
+        width: 60px;
+    }
 
-        .cart-items h3 {
-            margin-bottom: 10px;
-        }
+    .details {
+        flex: 1;
+    }
 
-        .cart-row {
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            gap: 20px;
-        }
+    .price,
+    .sku,
+    .subtotal {
+        width: 100px;
+        text-align: center;
+    }
 
-        .cart-row img {
-            width: 60px;
-        }
+    .qty {
+        width: 60px;
+        padding: 5px;
+    }
 
-        .details {
-            flex: 1;
-        }
+    .coupon {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        .price,
-        .sku,
-        .subtotal {
-            width: 100px;
-            text-align: center;
-        }
+    .coupon input {
+        padding: 8px;
+        width: 200px;
+    }
 
-        .qty {
-            width: 60px;
-            padding: 5px;
-        }
+    .clear-btn {
+        margin-left: auto;
+        padding: 8px 16px;
+        border: 1px solid #aaa;
+        background: white;
+        cursor: pointer;
+    }
 
-        .coupon {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .cart-summary {
+        flex: 1;
+        border: 1px solid #ccc;
+        padding: 20px;
+        height: fit-content;
+        align-self: flex-start;
+    }
 
-        .coupon input {
-            padding: 8px;
-            width: 200px;
-        }
+    .cart-summary h4 {
+        margin-bottom: 15px;
+    }
 
-        .clear-btn {
-            margin-left: auto;
-            padding: 8px 16px;
-            border: 1px solid #aaa;
-            background: white;
-            cursor: pointer;
-        }
+    .cart-summary p {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
 
-        .cart-summary {
-            flex: 1;
-            border: 1px solid #ccc;
-            padding: 20px;
-            height: fit-content;
-            align-self: flex-start;
-        }
+    .total {
+        font-weight: bold;
+        font-size: 16px;
+        margin-top: 20px;
+    }
 
-        .cart-summary h4 {
-            margin-bottom: 15px;
-        }
+    .checkout-btn,
+    .continue-btn {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+    }
 
-        .cart-summary p {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-        }
+    .checkout-btn {
+        background: black;
+        color: white;
+    }
 
-        .total {
-            font-weight: bold;
-            font-size: 16px;
-            margin-top: 20px;
-        }
+    .continue-btn {
+        background: white;
+        border: 1px solid black;
+    }
 
-        .checkout-btn,
-        .continue-btn {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-        }
+    footer {
+        background: #f9f9f9;
+        text-align: center;
+        padding: 30px;
+        margin-top: 40px;
+    }
 
-        .checkout-btn {
-            background: black;
-            color: white;
-        }
+    .payment-icons img {
+        height: 30px;
+        margin: 0 8px;
+    }
+</style>
 
-        .continue-btn {
-            background: white;
-            border: 1px solid black;
-        }
+@extends('client.master')
 
-        footer {
-            background: #f9f9f9;
-            text-align: center;
-            padding: 30px;
-            margin-top: 40px;
-        }
-
-        .payment-icons img {
-            height: 30px;
-            margin: 0 8px;
-        }
-    </style>
-</head>
-
-<body>
-    <header>
-        <div class="top-bar">
-            <div class="logo">Marseille<br><span>XSTORE THEME</span></div>
-            <nav>
-                <a href="#">Elements</a>
-                <a href="#">Our Shop</a>
-                <a href="#">About us</a>
-            </nav>
-            <div class="actions">
-                <a href="#">Sign In</a>
-                <span class="cart">🛒<span class="cart-count">1</span></span>
-            </div>
-        </div>
-        <div class="progress">
-            <span class="step active">1 SHOPPING CART</span>
-            <span class="step">2 CHECKOUT</span>
-            <span class="step">3 ORDER STATUS</span>
-        </div>
-        <div class="timer">
-            🔥 Hurry up, these products are limited, checkout within <strong>04:18</strong>
-        </div>
-    </header>
-
+@section('content')
     <main class="cart-container">
         <section class="cart-items">
             <h3>Product</h3>
-            <div class="cart-row">
-                <img src="https://via.placeholder.com/60" alt="Product" />
-                <div class="details">
-                    <p>10K Yellow Gold</p>
-                    <small>Size: M</small>
+            @foreach ($cart->items as $item)
+                <div class="cart-row">
+                    <img src="https://via.placeholder.com/60" alt="Product" />
+                    <div class="details">
+                        <p>{{ $item->product->name }}</p>
+                        <small>Size: M</small>
+                    </div>
+                    <div class="price">{{ $item->product->price }}</div>
+                    <div class="sku">{{ $item->product->id }}</div>
+                    <button>{{ $item->quantity }}</button>
+                    <div class="subtotal">$99.99</div>
                 </div>
-                <div class="price">$99.99</div>
-                <div class="sku">12345</div>
-                <select class="qty">
-                    <option>1</option>
-                    <option>2</option>
-                </select>
-                <div class="subtotal">$99.99</div>
-            </div>
+            @endforeach
+
 
             <div class="coupon">
                 <input type="text" placeholder="Coupon code" />
@@ -268,16 +233,4 @@
             <button class="continue-btn">CONTINUE SHOPPING</button>
         </section>
     </main>
-
-    <footer>
-        <div class="payment-icons">
-            <img src="https://img.icons8.com/color/48/visa.png" alt="Visa" />
-            <img src="https://img.icons8.com/color/48/mastercard.png" alt="MasterCard" />
-            <img src="https://img.icons8.com/color/48/paypal.png" alt="PayPal" />
-            <img src="https://img.icons8.com/color/48/bitcoin.png" alt="Bitcoin" />
-        </div>
-        <p>Your Payment is <strong>100% Secure</strong></p>
-    </footer>
-</body>
-
-</html>
+@endsection
