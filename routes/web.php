@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
 // Client
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
-
+Route::get('/home', [HomeController::class, 'showProduct'])->name('homePage');
+Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

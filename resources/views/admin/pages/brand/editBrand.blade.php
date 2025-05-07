@@ -2,7 +2,7 @@
 
 @section('content')
     <form method="post" action={{ route('brand.update', $brand->id) }} enctype="multipart/form-data"
-        style="max-width: 800px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); margin-top: 80px; padding: 40px;"
+        style="max-width: 800px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2) margin-top: 80px; padding: 40px;"
         class="container">
         @csrf
         @method('PUT')
@@ -10,7 +10,7 @@
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
-                    @foreach ($errors->all() as $error)
+                    @foreach ($errors->all() as $error)b
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
