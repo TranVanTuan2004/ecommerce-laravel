@@ -9,9 +9,6 @@ use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
 
 // Client
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-
 Route::group([
     'prefix' => '/cart',
 ], function () {
@@ -21,7 +18,7 @@ Route::group([
 
 
 
-Route::get('/home', [HomeController::class, 'showProduct'])->name('homePage');
+Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
 
 

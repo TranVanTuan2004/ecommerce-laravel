@@ -22,7 +22,7 @@ class Product extends Model
     // 1 sản phẩm thuộc về 1 brand
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
     // 1 sản phẩm thuộc về 1 danh mục
