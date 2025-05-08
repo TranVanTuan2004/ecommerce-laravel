@@ -9,11 +9,6 @@
 </head>
 
 <body>
-    <!-- Start Top Nav -->
-    @include('client.components.topnav')
-    <!-- Close Top Nav -->
-
-
     <!-- Header -->
     @include('client.components.header')
     <!-- Close Header -->

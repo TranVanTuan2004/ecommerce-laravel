@@ -1,82 +1,52 @@
-<nav class="navbar navbar-expand-lg navbar-light shadow">
-    <div class="container d-flex justify-content-between align-items-center">
-
-        <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
-            Zay
-        </a>
-
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-            data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
-            id="templatemo_main_nav">
-            <div class="flex-fill">
-                <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href={{ route('homePage') }}>Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="shop.html">Shop</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
+<header class="container">
+    <div class="row py-3 align-items-center">
+        <!-- Social Icons -->
+        <div class="col-lg-4 col-md-4 col-6 d-flex align-items-center">
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
             </div>
-            <div class="navbar align-self-center d-flex">
-                <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                        <div class="input-group-text">
-                            <i class="fa fa-fw fa-search"></i>
-                        </div>
-                    </div>
-                </div>
-                <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
-                    data-bs-target="#templatemo_search">
-                    <i class="fa fa-fw fa-search text-dark mr-2"></i>
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Logo -->
+        <div class="col-lg-4 col-md-4 text-center">
+            <div class="logo">
+                <a href="#">
+                    <h1 class="m-0">Marseille</h1>
+                    <div class="tagline">XSTORE THEME</div>
                 </a>
-                <a href="{{ route('cart.index') }}" class="nav-icon position-relative text-decoration-none">
-                    <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                    <span
-                        class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
-                </a>
-                <a href="#" class="nav-icon position-relative text-decoration-none">
-                    <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                    <span
-                        class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
-                </a>
+            </div>
+        </div>
+
+        <!-- Navigation Right -->
+        <div class="col-lg-4 col-md-4 col-6">
+            <div class="header-actions d-flex justify-content-end">
+                <a href="#" class="me-3">Contacts</a>
+                <a href="#" class="me-3"><i class="fas fa-search"></i></a>
                 @if (Auth::check())
-                    <a href="{{ route('logout') }}">Logout</a>
+                    <a href={{ route('logout') }} class="me-3">Logout</a>
                 @else
-                    <a href="{{ route('login') }}">Login</a>
+                    <a href={{ route('login') }} class="me-3">Login</a>
                 @endif
+
+                <a href="#" class="me-3"><i class="far fa-heart"></i></a>
+                <a href={{ route('cart.index') }} class="position-relative">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count">3</span>
+                </a>
             </div>
         </div>
-
     </div>
-</nav>
-
-<!-- Modal -->
-<div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="w-100 pt-1 mb-5 text-right">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="" method="get" class="modal-content modal-body border-0 p-0">
-            <div class="input-group mb-2">
-                <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
-                <button type="submit" class="input-group-text bg-success text-light">
-                    <i class="fa fa-fw fa-search text-white"></i>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+</header>
