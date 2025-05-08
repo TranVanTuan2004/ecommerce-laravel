@@ -7,29 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'total_price',
-        'payment_method',
-        'status'
-    ];
+    protected $fillable = ['user_id', 'total_price', 'status'];
 
-    // 1 order thuộc về 1 user
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // 1 order có nhiều chi tiết sản phẩm
+    // Quan hệ với bảng order_products
     public function orderProducts()
     {
         return $this->hasMany(OrderProduct::class);
     }
 
-    // 1 order có nhiều sản phẩm (qua order_details)
+    // Quan hệ với Shipping
+    public function shipping()
+    {
+        return $this->hasOne(Shipping::class);
+    }
+
+    // Quan hệ với bảng trung gian order_products và Product
     public function products()
     {
         return $this->belongsToMany(Product::class, 'order_products')
@@ -37,14 +36,7 @@ class Order extends Model
             ->withTimestamps();
     }
 
-
-    // 1 order có thông tin giao hàng
-    public function shipping()
-    {
-        return $this->hasOne(Shipping::class);
-    }
-
-    // 1 order có thể có nhiều payment
+    // Quan hệ với Payment
     public function payments()
     {
         return $this->hasMany(Payment::class);

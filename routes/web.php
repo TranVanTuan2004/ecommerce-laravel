@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Order\OrderController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -24,22 +25,24 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
+], function () {});
+
+Route::group([
+    'prefix' => '/orders',
+    'middleware' => ['auth'], // Kiểm tra người dùng đã đăng nhập chưa
 ], function () {
-
+    Route::get('', [OrderController::class, 'index'])->name('orders.index'); // Hiển thị danh sách đơn hàng
+    Route::get('/history', [OrderController::class, 'history'])->name('orders.history'); // Hiển thị lịch sử đơn hàng
+    Route::post('/{id}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel'); // Hủy đơn hàng
 });
-
 
 
 

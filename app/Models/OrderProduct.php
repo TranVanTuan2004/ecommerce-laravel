@@ -3,16 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class OrderProduct extends Model
 {
-    protected $fillable = [
-        'order_id',
-        'product_id',
-        'quantity',
-        'price'
-    ];
+    use HasFactory;
 
+    protected $fillable = ['order_id', 'product_id', 'quantity', 'price'];
 
     public function order()
     {
