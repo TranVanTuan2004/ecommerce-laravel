@@ -6,6 +6,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 // Client

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Http\Controllers\Controller;
+use App\Models\Review;
 use App\Models\Product;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -22,6 +23,10 @@ class HomeController extends Controller
     public function showProductDetail($id)
     {
         $product = Product::with('brand', 'category')->findOrFail($id);
-        return view('client.pages.home.detail', compact('product'));
+
+        $reviews = Review::with('user')
+            ->where('product_id', $id)
+            ->get();
+        return view('client.pages.home.detail', compact('product', 'reviews'));
     }
 }
