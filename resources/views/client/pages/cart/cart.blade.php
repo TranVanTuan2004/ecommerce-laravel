@@ -1,49 +1,4 @@
 <style>
-    body {
-        font-family: 'Courier New', Courier, monospace;
-        margin: 0;
-        padding: 0;
-        background: #fff;
-        color: #111;
-    }
-
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    header {
-        border-bottom: 1px solid #ddd;
-        padding: 20px 40px;
-    }
-
-    .top-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .logo {
-        font-size: 22px;
-        font-weight: bold;
-    }
-
-    .logo span {
-        font-size: 12px;
-        color: #888;
-    }
-
-    nav a {
-        margin: 0 12px;
-        font-size: 14px;
-    }
-
-    .actions {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
     .cart-count {
         background: black;
         color: white;
@@ -76,12 +31,12 @@
         margin-bottom: 20px;
     }
 
-    main.cart-container {
+    .cart-container {
         display: flex;
-        max-width: 1200px;
         margin: auto;
-        padding: 20px 40px;
         gap: 40px;
+        margin-top: 50px;
+        margin-bottom: 50px;
     }
 
     .cart-items {
@@ -166,6 +121,7 @@
 
     .checkout-btn,
     .continue-btn {
+        font-size: 14px;
         width: 100%;
         padding: 12px;
         margin-top: 10px;
@@ -184,46 +140,182 @@
         border: 1px solid black;
     }
 
-    footer {
-        background: #f9f9f9;
-        text-align: center;
-        padding: 30px;
-        margin-top: 40px;
-    }
-
     .payment-icons img {
         height: 30px;
         margin: 0 8px;
     }
+
+    .step .circle {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        line-height: 28px;
+        font-size: 14px;
+        font-weight: bold;
+        display: inline-block;
+        text-align: center;
+        border: 1px solid #ccc;
+        color: #999;
+        background-color: #f8f9fa;
+    }
+
+    .step.active .circle {
+        background-color: #111;
+        color: white;
+        border-color: #111;
+    }
+
+    .step .label {
+        font-size: 14px;
+        margin-top: 4px;
+        color: #999;
+        letter-spacing: 0.5px;
+    }
+
+    .step.active .label {
+        color: #111;
+        font-weight: 500 !important;
+    }
+
+    .line {
+        width: 120px;
+        height: 1px;
+        background-color: #ccc;
+    }
+
+    .checkout-steps {
+        border-bottom: 1px solid #eee;
+    }
+
+    thead tr {
+        border-bottom: 1px solid #9fa7a7 !important;
+    }
+
+    th {
+        padding: 12px 0 !important;
+    }
+
+    td {
+        padding: 12px 0 !important;
+        border: none !important;
+    }
 </style>
+
 
 @extends('client.master')
 
 @section('content')
-    <main class="cart-container">
-        <section class="cart-items">
-            <h3>Product</h3>
-            @foreach ($cart->items as $item)
-                <div class="cart-row">
-                    <img src="https://via.placeholder.com/60" alt="Product" />
-                    <div class="details">
-                        <p>{{ $item->product->name }}</p>
-                        <small>Size: M</small>
-                    </div>
-                    <div class="price">{{ $item->product->price }}</div>
-                    <div class="sku">{{ $item->product->id }}</div>
-                    <button>{{ $item->quantity }}</button>
-                    <div class="subtotal">$99.99</div>
-                </div>
-            @endforeach
+    <div class="checkout-steps py-5 bg-light">
+        <div class="d-flex justify-content-center align-items-center gap-3 mb-2">
+            <!-- Step 1 -->
+            <div class="d-flex gap-2 align-items-center text-center step active">
+                <div class="circle">1</div>
+                <div class="label">SHOPPING CART</div>
+            </div>
+            <div class="line"></div>
+            <!-- Step 2 -->
+            <div class="d-flex gap-2 align-items-center text-center step">
+                <div class="circle">2</div>
+                <div class="label">CHECKOUT</div>
+            </div>
+            <div class="line"></div>
+            <!-- Step 3 -->
+            <div class="d-flex gap-2 align-items-center text-center step">
+                <div class="circle">3</div>
+                <div class="label">ORDER STATUS</div>
+            </div>
+        </div>
 
+        <!-- Countdown -->
+        <div class="text-center fw-light font-monospace text-secondary">
+            🔥 Hurry up, these products are limited, checkout within <strong id="countdown">03:00</strong>
+        </div>
+    </div>
+
+    <div class="cart-container container">
+        <div class="cart-items">
+            <table class="table w-100">
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 35%;">
+                    <col style="width: 15%;">
+                    <col style="width: 10%;">
+                    <col style="width: 15%;">
+                    <col style="width: 15%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>SKU</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($cart->items as $item)
+                        <tr>
+                            <td class="">
+                                <input type="checkbox">
+                            </td>
+                            <td class="d-flex gap-2">
+                                <img style="width: 80px; height: 100px;" class="" src="https://via.placeholder.com/60"
+                                    alt="Product" />
+                                <div class="fw-semibold" style="margin-right: 12px !important">
+                                    {{ $item->product->name }}</div>
+                            </td>
+                            <td class="">
+                                ${{ number_format($item->product->price, 2) }}
+                            </td>
+                            <td class="text-muted">
+                                {{ $item->product->id }}
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <form action="{{ route('cart.decrease', $item->product->id) }}" method="POST"
+                                        class="m-0">
+                                        @csrf
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm">−</button>
+                                    </form>
+                                    <span class="px-2">{{ $item->quantity }}</span>
+                                    <form action="{{ route('cart.increase', $item->product->id) }}" method="POST"
+                                        class="m-0">
+                                        @csrf
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm">+</button>
+                                    </form>
+                                </div>
+
+                            </td>
+                            <td class="fw-bold ">
+                                ${{ number_format($item->product->price * $item->quantity, 2) }}
+                            </td>
+                            <td class="text-center">
+                                <form action={{ route('cart.destroy', $item->product->id) }} method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        style="outline: none; border: none; background-color: transparent;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
 
             <div class="coupon">
                 <input type="text" placeholder="Coupon code" />
                 <button>OK</button>
-                <button class="clear-btn">🗑 Clear Shopping Cart</button>
+                <form action="{{ route('cart.clearAllCart') }}" method="POST" class="m-0">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="clear-btn">🗑 Clear Shopping Cart</button>
+                </form>
             </div>
-        </section>
+        </div>
 
         <section class="cart-summary">
             <h4>Cart Totals</h4>
@@ -232,5 +324,5 @@
             <button class="checkout-btn">PROCEED TO CHECKOUT</button>
             <button class="continue-btn">CONTINUE SHOPPING</button>
         </section>
-    </main>
+    </div>
 @endsection
