@@ -14,6 +14,12 @@ Route::group([
 ], function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
     Route::post('/addToCart', [CartController::class, 'addToCart'])->name('cart.addToCart');
+    Route::post('/increase/{productId}', [CartController::class, 'increase'])->name('cart.increase');
+    Route::post('/decrease/{productId}', [CartController::class, 'decrease'])->name('cart.decrease');
+    Route::delete('/destroy/{productId}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::delete('/clearAllCart', [CartController::class, 'clearAllCart'])->name('cart.clearAllCart');
+
+
 });
 
 
