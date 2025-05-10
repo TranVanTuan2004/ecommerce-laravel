@@ -24,6 +24,7 @@
 
     <!-- Start Script -->
     @include('client.components.js')
+    @yield('scripts')
     <!-- End Script -->
 </body>
 

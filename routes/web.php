@@ -6,6 +6,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 // Client
@@ -26,7 +27,7 @@ Route::group([
 
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
-
+Route::post('/comment/{product_id}/{user_id}', [HomeController::class, 'storeReview'])->name('review.store');
 
 Route::group([
     'prefix' => '/auth',
