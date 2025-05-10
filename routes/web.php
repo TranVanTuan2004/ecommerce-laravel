@@ -21,7 +21,7 @@ Route::group([
 
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
-
+Route::post('/comment/{product_id}/{user_id}', [HomeController::class, 'storeReview'])->name('review.store');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
