@@ -7,6 +7,11 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+
 
 // Client
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -53,21 +58,15 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {
-
-});
+], function () {});
 
 
 
@@ -84,8 +83,16 @@ Route::group([
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
 
-
-
-
-
-
+//may chuc nang resgister/changepassword/forgotpassword
+Route::group([
+    'prefix' => '/auth',
+], function () {
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::get('/change-password', [AuthController::class, 'showChangePasswordForm'])->name('changepassword.form');
+    Route::post('/change-password', [AuthController::class, 'updatePassword'])->name('changepassword');
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+});

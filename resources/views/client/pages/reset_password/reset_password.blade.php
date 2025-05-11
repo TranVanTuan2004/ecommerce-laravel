@@ -22,14 +22,7 @@
             width: 100%;
         }
 
-        .left-panel {
-            background-image: url('{{ asset('client/img/bg_login.png') }}');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            width: 70%;
-            height: 100%;
-        }
+
 
         .logo {
             display: flex;
@@ -117,7 +110,7 @@
             border-radius: 5px;
         }
 
-        .login {
+        .reset {
             width: 100%;
             background-color: #007bff;
             padding: 12px;
@@ -155,52 +148,58 @@
 </head>
 
 <body>
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-
-    <body>
-
-        <div class="wrapper">
-
-            <div class="left-panel">
-
+    <div class="wrapper">
+        <div class="left-panel"></div>
+        <div class="right-panel">
+            <div class="logo">
+                <h1><span class="blue">HAPPY</span><span class="yellow">SHOP</span></h1>
             </div>
-            <div class="right-panel">
-                <div class="logo">
-                    <h1><span class="blue">HAPPY</span><span class="yellow">SHOP</span></h1>
+
+            <form method="POST" action="{{ route('password.update') }}" class="form-card">
+                @csrf
+                <input type="hidden" name="token" value="{{ request()->token }}">
+
+                
+                <p style="text-align: center">
+                    Don't have an account? <a href="{{ route('register.form') }}">Register</a>
+                </p>
+
+                <div class="social-btns">
+                    <button class="facebook" type="button">Facebook</button>
+                    <button class="google" type="button">Google</button>
                 </div>
-                <form method="POST" action="{{ route('login') }}" class="form-card">
-                    @csrf
-                    <h3 style="text-align: center">Login Now</h3>
-                    <p style="text-align: center">Don't have an account? <a href="{{ route('register.form') }}">Register</a></p>
-                    <div class="social-btns">
-                        <button class="facebook" type="button">Facebook</button>
-                        <button class="google" type="button">Google</button>
-                    </div>
 
-                    <p class="or">or login with email</p>
-                    <div class="form-group">
-                        <input type="email" name="email" placeholder="Your email" value="{{ old('email') }}"
-                            class="@error('email') is-invalid @enderror" />
-                        @if ($errors->has('email'))
-                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" placeholder="Your password" value="{{ old('password') }}"
-                            class="@error('password') is-invalid @enderror" />
-                        @if ($errors->has('password'))
-                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                        @endif
-                    </div>
-                    <button type="submit" class="login">Login</button>
-                    <p class="terms">Terms & Conditions | Privacy Policy |<a href="{{ route('password.email') }}">Forgot Password</a></p>
-                </form>
-            </div>
-        </div>
-        </div>
-    </body>
+                <p class="or">or login with email</p>
 
-    </html>
+                <label for="email">Email:</label>
+                <input type="email" name="email" required>
+                @if ($errors->has('email'))
+                <div class="text-danger">{{ $errors->first('email') }}</div>
+                @endif
+
+                <label for="password">New Password:</label>
+                <input type="password" name="password" required>
+                @if ($errors->has('password'))
+                <div class="text-danger">{{ $errors->first('password') }}</div>
+                @endif
+
+                <label for="password_confirmation">Confirm Password:</label>
+                <input type="password" name="password_confirmation" required>
+                @if ($errors->has('password'))
+                <div class="text-danger">{{ $errors->first('password') }}</div>
+                @endif
+                
+
+                <div>
+                    <button type="submit" class="reset">Reset Password</button>
+                </div>
+
+                <p class="terms">
+                    Terms & Conditions | Privacy Policy | <a href="{{ route('login') }}">Login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

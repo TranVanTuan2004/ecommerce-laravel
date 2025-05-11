@@ -16,6 +16,7 @@
                         <li><a href="mailbox.html">Mailbox</a></li>
                         <li class="divider"></li>
                         <li><a href="">Logout</a></li>
+                        
                     </ul>
                 </div>
                 <div class="logo-element">
