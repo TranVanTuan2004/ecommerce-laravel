@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use \App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
@@ -19,8 +20,12 @@ Route::group([
     Route::post('/decrease/{productId}', [CartController::class, 'decrease'])->name('cart.decrease');
     Route::delete('/destroy/{productId}', [CartController::class, 'destroy'])->name('cart.destroy');
     Route::delete('/clearAllCart', [CartController::class, 'clearAllCart'])->name('cart.clearAllCart');
+});
 
-
+Route::group([
+    'prefix' => '/checkout',
+], function () {
+    Route::post('/', [CheckoutController::class, 'index'])->name('checkout.index');
 });
 
 
