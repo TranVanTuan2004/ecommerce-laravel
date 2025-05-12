@@ -2,34 +2,54 @@
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
-                <div class="dropdown profile-element"> <span>
-                        <img alt="image" class="img-circle" src="/\backend/img/profile_small.jpg" />
+                <div class="dropdown profile-element" style="display: flex; align-items: center; gap: 10px"> <span>
+                        <img alt="image" class="img-circle" style="width: 50px; height: 50px; object-fit: cover;"
+                            src="https://naidecor.vn/wp-content/uploads/2023/09/landscape_photography_tips_featured_image_1024x1024.webp" />
                     </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David
                                     Williams</strong>
-                            </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
-                        </span> </a>
-                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="contacts.html">Contacts</a></li>
-                        <li><a href="mailbox.html">Mailbox</a></li>
-                        <li class="divider"></li>
-                        <li><a href="">Logout</a></li>
-                    </ul>
-                </div>
-                <div class="logo-element">
-                    IN+
+                            </span>
                 </div>
             </li>
-            <li class="active">
-                <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span>
-                    <span class="fa arrow"></span></a>
+
+            <li>
+                <a href={{ route('dashboard') }}>
+                    <i class="fa fa-th-large"></i> <span class="nav-label">Trang Chủ</span>
+                </a>
+            </li>
+
+            <li>
+                <a><i class="fa fa-th-large"></i> <span class="nav-label">Quản Lý
+                        User</span>
+                    <span class="fa arrow"></span>
+                </a>
                 <ul class="nav nav-second-level">
-                    <li class="active"><a href={{ route('brand.index') }}>Quản Lý Brand</a></li>
-                    {{-- <li><a href={{ route('users.index') }}>Quản lý User</a></li> --}}
+                    <li> <a href={{ route('users.index') }}>Quản lý User</a></li>
                 </ul>
             </li>
+
+
+            <li>
+                <a><i class="fa fa-th-large"></i> <span class="nav-label">Quản Lý
+                        Brand</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li> <a href={{ route('brand.index') }}>Quản lý Brand</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fa fa-th-large"></i> <span class="nav-label">Quản Lý
+                        Voucher</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li> <a href={{ route('voucher.index') }}>Quản lý Voucher</a></li>
+                </ul>
+            </li>
+
         </ul>
 
     </div>
