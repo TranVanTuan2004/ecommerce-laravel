@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Voucher\VoucherController;
 use Illuminate\Support\Facades\Route;
 
 // Client
@@ -64,7 +65,6 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/brands',
-        'middleware' => 'is_admin'
     ], function () {
         Route::get('', [BrandController::class, 'index'])->name('brand.index');
         Route::get('/create', [BrandController::class, 'create'])->name('brand.create');
@@ -76,9 +76,11 @@ Route::group([
 
 
     Route::group([
-        'prefix' => '/user',
+        'prefix' => '/dashboard/voucher',
     ], function () {
-
+        Route::get('', [VoucherController::class, 'index'])->name('voucher.index');
+        Route::get('/create', [VoucherController::class, 'create'])->name('voucher.create');
+        Route::post('/store', [VoucherController::class, 'store'])->name('voucher.store');
     });
 
     Route::group([
