@@ -154,7 +154,27 @@
                 <i class="bi bi-ticket-perforated text-danger me-2"></i>
                 <strong>Voucher</strong>
             </div>
-            <a href="#" class="text-primary">Chọn Voucher</a>
+            <div>
+                <a href="#" id="open-voucher-modal" class="text-primary">Chọn Voucher</a>
+            </div>
+        </div>
+
+        <!-- Hidden input để gửi mã voucher khi submit form -->
+        <input type="hidden" name="voucher_code" id="selected-voucher-code">
+
+        <!-- Modal -->
+        <div class="modal fade" id="voucherModal" tabindex="-1" aria-labelledby="voucherModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" style="max-width: 600px;">
+                <div class="modal-content" style="max-height: 500px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chọn Voucher</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="voucher-list">
+                        <!-- AJAX sẽ load danh sách voucher ở đây -->
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -189,4 +209,43 @@
         </div>
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('open-voucher-modal').addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Gửi AJAX tới route Laravel để lấy danh sách voucher
+                fetch('/vouchers/list')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('voucher-list').innerHTML = html;
+
+                        // Khởi động modal Bootstrap
+                        const modal = new bootstrap.Modal(document.getElementById('voucherModal'));
+                        modal.show();
+
+                        // Gắn sự kiện click cho các nút chọn voucher
+                        document.querySelectorAll('.select-voucher').forEach(btn => {
+                            btn.addEventListener('click', function() {
+                                const code = this.getAttribute('data-code');
+                                const name = this.getAttribute('data-name');
+
+                                // Gán vào input hidden để submit form
+                                document.getElementById('selected-voucher-code').value =
+                                    code;
+
+                                // Gán hiển thị tên voucher (tùy chọn)
+                                document.querySelector('span#selected-voucher-name')
+                                    ?.remove();
+                                this.insertAdjacentHTML('afterend',
+                                    `<span id="selected-voucher-name" class="text-success ms-2">${name}</span>`
+                                );
+
+                                modal.hide();
+                            });
+                        });
+                    });
+            });
+        });
+    </script>
 @endsection
