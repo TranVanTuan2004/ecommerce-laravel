@@ -27,6 +27,15 @@ Route::group([
     'prefix' => '/checkout',
 ], function () {
     Route::post('/', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::get('/getAllVouchers', [CheckoutController::class, 'getAllVouchers'])->name('checkout.voucher');
+    Route::post('/store', [CheckoutController::class, 'store'])->name('checkout.store');
+});
+
+
+Route::group([
+    'prefix' => '/orders',
+], function () {
+    Route::get('/{id}', [CheckoutController::class, 'abc'])->name('orders.show');
 });
 
 

@@ -111,44 +111,41 @@
                 $totalProduct = 0;
                 $totalPrice = 0;
             @endphp
-
-            @foreach ($products as $product)
-                @php
-                    $totalProduct += $product->quantity;
-                    $totalPrice += $product->price * $product->quantity;
-                @endphp
-                <div class="d-flex mb-2 align-products-start border-bottom pb-2">
-                    <img src="https://via.placeholder.com/40" class="product-img me-2"
-                        style="width: 80px; height: 80px; object-fit: cover;" alt="Sữa rửa mặt">
-                    <div class="flex-grow-1">
-                        <div>{{ $product->name }}</div>
-                        <div class="text-small text-muted">₫{{ number_format($product->price, 3) }}</div>
+            <form action="{{ route('checkout.store') }}" method="POST">
+                @foreach ($products as $product)
+                    <input hidden type="checkbox" name="product_ids[]" value="{{ $product->id }}" checked>
+                    @php
+                        $totalProduct += $product->quantity;
+                        $totalPrice += $product->price * $product->quantity;
+                    @endphp
+                    <div class="d-flex mb-2 align-products-start border-bottom pb-2">
+                        <img src="https://via.placeholder.com/40" class="product-img me-2"
+                            style="width: 80px; height: 80px; object-fit: cover;" alt="Sữa rửa mặt">
+                        <div class="flex-grow-1">
+                            <div>{{ $product->name }}</div>
+                            <div class="text-small text-muted">₫{{ number_format($product->price, 3) }}</div>
+                        </div>
+                        <div class="me-3">{{ $product->quantity }}</div>
+                        <div class="ms-3" style="min-width: 100px">
+                            {{ number_format($product->price * $product->quantity, 3) }}</div>
                     </div>
-                    <div class="me-3">{{ $product->quantity }}</div>
-                    <div class="ms-3" style="min-width: 100px">
-                        {{ number_format($product->price * $product->quantity, 3) }}</div>
-                </div>
-            @endforeach
+                @endforeach
 
-            <!-- Giao hàng và voucher -->
-            <div class="row g-3 align-items-center border-top pt-3">
-                <div class="col-md-6">
-                    <span>Phương thức vận chuyển:</span><br>
-                    <span class="text-success">🚚 Nhanh</span> <a href="#" class="ms-2 text-primary">Thay
-                        Đổi</a><br>
-                    <small class="text-muted">Đảm bảo nhận hàng từ 13 - 15 Tháng 5</small><br>
-                    <small class="text-muted">+ ₫16.500</small>
+                <!-- Giao hàng và voucher -->
+                <div class="row g-3 align-items-center border-top pt-3">
+                    <div class="col-md-6">
+                        <span>Phương thức vận chuyển:</span><br>
+                        <span class="text-success">🚚 Nhanh</span>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <strong>Tổng số tiền ({{ $totalProduct }} sản phẩm):</strong><br>
+                        <span class="fs-5 text-danger">₫{{ number_format($totalPrice, 3) }}</span>
+                    </div>
                 </div>
-                <div class="col-md-6 text-end">
-                    <strong>Tổng số tiền ({{ $totalProduct }} sản phẩm):</strong><br>
-                    <span class="fs-5 text-danger">₫{{ number_format($totalPrice, 3) }}</span>
-                </div>
-            </div>
         </div>
     </div>
     <div class="container border rounded p-4 my-4">
-
-        <!-- Shopee Voucher -->
+        @csrf
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
                 <i class="bi bi-ticket-perforated text-danger me-2"></i>
@@ -194,9 +191,11 @@
 
         <!-- Tổng tiền -->
         <div class="text-end">
-            <div class="mb-1">Tổng tiền hàng: <strong>₫607.700</strong></div>
-            <div class="mb-1">Tổng tiền phí vận chuyển: <strong>₫124.600</strong></div>
-            <div class="h5 text-danger">Tổng thanh toán: <strong>₫732.300</strong></div>
+            <div class="mb-1">Tổng tiền hàng: <strong>đ{{ number_format($totalPrice, 3) }}</strong></div>
+            <div class="mb-1 discount">Giảm giá: <strong>₫0</strong></div>
+            <div class="h5 text-danger total">Tổng thanh toán:
+                <strong>₫{{ number_format($totalPrice, 3) }}</strong>
+            </div>
         </div>
 
         <!-- Ghi chú và nút đặt hàng -->
@@ -205,42 +204,78 @@
                 Khi nhấn 'Đặt hàng', bạn xác nhận rằng bạn đồng ý với
                 <a href="#" class="text-primary">Điều khoản</a> của chúng tôi.
             </small>
-            <button class="btn btn-danger px-4">Đặt hàng</button>
+            <button type="submit" class="btn btn-danger px-4">Đặt hàng</button>
         </div>
-
+        </form>
     </div>
     <script>
+        const formatCurrencyVN = (number) => {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 3
+            }).format(number);
+        };
         document.addEventListener('DOMContentLoaded', function() {
+            const modalElement = document.getElementById('voucherModal');
+            const modal = new bootstrap.Modal(modalElement);
+
+            let originalTotal = {{ $totalPrice }}; // tổng tiền sản phẩm từ backend
+
             document.getElementById('open-voucher-modal').addEventListener('click', function(e) {
                 e.preventDefault();
 
-                // Gửi AJAX tới route Laravel để lấy danh sách voucher
-                fetch('/vouchers/list')
+                fetch('/checkout/getAllVouchers')
                     .then(response => response.text())
                     .then(html => {
                         document.getElementById('voucher-list').innerHTML = html;
-
-                        // Khởi động modal Bootstrap
-                        const modal = new bootstrap.Modal(document.getElementById('voucherModal'));
                         modal.show();
 
-                        // Gắn sự kiện click cho các nút chọn voucher
                         document.querySelectorAll('.select-voucher').forEach(btn => {
                             btn.addEventListener('click', function() {
-                                const code = this.getAttribute('data-code');
-                                const name = this.getAttribute('data-name');
+                                const code = this.dataset.code;
+                                const name = this.dataset.name;
+                                const percent = parseFloat(this.dataset.percent);
 
-                                // Gán vào input hidden để submit form
+                                // Tính số tiền giảm
+                                const discountAmount = Math.round(originalTotal * (
+                                    percent / 100));
+
+                                const newPrice = originalTotal - discountAmount;
+
+                                // Gán vào input hidden
                                 document.getElementById('selected-voucher-code').value =
                                     code;
 
-                                // Gán hiển thị tên voucher (tùy chọn)
-                                document.querySelector('span#selected-voucher-name')
+                                // Hiển thị tên voucher
+                                document.querySelector('#selected-voucher-name')
                                     ?.remove();
                                 this.insertAdjacentHTML('afterend',
                                     `<span id="selected-voucher-name" class="text-success ms-2">${name}</span>`
                                 );
 
+                                // Hiển thị giảm giá
+                                if (!document.querySelector('#voucher-discount-line')) {
+                                    const newLine = document.createElement('div');
+                                    newLine.id = 'voucher-discount-line';
+                                    newLine.className = 'mb-1 text-end';
+                                    newLine.innerHTML =
+                                        `Giảm giá (${Math.round(percent)}%): <strong class="text-success">₫${formatCurrencyVN(discountAmount)}</strong>`;
+                                    document.querySelector('.text-end').insertBefore(
+                                        newLine, document.querySelector('.text-end')
+                                        .children[2]);
+                                } else {
+                                    document.querySelector('#voucher-discount-line')
+                                        .innerHTML =
+                                        `Giảm giá (${Math.round(percent)}%): <strong class="text-success">₫${formatCurrencyVN(discountAmount)}</strong>`;
+                                }
+
+                                // Cập nhật tổng thanh toán
+                                document.querySelector('.discount strong')
+                                    .textContent =
+                                    `₫${formatCurrencyVN(discountAmount)}`;
+                                document.querySelector('.total strong')
+                                    .textContent = `₫${formatCurrencyVN(newPrice)}`;
                                 modal.hide();
                             });
                         });
