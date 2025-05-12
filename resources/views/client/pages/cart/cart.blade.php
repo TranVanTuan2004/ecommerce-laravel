@@ -359,12 +359,11 @@
                 <h4>Cart Totals</h4>
                 <p>TOTAL: <span class="total">0</span></p>
                 <button type="submit" class="checkout-btn">PROCEED TO CHECKOUT</button>
-                <form method="GET" action={{ route('homePage') }}>
-                    <button type="submit" class="continue-btn">
+                <button class="continue-btn">
+                    <a href={{ route('homePage') }}>
                         CONTINUE SHOPPING
-                    </button>
-                </form>
-
+                    </a>
+                </button>
             </div>
         </form>
     </div>
