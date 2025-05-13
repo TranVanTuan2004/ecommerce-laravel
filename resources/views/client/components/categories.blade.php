@@ -44,15 +44,22 @@
                     Danh mục sản phẩm
                 </button>
                 <ul class="dropdown-menu">
+                    <li>
+                        <a href="{{ route('product.shop') }}" class="dropdown-item">
+                            <span class="category-name">Tất cả</span>
+                        </a>
+                    </li>
                     @foreach ($categories as $category)
                     <li>
-                        <a href="{{ route('category.products', $category->id) }}" class="dropdown-item d-flex justify-content-between align-items-center">
+                        <a href="{{ route('product.shop', ['category_id' => $category->id]) }}"
+                            class="dropdown-item d-flex justify-content-between align-items-center {{ request('category_id') == $category->id ? 'active text-white bg-primary' : '' }}">
                             <span class="category-name">{{ $category->name }}</span>
-                            <span class="badge bg-primary rounded-pill">{{ $category->products_count }} sản phẩm</span>
+                            <span class="badge bg-primary rounded-pill">{{ $category->products_count ?? 0 }} sản phẩm</span>
                         </a>
                     </li>
                     @endforeach
                 </ul>
+
             </div>
         </div>
     </div>

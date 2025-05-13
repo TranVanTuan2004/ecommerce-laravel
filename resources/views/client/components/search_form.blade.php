@@ -1,6 +1,6 @@
 <div class="container my-4">
     <div class="row align-items-center">
-        <form action="{{ route('product.search') }}" method="GET" class="row g-3 align-items-center mb-4">
+        <form action="{{ route('product.shop') }}" method="GET" class="row g-3 align-items-center mb-4">
             <div class="col-md-3">
                 <input type="text" name="keyword" class="form-control" placeholder="Tìm theo tên, mô tả..." value="{{ request()->keyword }}">
             </div>

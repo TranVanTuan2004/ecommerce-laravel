@@ -6,6 +6,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Admin\BlogController;
 use Illuminate\Support\Facades\Route;
 
 // Client
@@ -17,10 +18,13 @@ Route::group([
 });
 
 Route::get('/shop', [HomeController::class, 'showProduct'])->name('product.shop');
-Route::get('/search', [HomeController::class, 'search'])->name('product.search');
-Route::get('/category/{id}', [HomeController::class, 'showProductByCategory'])->name('category.products');
+Route::get('/shop', [HomeController::class, 'showProduct'])->name('product.shop');
+Route::get('/category/{id}', [HomeController::class, 'showProduct'])->name('category.products');
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
+// Client routes
+Route::get('/blogs', [App\Http\Controllers\Client\BlogClientController::class, 'index'])->name('client.blogs.index');
+Route::get('/blogs/{id}', [App\Http\Controllers\Client\BlogClientController::class, 'show'])->name('client.blogs.show');
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -46,6 +50,12 @@ Route::group([
     Route::get('/{id}/edit', [BrandController::class, 'edit'])->name('brand.edit');
     Route::put('/{id}', [BrandController::class, 'update'])->name('brand.update');
     Route::delete('/{id}', [BrandController::class, 'destroy'])->name('brand.destroy');
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('blogs/create', [BlogController::class, 'create'])->name('blog.create');
+    Route::post('blogs', [BlogController::class, 'store'])->name('blog.store');
+    Route::get('/blogs/{id}/edit', [BlogController::class, 'edit'])->name('blog.edit');
+    Route::put('/blogs/{id}', [BlogController::class, 'update'])->name('blog.update');
+    Route::delete('/blogs/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
 });
 
 
