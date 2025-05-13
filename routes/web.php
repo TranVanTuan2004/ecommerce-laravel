@@ -17,7 +17,7 @@ Route::group([
 });
 
 
-
+Route::get('/category/{id}', [HomeController::class, 'showProductByCategory'])->name('category.products');
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
 
@@ -50,21 +50,15 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {
-
-});
+], function () {});
 
 
 
@@ -80,9 +74,3 @@ Route::group([
     Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
-
-
-
-
-
-

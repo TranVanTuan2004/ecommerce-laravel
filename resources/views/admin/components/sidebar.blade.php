@@ -27,7 +27,7 @@
                     <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li class="active"><a href={{ route('brand.index') }}>Quản Lý Brand</a></li>
-                    {{-- <li><a href={{ route('users.index') }}>Quản lý User</a></li> --}}
+                    <li class="active"><a href={{ route('users.index') }}>Quản Lý User</a></li>
                 </ul>
             </li>
         </ul>
