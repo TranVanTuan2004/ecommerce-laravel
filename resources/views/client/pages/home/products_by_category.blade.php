@@ -3,6 +3,7 @@
 @include('client.components.banner')
 @include('client.components.categories') <!-- Hiển thị danh mục -->
 @include('client.components.filter')
+@include('client.components.search_form', ['brands' => $brands])
 
 <div class="container my-4">
     <h2 class="mb-4">Sản phẩm trong danh mục: {{ $category->name }}</h2>
