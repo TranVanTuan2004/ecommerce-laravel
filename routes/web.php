@@ -16,6 +16,7 @@ Route::group([
     Route::post('/addToCart', [CartController::class, 'addToCart'])->name('cart.addToCart');
 });
 
+Route::get('/shop', [HomeController::class, 'showProduct'])->name('product.shop');
 Route::get('/search', [HomeController::class, 'search'])->name('product.search');
 Route::get('/category/{id}', [HomeController::class, 'showProductByCategory'])->name('category.products');
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');

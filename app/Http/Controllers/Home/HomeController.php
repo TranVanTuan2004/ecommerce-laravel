@@ -17,14 +17,35 @@ class HomeController extends Controller
     //     return view('client.pages.home.home', compact('products'));
     // }
 
-    public function showProduct()
+    public function showProduct(Request $request)
     {
-        $products = Product::with('brand')->paginate(8);
+        $query = Product::with('brand');
+
+        // Xử lý sắp xếp
+        if ($request->has('sort_by')) {
+            switch ($request->sort_by) {
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'popular':
+                    $query->orderBy('views', 'desc');
+                    break;
+                case 'discount':
+                    $query->orderBy('discount', 'desc');
+                    break;
+            }
+        }
+
+        $products = $query->paginate(8)->appends($request->query());
         $categories = Category::all();
         $brands = Brand::all();
 
         return view('client.pages.home.homeShop', compact('products', 'categories', 'brands'));
     }
+
 
 
     public function showProductDetail($id)
