@@ -30,7 +30,8 @@ class CartItemSeeder extends Seeder
                         'product_id' => $product->id
                     ],
                     [
-                        'quantity' => rand(1, 10)
+                        'quantity' => rand(1, 10),
+                        'price' => rand(10000, 500000)
                     ]
                 );
             }

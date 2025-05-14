@@ -318,5 +318,6 @@
                 </div>
             </div>
         </div>
+        @include('client.components.review', ['reviews' => $reviews])
     </section>
 @endsection
