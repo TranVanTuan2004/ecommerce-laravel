@@ -6,6 +6,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Order\OrderController;
 use Illuminate\Support\Facades\Route;
 
 // Client
@@ -50,22 +51,22 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {
-
-});
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {
+], function () {});
 
-});
-
+// Route::middleware('auth')->group(function () {
+//     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+//     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+// });
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 
 
 
@@ -80,9 +81,3 @@ Route::group([
     Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
-
-
-
-
-
-
