@@ -1,6 +1,7 @@
 <div class="comments-container">
     <h1>Comments</h1>
     @foreach ($reviews as $review)
+
         <div class="comment-box">
             <div class="comment-header">
                 <div class="avatar">
@@ -30,9 +31,7 @@
             </div>
         </div>
     @endforeach
-    <form
-        action="{{Auth::check() ? route('review.store', ['product_id' => $product->id, 'user_id' => $user->id]) : '#' }}"
-        method="POST">
+    <form action="{{ route('review.store', ['product_id' => $product->id]) }}" method="POST">
         @csrf
         <div class="comment-box">
             <div class="comment-header">
