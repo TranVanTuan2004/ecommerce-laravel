@@ -6,7 +6,9 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4>Danh sách Blog</h4>
-        <a href="{{ route('blog.create') }}" class="btn btn-success">+ Thêm Blog</a>
+        <a href="{{ url('dashboard/blogs/create') }}" class="btn btn-success">+ Thêm Blog</a>
+
+
     </div>
 
     @if (session('success'))

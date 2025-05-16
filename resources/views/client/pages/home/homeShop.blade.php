@@ -61,5 +61,15 @@
         {{ $products->links('pagination::bootstrap-4') }}
     </div>
 </div>
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+
+<script>
+    window.Echo.channel('chat')
+        .listen('MessageSent', (e) => {
+            console.log('Tin nhắn mới:', e.message);
+            // cập nhật UI
+        });
+</script>
+<script type="module" src="{{ asset('build/assets/app.js') }}"></script>
 
 @endsection
