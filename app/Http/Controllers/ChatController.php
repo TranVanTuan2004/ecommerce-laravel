@@ -12,12 +12,14 @@ class ChatController extends Controller
 {
     public function sendMessage(Request $request)
     {
+        $user = Auth::user();
+
         $message = Message::create([
-            'user_id' => auth()->id(),
+            'user_id' => Auth::user(),
             'content' => $request->input('message'),
         ]);
 
-        broadcast(new MessageSent($message->content, auth()->user()))->toOthers();
+        broadcast(new MessageSent($message->content, Auth::user()))->toOthers();
 
         return response()->json(['status' => 'Message Sent!']);
     }
