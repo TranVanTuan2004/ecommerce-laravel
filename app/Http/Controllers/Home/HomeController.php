@@ -97,8 +97,12 @@ class HomeController extends Controller
         return view('client.pages.home.detail', compact('product', 'reviews', 'user'));
     }
 
-    public function storeReview($product_id, $user_id, Request $request)
+    public function storeReview($product_id, Request $request)
     {
+        $user_id = auth()->id();
+        if (is_null($user_id)) {
+            return redirect()->route('login')->with('error', "Ban phai dang nhap");
+        }
         $request->validate([
             'review_text' => 'required|string|max:1000',
             'rating' => 'required|integer|min:1|max:5',

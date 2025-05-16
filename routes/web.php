@@ -51,21 +51,21 @@ Route::group([
 
 Route::group([
     'prefix' => '/orders',
-], function () {});
+], function () { });
 
 
 
 Route::group([
     'prefix' => '/user',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {});
+], function () { });
 
 
 
@@ -86,7 +86,7 @@ Route::group([
 Route::post('/send-message', [ChatController::class, 'sendMessage'])->middleware('auth');
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
-Route::post('/comment/{product_id}/{user_id}', [HomeController::class, 'storeReview'])->name('review.store');
+Route::post('/comment/{product_id}', [HomeController::class, 'storeReview'])->name('review.store');
 
 Route::group([
     'prefix' => '/auth',
@@ -149,9 +149,9 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () {});
+    ], function () { });
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () {});
+    ], function () { });
 });
