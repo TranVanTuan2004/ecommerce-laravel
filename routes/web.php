@@ -23,6 +23,17 @@ Route::group([
     Route::delete('/clearAllCart', [CartController::class, 'clearAllCart'])->name('cart.clearAllCart');
 });
 
+
+Route::get('/shop', [HomeController::class, 'showProduct'])->name('product.shop');
+Route::get('/search', [HomeController::class, 'search'])->name('product.search');
+Route::get('/category/{id}', [HomeController::class, 'showProductByCategory'])->name('category.products');
+Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
+Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
 Route::group([
     'prefix' => '/checkout',
 ], function () {
@@ -38,6 +49,34 @@ Route::group([
     Route::get('/{id}', [CheckoutController::class, 'abc'])->name('orders.show');
 });
 
+
+
+Route::group([
+    'prefix' => '/user',
+], function () {});
+
+Route::group([
+    'prefix' => '/dashboard/product',
+], function () {});
+
+Route::group([
+    'prefix' => '/dashboard/category',
+], function () {});
+
+
+
+
+//hau chuc nang crud_user
+Route::group([
+    'prefix' => '/dashboard/users',
+], function () {
+    Route::get('', [UserController::class, 'index'])->name('users.index');
+    Route::get('/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('dashboard/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+});
 
 
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
@@ -105,9 +144,6 @@ Route::group([
     });
 
 });
-
-
-
 
 
 

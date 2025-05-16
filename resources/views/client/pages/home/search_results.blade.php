@@ -1,18 +1,18 @@
 @extends('client.master')
 @section('content')
 @include('client.components.banner')
-@include('client.components.categories')
+@include('client.components.categories') <!-- Hiển thị danh mục -->
 @include('client.components.filter')
 @include('client.components.search_form', ['brands' => $brands])
 <div class="container">
+    <h2>Kết quả tìm kiếm</h2>
     <div class="row">
-        <!-- Product 1 -->
         @foreach ($products as $product)
         <div class="col-md-3 col-6 mb-4">
             <div class="product-card">
                 <div class="product-image">
-                    <a href={{ route('productDetail', ['id' => $product->id]) }}>
-                        <img src="{{ asset('client/img/category_img_01.jpg') }}" alt="Product Name" class="img-fluid">
+                    <a href="{{ route('productDetail', ['id' => $product->id]) }}">
+                        <img src="{{ asset('client/img/category_img_01.jpg') }}" alt="{{ $product->name }}" class="img-fluid">
                     </a>
                     <div class="color-options position-absolute bottom-0 start-0 p-2">
                         <button class="color-btn me-1" style="background-color: #000000;"></button>
@@ -22,12 +22,12 @@
                 </div>
                 <div class="product-info py-2">
                     <h3 class="product-title h6">
-                        <a href={{ route('productDetail', ['id' => $product->id]) }}
-                            class="text-dark text-decoration-none">{{ $product->name }}</a>
+                        <a href="{{ route('productDetail', ['id' => $product->id]) }}" class="text-dark text-decoration-none">{{ $product->name }}</a>
                     </h3>
                     <p class="product-brand text-muted small"> {{ $product->brand->name ?? 'No brand' }}</p>
+                    <p class="product-category text-muted small">{{ $product->category->name ?? 'No category' }}</p>
                     <div class="product-price">
-                        <span class="sale-price">${{ $product->price }}</span>
+                        <span class="sale-price">{{ number_format($product->price) }} VNĐ</span>
                     </div>
                     <form action="{{ route('cart.addToCart') }}" method="POST">
                         @csrf
@@ -38,10 +38,12 @@
             </div>
         </div>
         @endforeach
+    </div>
 
-        <div class="pagination-container">
-            {{ $products->links('pagination::bootstrap-4') }}
-        </div>
+    <!-- Pagination -->
+    <div class="pagination-container">
+        {{ $products->links('pagination::bootstrap-4') }}
     </div>
 </div>
+
 @endsection
