@@ -165,8 +165,6 @@ Route::group([
         'prefix' => '/dashboard/category',
     ], function () {});
 
-    ], function () { });
-
     Route::group([
         'prefix' => '/dashboard/category',
     ], function () { });
