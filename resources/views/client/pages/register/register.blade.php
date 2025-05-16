@@ -22,14 +22,6 @@
             width: 100%;
         }
 
-        /* .left-panel {
-            background-image: url('{{ asset('client/img/bg_login.png') }}');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            width: 70%;
-            height: 100%;
-        } */
 
         .logo {
             display: flex;
@@ -117,7 +109,7 @@
             border-radius: 5px;
         }
 
-        .login {
+        .register {
             width: 100%;
             background-color: #007bff;
             padding: 12px;
@@ -151,6 +143,19 @@
         .text-danger {
             color: red;
         }
+
+        .error-message {
+            color: #d93025;
+            /* Màu đỏ giống Facebook */
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        input.error {
+            border: 1px solid #d93025;
+            background: #fff5f5;
+            /* Nền đỏ nhạt */
+        }
     </style>
 </head>
 
@@ -171,10 +176,10 @@
                 <div class="logo">
                     <h1><span class="blue">HAPPY</span><span class="yellow">SHOP</span></h1>
                 </div>
-                <form method="POST" action="{{ route('login') }}" class="form-card">
+                <form method="POST" action="{{ route('register') }}" class="form-card">
                     @csrf
-                    <h3 style="text-align: center">Login Now</h3>
-                    <p style="text-align: center">Don't have an account? <a href="{{ route('register') }}">Register</a></p>
+                    <h3 style="text-align: center">Register Now</h3>
+                    <p style="text-align: center">Đã có tài khoản <a href="{{ route('login') }}">Login</a></p>
                     <div class="social-btns">
                         <button class="facebook" type="button">Facebook</button>
                         <button class="google" type="button">Google</button>
@@ -182,20 +187,30 @@
 
                     <p class="or">or login with email</p>
                     <div class="form-group">
-                        <input type="email" name="email" placeholder="Your email" value="{{ old('email') }}"
-                            class="@error('email') is-invalid @enderror" />
-                        @if ($errors->has('email'))
-                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                        @endif
+                        <input type="text" name="name" placeholder="Họ và Tên" value="{{ old('name') }}" />
+                        @error('name')
+                        <div class="error-message">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" placeholder="Your password" value="{{ old('password') }}"
-                            class="@error('password') is-invalid @enderror" />
-                        @if ($errors->has('password'))
-                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                        @endif
+                        <input type="email" name="email" placeholder="Your email" value="{{ old('email') }}" />
+                        @error('email')
+                        <div class="error-message">{{ $message }}</div>
+                        @enderror
                     </div>
-                    <button type="submit" class="login">Login</button>
+                    <div class="form-group">
+                        <input type="password" name="password" placeholder="Mật khẩu" />
+                        @error('password')
+                        <div class="error-message">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password_confirmation" placeholder="Xác nhận mật khẩu" />
+                        @error('password_confirmation')
+                        <div class="error-message">>{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <button type="submit" class="register">Register</button>
                     <p class="terms">Terms & Conditions | Privacy Policy</p>
                 </form>
             </div>

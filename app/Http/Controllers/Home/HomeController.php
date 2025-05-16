@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    // public function index()
-    // {
-    //     $products = Product::latest()->paginate(10);
-    //     return view('client.pages.home.home', compact('products'));
-    // }
+     public function index()
+     {
+         $products = Product::latest()->paginate(10);
+         return view('client.pages.home.homeShop', compact('products'));
+     }
 
     public function showProduct(Request $request)
     {
