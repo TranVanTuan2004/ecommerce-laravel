@@ -10,6 +10,10 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Voucher\VoucherController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 // Client
 Route::group([
@@ -50,11 +54,16 @@ Route::group([
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'postLogin'])->name('login.post');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
 });
 
 Route::group([
     'prefix' => '',
-    'middleware' => 'is_admin'
+    'middleware' => 'is_admin',
+    'verified'
 ], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('is_admin');
 
@@ -94,26 +103,9 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () {
-
-    });
+    ], function () {});
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () {
-
-    });
-
+    ], function () {});
 });
-
-
-
-
-
-
-
-
-
-
-
-

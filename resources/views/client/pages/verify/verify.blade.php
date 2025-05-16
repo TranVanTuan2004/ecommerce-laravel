@@ -22,14 +22,6 @@
             width: 100%;
         }
 
-        /* .left-panel {
-            background-image: url('{{ asset('client/img/bg_login.png') }}');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            width: 70%;
-            height: 100%;
-        } */
 
         .logo {
             display: flex;
@@ -117,7 +109,7 @@
             border-radius: 5px;
         }
 
-        .login {
+        .register {
             width: 100%;
             background-color: #007bff;
             padding: 12px;
@@ -171,32 +163,12 @@
                 <div class="logo">
                     <h1><span class="blue">HAPPY</span><span class="yellow">SHOP</span></h1>
                 </div>
-                <form method="POST" action="{{ route('login') }}" class="form-card">
+                <form method="POST" action="{{ route('register') }}" class="form-card">
                     @csrf
-                    <h3 style="text-align: center">Login Now</h3>
-                    <p style="text-align: center">Don't have an account? <a href="{{ route('register') }}">Register</a></p>
-                    <div class="social-btns">
-                        <button class="facebook" type="button">Facebook</button>
-                        <button class="google" type="button">Google</button>
-                    </div>
-
-                    <p class="or">or login with email</p>
-                    <div class="form-group">
-                        <input type="email" name="email" placeholder="Your email" value="{{ old('email') }}"
-                            class="@error('email') is-invalid @enderror" />
-                        @if ($errors->has('email'))
-                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" placeholder="Your password" value="{{ old('password') }}"
-                            class="@error('password') is-invalid @enderror" />
-                        @if ($errors->has('password'))
-                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                        @endif
-                    </div>
-                    <button type="submit" class="login">Login</button>
-                    <p class="terms">Terms & Conditions | Privacy Policy</p>
+                    <h3 style="text-align: center">Xác thực email</h3>
+                    <p>Xin chào {{ $user->name }},</p>
+                    <p>Vui lòng nhấp vào liên kết dưới đây để kích hoạt tài khoản:</p>
+                     <a href="{{ $url }}">Xác thực tài khoản</a>
                 </form>
             </div>
         </div>
