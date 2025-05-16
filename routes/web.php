@@ -8,6 +8,7 @@ use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Admin\BlogController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 
 // Client
 Route::group([
@@ -85,3 +86,6 @@ Route::group([
     Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 });
+
+
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->middleware('auth');
