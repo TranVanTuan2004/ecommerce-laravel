@@ -13,6 +13,7 @@ class CartController extends Controller
 {
     public function index()
     {
+        session()->forget('order_submitted');
         if (!Auth::check())
             return redirect()->route('login');
         $cart = Cart::with('items.product')->where('user_id', Auth::id())->first();

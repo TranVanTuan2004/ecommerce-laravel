@@ -18,7 +18,7 @@
 
         <div class="mt-4">
             <a href="{{ route('homePage') }}" class="btn btn-outline-primary me-2">Tiếp tục mua sắm</a>
-            <a href="" class="btn btn-primary">Xem lịch sử đơn hàng</a>
+            <a href="{{ route('homePage') }}" class="btn btn-primary">Xem lịch sử đơn hàng</a>
         </div>
     </div>
 @endsection
