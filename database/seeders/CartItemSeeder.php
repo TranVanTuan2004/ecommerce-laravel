@@ -31,7 +31,6 @@ class CartItemSeeder extends Seeder
                     ],
                     [
                         'quantity' => rand(1, 10),
-                        'price' => rand(10000, 500000)
                     ]
                 );
             }

@@ -56,7 +56,8 @@ Route::group([
 
 Route::group([
     'prefix' => '/orders',
-], function () { });
+], function () {
+});
 
 
 
@@ -159,11 +160,11 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () {});
+    ], function () { });
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () {});
+    ], function () { });
 
     Route::group([
         'prefix' => '/dashboard/category',

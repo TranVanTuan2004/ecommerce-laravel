@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-     public function index()
-     {
-         $products = Product::latest()->paginate(10);
-         return view('client.pages.home.homeShop', compact('products'));
-     }
+    public function index()
+    {
+        $products = Product::latest()->paginate(10);
+        return view('client.pages.home.homeShop', compact('products'));
+    }
 
     public function showProduct(Request $request)
     {
@@ -99,7 +99,7 @@ class HomeController extends Controller
 
     public function storeReview($product_id, Request $request)
     {
-        $user_id = auth()->id();
+        $user_id = Auth::id();
         if (is_null($user_id)) {
             return redirect()->route('login')->with('error', "Ban phai dang nhap");
         }
