@@ -14,9 +14,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        // Lọc theo trạng thái nếu có tham số status
         $status = $request->query('status');
-
         $query = Order::where('user_id', Auth::id());
 
         if ($status && $status != 'all') {
@@ -24,7 +22,6 @@ class OrderController extends Controller
         }
 
         $orders = $query->orderBy('created_at', 'desc')->paginate(10);
-
         return view('client.pages.orders.index', compact('orders'));
     }
 
@@ -50,9 +47,12 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        //$this->authorize('view', $order); // (nếu muốn bảo vệ)
         $order->load('orderProducts.product');
-        return view('client.pages.orders.show', compact('id'));
+        return view('client.pages.orders.show', compact('order'));
     }
+
+
 
 
 
