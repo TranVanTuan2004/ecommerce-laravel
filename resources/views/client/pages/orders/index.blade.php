@@ -7,11 +7,9 @@
         <h5>{{ auth()->user() ? auth()->user()->name : 'Khách' }}</h5>
 
         <ul class="list-unstyled">
-            <li><a href="#">🔔 Thông báo</a></li>
-            <li><a href="#">👤 Tài khoản Của Tôi</a></li>
-            <li><a href="{{ route('orders.index') }}">📦 Đơn Mua</a></li>
-            <li><a href="#">🎟️ Kho Voucher</a></li>
-            <li><a href="#">💰 Shopee Xu</a></li>
+            <li><a href="#"><i class="ri-notification-3-line"></i> Thông báo</a></li>
+            <li><a href="#"><i class="ri-account-circle-line"></i> Tài khoản Của Tôi</a></li>
+            <li><a href="{{ route('orders.index') }}"><i class="ri-store-line"></i> Đơn Mua</a></li>
         </ul>
     </div>
 

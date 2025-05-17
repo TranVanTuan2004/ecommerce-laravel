@@ -10,8 +10,6 @@
             <li><a href="#">🔔 Thông báo</a></li>
             <li><a href="#">👤 Tài khoản Của Tôi</a></li>
             <li><a href="{{ route('orders.index') }}">📦 Đơn Mua</a></li>
-            <li><a href="#">🎟️ Kho Voucher</a></li>
-            <li><a href="#">💰 Shopee Xu</a></li>
         </ul>
     </div>
 

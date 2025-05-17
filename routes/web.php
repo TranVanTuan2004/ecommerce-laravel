@@ -61,7 +61,10 @@ Route::group([
     'prefix' => '/dashboard/category',
 ], function () {});
 
-Route::middleware('auth')->group(function () {
+Route::group([
+    'prefix' => '/order',
+    // 'middleware' => 'is_admin'
+], function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
