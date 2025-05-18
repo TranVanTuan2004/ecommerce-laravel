@@ -15,4 +15,8 @@ class Coupons extends Model
         'min_order_value',
         'expiration_date'
     ];
+
+    protected $casts = [
+        'discount' => 'integer',
+    ];
 }

@@ -36,7 +36,7 @@ class CheckoutController extends Controller
 
     public function getAllVouchers()
     {
-        $vouchers = Coupons::all();
+        $vouchers = Coupons::latest()->get();
         return view('client.pages.checkout.voucherList', compact('vouchers'));
     }
 
