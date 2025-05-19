@@ -59,8 +59,7 @@ Route::group([
 
 Route::group([
     'prefix' => '/orders',
-], function () {
-});
+], function () {});
 
 
 
@@ -84,15 +83,14 @@ Route::group([
 });
 
 
-], function () { });
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () { });
+], function () {});
 
 
 
@@ -181,20 +179,19 @@ Route::group([
         Route::get('/{id}/edit', [VoucherController::class, 'edit'])->name('voucher.edit');
         Route::put('/{id}', [VoucherController::class, 'update'])->name('voucher.update');
         Route::delete('/{id}', [VoucherController::class, 'destroy'])->name('voucher.destroy');
-
     });
 
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () { });
+    ], function () {});
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () { });
+    ], function () {});
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () { });
+    ], function () {});
 
     //Route danh cho top10
     Route::group(['prefix' => '/dashboard/top10'], function () {
