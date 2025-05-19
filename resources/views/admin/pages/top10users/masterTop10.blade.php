@@ -13,7 +13,6 @@
 
 <body>
     <!-- Header -->
-    @include('client.components.header')
     <!-- Close Header -->
 
     <!-- Content -->
@@ -22,7 +21,6 @@
 
 
     <!-- Start Footer -->
-    @include('client.components.footer')
     <!-- End Footer -->
 
     <!-- Start Script -->

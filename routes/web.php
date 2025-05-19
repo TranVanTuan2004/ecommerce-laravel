@@ -9,6 +9,7 @@ use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Top10Users\Top10UsersController;
 use App\Http\Controllers\Voucher\VoucherController;
 
 use Illuminate\Support\Facades\Route;
@@ -173,4 +174,9 @@ Route::group([
     Route::group([
         'prefix' => '/dashboard/category',
     ], function () { });
+
+    //Route danh cho top10
+    Route::group(['prefix' => '/dashboard/top10'], function () {
+        Route::get('/show', [Top10UsersController::class, 'showTopUsers'])->name('topusers.show');
+    });
 });

@@ -2,7 +2,8 @@
 
 @section('content')
     <form method="post" action={{ route('users.update', $user->id) }} enctype="multipart/form-data"
-        style="max-width: 800px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); margin-top: 80px; padding: 40px;" class="container">
+        style="max-width: 800px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); margin-top: 80px; padding: 40px;"
+        class="container">
         @csrf
         @method('PUT')
 
@@ -36,7 +37,10 @@
             <label for="Address" class="form-label">Address</label>
             <input type="text" name="address" class="form-control" value="{{ $user->address }}" id="description">
         </div>
-
+        <div class="mb-3" style="margin-top: 12px">
+            <label for="avatar" class="form-label">Choose file:</label>
+            <input type="file" name="avatar" class="form-control" id="avatar">
+        </div>
 
 
 
