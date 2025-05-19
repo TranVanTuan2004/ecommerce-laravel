@@ -237,16 +237,21 @@
             <!-- Product Images -->
             <div class="product-gallery">
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/400x450" alt="Product Front">
+                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+
                 </div>
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/400x450" alt="Product Detail">
+                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+
+
                 </div>
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/400x450" alt="Product Back">
+                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+
                 </div>
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/400x450" alt="Product Full">
+                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+
                 </div>
             </div>
 

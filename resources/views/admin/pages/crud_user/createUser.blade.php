@@ -36,9 +36,10 @@
             <label for="address" class="form-label">Address</label>
             <input type="text" name="address" class="form-control" id="address">
         </div>
-
-
-
+        <div class="mb-3" style="margin-top: 12px">
+            <label for="avatar" class="form-label">Choose file:</label>
+            <input type="file" name="avatar" class="form-control" id="avatar">
+        </div>
         <button type="submit" class="btn btn-primary" style="display: block; margin: 20px auto 0 auto;">Thêm</button>
     </form>
 @endsection
