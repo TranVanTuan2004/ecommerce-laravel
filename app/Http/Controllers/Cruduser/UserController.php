@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
+use Illuminate\Support\Facades\Auth;
 use function Laravel\Prompts\error;
+use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
@@ -54,9 +57,7 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('success', 'Thanh Cong');
         } catch (Throwable $th) {
             return back()->with('success', false)->with('error', $th->getMessage());
-
         }
-
     }
     public function edit(Request $request)
     {
@@ -82,4 +83,6 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('users.index')->with('success', 'Thanh Cong');
     }
+
+    
 }
