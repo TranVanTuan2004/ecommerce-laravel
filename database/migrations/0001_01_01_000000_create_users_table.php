@@ -18,9 +18,13 @@ return new class extends Migration {
             $table->string('phone', 20)->nullable();
             $table->string('avatar', 255)->nullable();
             $table->string('address', 255)->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+             $table->string('email_verification_token')->nullable();
             $table->string('role')->default("user");
             $table->rememberToken();
             $table->timestamps();
+           
+
         });
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

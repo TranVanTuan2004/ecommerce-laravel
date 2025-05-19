@@ -37,7 +37,10 @@
             <label for="Address" class="form-label">Address</label>
             <input type="text" name="address" class="form-control" value="{{ $user->address }}" id="description">
         </div>
-
+        <div class="mb-3" style="margin-top: 12px">
+            <label for="avatar" class="form-label">Choose file:</label>
+            <input type="file" name="avatar" class="form-control" id="avatar">
+        </div>
 
 
 

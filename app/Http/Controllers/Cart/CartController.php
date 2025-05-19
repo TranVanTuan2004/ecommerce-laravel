@@ -13,6 +13,7 @@ class CartController extends Controller
 {
     public function index()
     {
+        session()->forget('order_submitted');
         if (!Auth::check())
             return redirect()->route('login');
         $cart = Cart::with('items.product')->where('user_id', Auth::id())->first();
@@ -45,5 +46,61 @@ class CartController extends Controller
             ]);
         }
         return redirect()->back()->with('success', 'Đã thêm vào giỏ hàng');
+    }
+
+    public function increase($productId)
+    {
+        try {
+            $userId = Auth::user()->id;
+            $cartItem = CartItem::where('product_id', $productId)
+                ->where('cart_id', $userId)->firstOrFail();
+            if (!$cartItem) {
+                return redirect()->back();
+            }
+            $cartItem->increment('quantity');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Lỗi khi tăng số lượng');
+        }
+    }
+
+    public function decrease($productId)
+    {
+        try {
+            $userId = Auth::user()->id;
+            $cartItem = CartItem::where('product_id', $productId)
+                ->where('cart_id', $userId)->firstOrFail();
+            if ($cartItem && $cartItem->quantity > 1) {
+                $cartItem->decrement('quantity');
+                return redirect()->back();
+            } else {
+                $cartItem->delete();
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Lỗi khi giảm số lượng ' . $e->getMessage());
+        }
+    }
+
+    public function destroy($productId)
+    {
+        try {
+            $userId = Auth::id();
+            CartItem::where('cart_id', $userId)->where('product_id', $productId)->delete();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Lỗi khi xóa sản phẩm ' . $e->getMessage());
+        }
+    }
+
+    public function clearAllCart()
+    {
+        try {
+            $userId = Auth::id();
+            CartItem::where('cart_id', $userId)->delete();
+            return redirect()->back()->with('success', 'Đã xoá toàn bộ giỏ hàng!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Lỗi khi xóa tất cả giỏ hàng ' . $e->getMessage());
+        }
     }
 }
