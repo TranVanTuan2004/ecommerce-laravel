@@ -7,9 +7,12 @@ use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Top10Users\Top10UsersController;
 use App\Http\Controllers\Voucher\VoucherController;
+
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -63,6 +66,24 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
+], function () {});
+
+Route::group([
+    'prefix' => '/dashboard/product',
+], function () {});
+
+Route::group([
+    'prefix' => '/dashboard/category',
+], function () {});
+
+Route::group([
+    'prefix' => '/order',
+], function () {
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+});
+
+
 ], function () { });
 
 Route::group([
@@ -72,6 +93,7 @@ Route::group([
 Route::group([
     'prefix' => '/dashboard/category',
 ], function () { });
+
 
 
 
@@ -172,4 +194,9 @@ Route::group([
     Route::group([
         'prefix' => '/dashboard/category',
     ], function () { });
+
+    //Route danh cho top10
+    Route::group(['prefix' => '/dashboard/top10'], function () {
+        Route::get('/show', [Top10UsersController::class, 'showTopUsers'])->name('topusers.show');
+    });
 });
