@@ -159,7 +159,6 @@ Route::group([
         Route::get('/{id}/edit', [VoucherController::class, 'edit'])->name('voucher.edit');
         Route::put('/{id}', [VoucherController::class, 'update'])->name('voucher.update');
         Route::delete('/{id}', [VoucherController::class, 'destroy'])->name('voucher.destroy');
-
     });
 
     Route::group([
