@@ -1,3 +1,4 @@
+{{-- @extends('client.master')
 <!DOCTYPE html>
 <html>
 
@@ -18,4 +19,4 @@
     @include('client.components.js')
 </body>
 
-</html>
+</html> --}}
