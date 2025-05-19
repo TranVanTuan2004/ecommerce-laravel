@@ -24,7 +24,7 @@
 
             <div class="ibox-content">
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered align-middle text-center">
+                    <table class="table table-hover table-bordered align-middle text-center ">
                         <thead class="thead-light">
                             <tr>
                                 <th><input type="checkbox" id="checkAll"></th>
