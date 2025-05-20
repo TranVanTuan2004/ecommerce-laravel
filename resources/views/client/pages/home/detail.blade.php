@@ -281,20 +281,31 @@
                         <input type="text" value="1">
                         <button>+</button>
                     </div>
-                    <button class="add-to-cart-btn">
+                    <button class="add-to-cart-btn" style="border-radius: 6px">
                         🛒 ADD TO CART
                     </button>
                 </div>
 
                 <div class="or-divider">OR</div>
 
-                <button class="buy-now-btn">
-                    ⚡ BUY NOW
-                </button>
+                <div style="width: 100% !important; margin-bottom: 12px">
+                    <button class="add-to-cart-btn" style="display: block !important; width: 100%; border-radius: 6px">
+                        🛒 BUY NOW
+                    </button>
+                </div>
 
                 <div class="action-buttons">
-                    <button class="action-btn">❤</button>
-                    <button class="action-btn">🔄</button>
+                    <form action={{ route('favorite.toggle') }} method="POST">
+                        @csrf
+                        <input type="text" hidden name="product_id" value={{ $product->id }}>
+                        <button type="submit" class="action-btn">
+                            @if (Auth::user()->wishlist->contains($product->id))
+                                <i class="fas fa-heart text-danger"></i>
+                            @else
+                                <i class="fas fa-heart text-secondary"></i>
+                            @endif
+                        </button>
+                    </form>
                 </div>
 
                 <!-- Payment Info -->
