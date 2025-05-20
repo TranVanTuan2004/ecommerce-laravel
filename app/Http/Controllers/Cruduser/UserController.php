@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Cruduser;
 
-use Throwable;
 use App\Models\User;
 use Illuminate\Http\Request;
-use function Laravel\Prompts\error;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Throwable;

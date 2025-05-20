@@ -51,7 +51,7 @@ class CartController extends Controller
     public function increase($productId)
     {
         try {
-            $userId = Auth::user()->id;
+            $userId = Auth::id();
             $cartItem = CartItem::where('product_id', $productId)
                 ->where('cart_id', $userId)->firstOrFail();
             if (!$cartItem) {
@@ -67,7 +67,7 @@ class CartController extends Controller
     public function decrease($productId)
     {
         try {
-            $userId = Auth::user()->id;
+            $userId = Auth::id();
             $cartItem = CartItem::where('product_id', $productId)
                 ->where('cart_id', $userId)->firstOrFail();
             if ($cartItem && $cartItem->quantity > 1) {
