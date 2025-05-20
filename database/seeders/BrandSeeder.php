@@ -13,7 +13,31 @@ class BrandSeeder extends Seeder
      */
     public function run(): void
     {
-        Brand::factory(20)->create();
-
+        // Brand::factory(20)->create();
+        Brand::truncate();
+        Brand::factory()->create([
+            'name' => 'Chanel',
+            'description' => "Nothing to show desctiption"
+        ]);
+        Brand::factory()->create([
+            'name' => 'Gucci',
+            'description' => "Nothing to show desctiption"
+        ]);
+        Brand::factory()->create([
+            'name' => 'Hermes',
+            'description' => "Nothing to show desctiption"
+        ]);
+        Brand::factory()->create([
+            'name' => 'Dior',
+            'description' => "Nothing to show desctiption"
+        ]);
+        Brand::factory()->create([
+            'name' => 'Adidas',
+            'description' => "Nothing to show desctiption"
+        ]);
+        Brand::factory()->create([
+            'name' => 'Nike',
+            'description' => "Nothing to show desctiption"
+        ]);
     }
 }

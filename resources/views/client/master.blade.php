@@ -6,14 +6,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @include('client.components.css')
+    @push('styles')
+
+    @endpush
 </head>
 
 <body>
-    <!-- Start Top Nav -->
-    @include('client.components.topnav')
-    <!-- Close Top Nav -->
-
-
     <!-- Header -->
     @include('client.components.header')
     <!-- Close Header -->
@@ -29,6 +27,7 @@
 
     <!-- Start Script -->
     @include('client.components.js')
+    @yield('scripts')
     <!-- End Script -->
 </body>
 

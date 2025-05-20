@@ -22,7 +22,7 @@ class Product extends Model
     // 1 sản phẩm thuộc về 1 brand
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
 
     // 1 sản phẩm thuộc về 1 danh mục
@@ -42,6 +42,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
     // 1 sản phẩm nằm trong nhiều đơn hàng
     public function orders()
     {
@@ -54,12 +59,5 @@ class Product extends Model
     public function wishedByUsers()
     {
         return $this->belongsToMany(User::class, 'wishlists')->withTimestamps();
-    }
-
-    public function carts()
-    {
-        return $this->belongsToMany(Cart::class, 'cart_items')
-            ->withPivot('quantity')
-            ->withTimestamps();
     }
 }

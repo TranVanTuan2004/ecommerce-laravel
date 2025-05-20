@@ -1,38 +1,71 @@
 @extends('admin.master')
 
 @section('content')
-    <form method="post" action={{ route('brand.update', $brand->id) }} enctype="multipart/form-data"
-        style="max-width: 800px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); margin-top: 80px; padding: 40px;"
-        class="container">
-        @csrf
-        @method('PUT')
+    <style>
+        .voucher-card {
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+            border-radius: 12px;
+        }
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+        .center-wrapper {
+            height: auto;
+            padding: 40px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+    <div class="container center-wrapper">
+        <div class="card voucher-card w-100" style="min-width: 900px; padding: 30px;">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0" style="padding: 15px"><i class="fa fa-pencil"></i> Sửa Brand</h4>
             </div>
-        @endif
-        <h1 class="text-center text-primary">Sửa Brand</h1>
-        <div class="mb-3" style="margin-top: 12px">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" name="name" class="form-control" value="{{ $brand->name }}" id="name">
-        </div>
-        <div class="mb-3" style="margin-top: 12px">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" name="description" class="form-control" value="{{ $brand->description }}" id="description">
-        </div>
 
-        <div class="mb-3" style="margin-top: 12px">
-            <label for="logo" class="form-label">Logo</label>
-            <input type="file" name="logo" class="form-control" id="logo">
-            <img src="{{ asset('storage/' . $brand->logo) }}"
-                style="margin-top: 12px; width:100px; height:100px; object-fit: cover; border-radius: 6px" alt="Not found">
-        </div>
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-        <button type="submit" class="btn btn-primary" style="display: block; margin: 20px auto 0 auto;">Cập nhật</button>
-    </form>
+                <form method="POST" action="{{ route('brand.update', $brand->id) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="form-group mb-3">
+                        <label for="name">Tên Brand</label>
+                        <input type="text" name="name" id="name" class="form-control"
+                            value="{{ old('name', $brand->name) }}" placeholder="Nhập tên brand...">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="description">Mô tả</label>
+                        <input type="text" name="description" id="description" class="form-control"
+                            value="{{ old('description', $brand->description) }}" placeholder="Nhập mô tả...">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="logo">Logo</label>
+                        <input type="file" name="logo" id="logo" class="form-control">
+                        @if ($brand->logo)
+                            <div class="mt-3">
+                                <img src="{{ asset('storage/' . $brand->logo) }}" alt="Logo"
+                                    style="width: 100px; height: 100px; object-fit: cover; border-radius: 6px;">
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <a href="{{ route('brand.index') }}" class="btn btn-secondary me-2">Quay lại</a>
+                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
