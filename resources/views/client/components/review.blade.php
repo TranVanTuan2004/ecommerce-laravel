@@ -37,7 +37,7 @@
             <div class="comment-header">
                 <div class="avatar">
 
-                    <img src="{{ Auth::check() ? asset($review->user->avatar) : asset('storage/avatars/clone.png') }}"
+                    <img src="{{ Auth::check() ? asset($user->avatar) : asset('storage/avatars/clone.png') }}"
                         alt="User Avatar">
 
                 </div>
