@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Product\ProductController;
 
 // Client
 Route::group([
@@ -182,8 +183,13 @@ Route::group([
     });
 
     Route::group([
-        'prefix' => '/dashboard/product',
-    ], function () { });
+    'prefix' => '/dashboard/product',
+], function () {
+    Route::get('/', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+    Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+    Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+});
 
     Route::group([
         'prefix' => '/dashboard/category',
