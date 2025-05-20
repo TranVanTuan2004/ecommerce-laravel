@@ -37,9 +37,9 @@ class AuthController extends Controller
 
 
         if (Auth::attempt($credentials)) {
-
             // Phân quyền sau login
             $user = Auth::user();
+
 
             //check xác thực
             if (is_null($user->email_verified_at)) {
@@ -47,7 +47,6 @@ class AuthController extends Controller
                 toastr()->error('Tài khoản chưa được xác nhận email. Vui lòng kiểm tra email để xác nhận.');
                 return back()->withErrors(['message' => "Tài khoản chưa được xác nhận email"]);
             }
-
             $request->session()->regenerate();
 
             toastr()->success('Hello ' . $user->name);
@@ -68,6 +67,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+        toastr()->success('Đăng xuất thành công');
         return redirect()->route('homePage');
     }
 
@@ -79,6 +79,10 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        $existing = User::where('email', $request->email)->first();
+        if ($existing && !$existing->email_verified_at) {
+            $existing->delete(); // Xóa bản ghi chưa xác minh
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
@@ -95,8 +99,6 @@ class AuthController extends Controller
             'password_confirmation.required' => 'Vui lòng nhập lại mật khẩu.',
             'password.confirmed' => 'Mật khẩu không trùng khớp. Hãy kiểm tra lại.',
         ]);
-
-
 
         if ($validator->fails()) {
             return redirect()->route('register')->withErrors($validator)->withInput();
@@ -127,7 +129,7 @@ class AuthController extends Controller
         }
 
         $tokenAge = now()->diffInSeconds($user->email_verification_token_created_at);
-        if ($tokenAge > 60) {
+        if ($tokenAge > 300) {
             return redirect()->route('register')->with('error', 'Token không hợp lệ hoặc đã hết hạn! Vui lòng đăng ký lại!');
         }
 
