@@ -37,9 +37,19 @@ class AuthController extends Controller
 
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+
             // Phân quyền sau login
             $user = Auth::user();
+
+            //check xác thực
+            if (is_null($user->email_verified_at)) {
+                Auth::logout();
+                toastr()->error('Tài khoản chưa được xác nhận email. Vui lòng kiểm tra email để xác nhận.');
+                return back()->withErrors(['message' => "Tài khoản chưa được xác nhận email"]);
+            }
+
+            $request->session()->regenerate();
+
             toastr()->success('Hello ' . $user->name);
             if ($user->role === 'admin') {
                 return redirect()->intended('/dashboard');
@@ -51,6 +61,7 @@ class AuthController extends Controller
             return back()->withErrors(['message' => "Thông tin đăng nhập không chính xác"]);
         }
     }
+
 
     public function logout(Request $request)
     {
