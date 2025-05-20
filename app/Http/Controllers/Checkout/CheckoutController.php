@@ -23,11 +23,21 @@ class CheckoutController extends Controller
     {
         $selectedProducts = $request->input('products');
         $user = Auth::user();
+
         if ($selectedProducts) {
+            $cart = Cart::where('user_id', $user->id)->first();
+
+            if (!$cart) {
+                toastr()->info('Không tìm thấy giỏ hàng', [], 'Thông báo');
+                return redirect()->back();
+            }
+
             $products = Product::join('cart_items', 'products.id', '=', 'cart_items.product_id')
-                ->whereIn('products.id', $selectedProducts)->where('cart_items.cart_id', Auth::id())
+                ->whereIn('products.id', $selectedProducts)
+                ->where('cart_items.cart_id', $cart->id)
                 ->select('products.*', 'cart_items.quantity')
                 ->get();
+
             return view('client.pages.checkout.checkout', compact(['products', 'user']));
         } else {
             toastr()->info('Bạn vẫn chưa chọn sản phẩm nào để mua', [], 'Thông báo');
@@ -57,24 +67,36 @@ class CheckoutController extends Controller
         }
 
         $user = Auth::user();
+        // lấy ra được cái cart trước
+        $cart = Cart::where('user_id', $user->id)->first();
+
+        if (!$cart) {
+            toastr()->error('Không tìm thấy giỏ hàng');
+            return redirect()->back();
+        }
 
         DB::beginTransaction();
         try {
             $cartItems = CartItem::with('product')
-                ->where('cart_id', $user->id)
+                ->where('cart_id', $cart->id)
                 ->whereIn('product_id', $productIds)
                 ->get();
 
-            $totalPrice = 0;
-            foreach ($cartItems as $item) {
-                $totalPrice += $item->product->price * $item->quantity;
+            if ($cartItems->isEmpty()) {
+                toastr()->info('Không tìm thấy sản phẩm trong giỏ hàng');
+                return redirect()->back();
             }
+
+            $totalPrice = $cartItems->sum(function ($item) {
+                return $item->product->price * $item->quantity;
+            });
 
             $discount = 0;
             $percent = 0;
-            $coupons = Coupons::where('code', $voucher_code)->first();
-            if ($coupons) {
-                $percent = $coupons->discount;
+
+            $coupon = \App\Models\Coupons::where('code', $voucher_code)->first();
+            if ($coupon) {
+                $percent = $coupon->discount;
                 $discount = $totalPrice * ($percent / 100);
             }
 
@@ -84,37 +106,33 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'user_id' => $user->id,
                 'price' => $finalPrice,
-                'discount' => $discount, // thêm cột này trong DB nếu chưa có
+                'discount' => $discount,
                 'payment_method' => 'cod',
                 'status' => 'pending'
             ]);
 
-            // Lưu từng sản phẩm vào order_products
+            // Thêm từng sản phẩm vào đơn hàng
             foreach ($cartItems as $item) {
                 OrderProduct::create([
                     'order_id' => $order->id,
                     'product_id' => $item->product->id,
                     'quantity' => $item->quantity,
-                    'price' => $item->product->price, // đơn giá gốc tại thời điểm mua
+                    'price' => $item->product->price,
                 ]);
             }
 
-            // Xóa các item đã mua khỏi giỏ hàng
-            $cart = Cart::with('items')->where('user_id', $user->id)->first();
-            if ($cart) {
-                $cart->items()->whereIn('product_id', $productIds)->delete();
-            }
+            // Xóa các item khỏi giỏ hàng
+            $cart->items()->whereIn('product_id', $productIds)->delete();
 
             DB::commit();
-            // Xóa session và redirect
+
             session()->forget('order_submitted');
             session(['order_submitted' => true]);
-            return view('client.pages.checkout.success', compact('order'));
 
+            return view('client.pages.checkout.success', compact('order'));
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('homePage')->with('error', 'Lỗi khi đặt hàng: ' . $e->getMessage());
         }
     }
-
 }
