@@ -60,6 +60,7 @@ Route::group([
 
 Route::group([
     'prefix' => '/favorite',
+    'middleware' => 'is_login'
 ], function () {
     Route::get('/', [FavoriteController::class, 'index'])->name('favorite.index');
     Route::post('/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');

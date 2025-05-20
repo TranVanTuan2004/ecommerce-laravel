@@ -82,7 +82,7 @@
                         <h2>YOUR WISHLIST IS EMPTY</h2>
                         <p>We invite you to get acquainted with an assortment of our shop. Surely you can find something for
                             yourself!</p>
-                        <a href="{{ route('homePage') }}" class="btn btn-dark-custom" style="font-size: 16px !important">Return
+                        <a href="{{ route('homePage') }}" class="btn btn-dark-custom" style="font-size: 14px !important">Return
                             to
                             Shop</a>
                     </div>
@@ -116,12 +116,8 @@
                                 <p class="text-danger font-weight-bold mb-3">{{ number_format($product->price) }}đ</p>
 
                                 <div class="d-flex justify-content-center gap-2">
-                                    <form action="{{ route('cart.addToCart') }}" method="POST">
-                                        @csrf
-                                        <input type="text" hidden name="product_id" value="{{ $product->id }}">
-                                        <button type="submit" class="btn btn-sm btn-outline-dark w-100">ADD TO
-                                            CART</button>
-                                    </form>
+                                    <a href="{{ route('cart.addToCart', $product->id) }}"
+                                        class="btn btn-success btn-sm rounded-pill px-3">Add to cart</a>
                                 </div>
                             </div>
                         </div>

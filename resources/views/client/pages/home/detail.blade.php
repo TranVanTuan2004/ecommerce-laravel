@@ -325,8 +325,12 @@
                         @csrf
                         <input type="text" hidden name="product_id" value={{ $product->id }}>
                         <button type="submit" class="action-btn">
-                            @if (Auth::user()->wishlist->contains($product->id))
-                                <i class="fas fa-heart text-danger"></i>
+                            @if (Auth::check())
+                                @if (Auth::user()->wishlist->contains($product->id))
+                                    <i class="fas fa-heart text-danger"></i>
+                                @else
+                                    <i class="fas fa-heart text-secondary"></i>
+                                @endif
                             @else
                                 <i class="fas fa-heart text-secondary"></i>
                             @endif

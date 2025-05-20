@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Favorite;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,10 +14,6 @@ class FavoriteController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if (!$user) {
-            toastr()->info('Vui lòng đăng nhập');
-            return redirect()->route('login');
-        }
         $favorites = $user->wishlist()->with('category')->paginate(8);
         return view('client.pages.favorite.index', compact('favorites'));
     }
