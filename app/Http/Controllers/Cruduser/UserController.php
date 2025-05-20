@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 use function Laravel\Prompts\error;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Throwable;
 use Illuminate\Support\Facades\Auth;
-use function Laravel\Prompts\error;
 use Illuminate\Support\Facades\Storage;
 
 
