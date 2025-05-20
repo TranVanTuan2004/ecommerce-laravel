@@ -1,11 +1,11 @@
 <div class="comments-container">
-    <h1>Comments</h1>
     @foreach ($reviews as $review)
 
         <div class="comment-box">
             <div class="comment-header">
                 <div class="avatar">
-                    <img src="" alt="User Avatar">
+                    <img src="{{ asset($review->user->avatar ?? 'storage/avatars/clone.png') }}" alt="User Avatar">
+
                 </div>
                 <div class="user-info">
                     <span class="username">{{ $review->user->name }}</span>
@@ -36,7 +36,10 @@
         <div class="comment-box">
             <div class="comment-header">
                 <div class="avatar">
-                    <img src="" alt="User Avatar">
+
+                    <img src="{{ Auth::check() ? asset($review->user->avatar) : asset('storage/avatars/clone.png') }}"
+                        alt="User Avatar">
+
                 </div>
                 <div class="user-info">
                     <span class="username">{{ Auth::check() ? Auth::user()->name : 'unknown' }}</span>

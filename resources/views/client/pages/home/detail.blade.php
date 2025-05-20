@@ -213,6 +213,32 @@
         margin-right: 5px;
     }
 
+    .payment-logos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .payment-logo {
+        width: 100px;
+        height: 80px;
+        object-fit: contain;
+        padding: 6px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: white;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .payment-logo:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+
     /* Responsive */
     @media (max-width: 768px) {
 
@@ -300,14 +326,14 @@
                 <!-- Payment Info -->
                 <div class="payment-info">
                     <p class="payment-info-title">GUARANTEED SAFE CHECKOUT</p>
-                    <div class="payment-methods">
-                        <img src="/api/placeholder/50/30" alt="Visa">
-                        <img src="/api/placeholder/50/30" alt="MasterCard">
-                        <img src="/api/placeholder/50/30" alt="PayPal">
-                        <img src="/api/placeholder/50/30" alt="American Express">
-                        <img src="/api/placeholder/50/30" alt="Maestro">
-                        <img src="/api/placeholder/50/30" alt="Bitcoin">
+                    <div class="payment-logos">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/vnpay.png') }}" alt="VNPAY">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/momo.png') }}" alt="MOMO">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/zalo.png') }}" alt="ZaloPay">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/paypal.png') }}" alt="PayPal">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/bank.png') }}" alt="Stripe">
                     </div>
+
                     <p class="payment-security">Your Payment is 100% Secure</p>
                 </div>
 
