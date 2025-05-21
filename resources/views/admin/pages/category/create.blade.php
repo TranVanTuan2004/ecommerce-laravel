@@ -3,7 +3,7 @@
 @section('content')
     <style>
         .category-card {
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.3); /* Red shadow */
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.3)git ; /* Red shadow */
             border-radius: 12px;
         }
 
