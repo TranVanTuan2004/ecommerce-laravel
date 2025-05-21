@@ -23,14 +23,14 @@
         }
 
 
-     .left-panel {
+     /* .left-panel {
             background-image: url('{{ asset('client/img/bg_login.png') }}');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
             width: 70%;
             height: 100%;
-        } 
+        }  */
 
         .logo {
             display: flex;

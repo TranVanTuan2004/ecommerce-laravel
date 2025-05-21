@@ -20,7 +20,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 1,
-                'slide_id' => 1,
                 'image' => 'storage/product/chanel/aochanel.jpg',
             ],
             [
@@ -29,7 +28,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 2,
                 'brand_id' => 1,
-                'slide_id' => 1,
                 'image' => 'storage/product/chanel/quan.jpg',
             ],
             [
@@ -38,7 +36,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 1,
-                'slide_id' => 1,
                 'image' => 'storage/product/chanel/shoe.jpg',
             ],
             [
@@ -47,7 +44,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 1,
-                'slide_id' => 1,
                 'image' => 'storage/product/chanel/aokhoac.jpg',
             ],
             [
@@ -56,7 +52,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 4,
                 'brand_id' => 1,
-                'slide_id' => 1,
                 'image' => 'storage/product/chanel/bag.jpg',
             ],
             [
@@ -65,7 +60,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 1,
-                'slide_id' => 1,
                 'image' => 'storage/product/chanel/shoe2.jpg',
             ],
             [
@@ -74,7 +68,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 2,
-                'slide_id' => 1,
                 'image' => 'storage/product/gucci/aogucci.jpg',
             ],
             [
@@ -83,7 +76,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 2,
                 'brand_id' => 2,
-                'slide_id' => 1,
                 'image' => 'storage/product/gucci/quan.jpg',
             ],
             [
@@ -92,7 +84,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 2,
-                'slide_id' => 1,
                 'image' => 'storage/product/gucci/shoe1.jpg',
             ],
             [
@@ -101,7 +92,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 4,
                 'brand_id' => 2,
-                'slide_id' => 1,
                 'image' => 'storage/product/gucci/bag1.jpg',
             ],
             [
@@ -110,7 +100,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 4,
                 'brand_id' => 2,
-                'slide_id' => 1,
                 'image' => 'storage/product/gucci/bag2.jpg',
             ],
             [
@@ -119,7 +108,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 2,
-                'slide_id' => 1,
                 'image' => 'storage/product/gucci/shoe2.jpg',
             ],
             [
@@ -128,7 +116,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 3,
-                'slide_id' => 1,
                 'image' => 'storage/product/hermes/ao.jpg',
             ],
             [
@@ -137,7 +124,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 2,
                 'brand_id' => 3,
-                'slide_id' => 1,
                 'image' => 'storage/product/hermes/quan.jgp',
             ],
             [
@@ -146,7 +132,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 3,
-                'slide_id' => 1,
                 'image' => 'storage/product/hermes/shoe.jpg',
             ],
             [
@@ -155,7 +140,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 4,
                 'brand_id' => 3,
-                'slide_id' => 1,
                 'image' => 'storage/product/hermes/bag.jpg',
             ],
             [
@@ -164,7 +148,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 3,
-                'slide_id' => 1,
                 'image' => 'storage/product/hermes/ao2.jpg',
             ],
             [
@@ -173,7 +156,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 2,
                 'brand_id' => 3,
-                'slide_id' => 1,
                 'image' => 'storage/product/hermes/quan2.jpg',
             ],
             [
@@ -182,7 +164,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 4,
-                'slide_id' => 1,
                 'image' => 'storage/product/dior/ao.jpg',
             ],
             [
@@ -191,7 +172,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 2,
                 'brand_id' => 4,
-                'slide_id' => 1,
                 'image' => 'storage/product/dior/quan.jpg',
             ],
             [
@@ -200,7 +180,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 4,
-                'slide_id' => 1,
                 'image' => 'storage/product/dior/shoe.jpg',
             ],
             [
@@ -209,7 +188,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 4,
                 'brand_id' => 4,
-                'slide_id' => 1,
                 'image' => 'storage/product/dior/bag.jpg',
             ],
             [
@@ -218,7 +196,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 4,
                 'brand_id' => 4,
-                'slide_id' => 1,
                 'image' => 'storage/product/dior/bag2.jpg',
             ],
             [
@@ -227,7 +204,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 4,
-                'slide_id' => 1,
                 'image' => 'storage/product/dior/ao2.jpg',
             ],
             [
@@ -236,7 +212,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 5,
-                'slide_id' => 1,
                 'image' => 'storage/product/adidas/ao.jpg',
             ],
             [
@@ -245,7 +220,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 2,
                 'brand_id' => 5,
-                'slide_id' => 1,
                 'image' => 'storage/product/adidas/quan.jpg',
             ],
             [
@@ -254,7 +228,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 5,
-                'slide_id' => 1,
                 'image' => 'storage/product/adidas/shoe.jpg',
             ],
             [
@@ -263,7 +236,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 4,
                 'brand_id' => 5,
-                'slide_id' => 1,
                 'image' => 'storage/product/adidas/bag.jpg',
             ],
             [
@@ -272,7 +244,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 2,
                 'brand_id' => 5,
-                'slide_id' => 1,
                 'image' => 'storage/product/adidas/quan2.jpg',
             ],
             [
@@ -281,7 +252,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 5,
-                'slide_id' => 1,
                 'image' => 'storage/product/adidas/shoe2.jpg',
             ],
             [
@@ -290,7 +260,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 6,
-                'slide_id' => 1,
                 'image' => 'storage/product/nike/ao.jpg',
             ],
             [
@@ -299,7 +268,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 2,
                 'brand_id' => 6,
-                'slide_id' => 1,
                 'image' => 'storage/product/nike/quan.jpg',
             ],
             [
@@ -308,7 +276,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 6,
-                'slide_id' => 1,
                 'image' => 'storage/product/nike/shoe.jpg',
             ],
             [
@@ -317,7 +284,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 4,
                 'brand_id' => 6,
-                'slide_id' => 1,
                 'image' => 'storage/product/nike/bag.jpg',
             ],
             [
@@ -326,7 +292,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 6,
-                'slide_id' => 1,
                 'image' => 'storage/product/nike/shoe2.jpg',
             ],
             [
@@ -335,7 +300,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 6,
-                'slide_id' => 1,
                 'image' => 'storage/product/nike/ao2.jpg',
             ],
             [
@@ -344,7 +308,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 1,
                 'brand_id' => 7,
-                'slide_id' => 1,
                 'image' => 'storage/product/zara/zara.jgp',
             ],
             [
@@ -353,7 +316,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 2,
                 'brand_id' => 7,
-                'slide_id' => 1,
                 'image' => 'storage/product/zara/quan.jpg',
             ],
             [
@@ -362,7 +324,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 3,
                 'brand_id' => 7,
-                'slide_id' => 7,
                 'image' => 'storage/product/zara/shoe.jpg',
             ],
             [
@@ -371,7 +332,6 @@ class ProductSeeder extends Seeder
                 'price' => 299000,
                 'category_id' => 4,
                 'brand_id' => 7,
-                'slide_id' => 1,
                 'image' => 'storage/product/zara/bag.jpg',
             ],
 
