@@ -66,15 +66,15 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/order',
@@ -84,7 +84,10 @@ Route::group([
 });
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/main
 Route::group([
     'prefix' => '/dashboard/product',
 ], function () {});
