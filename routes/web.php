@@ -6,6 +6,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
+use App\Http\Controllers\Favorite\FavoriteController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ReviewController;
@@ -58,8 +59,12 @@ Route::group([
 
 
 Route::group([
-    'prefix' => '/orders',
-], function () {});
+    'prefix' => '/favorite',
+    'middleware' => 'is_login'
+], function () {
+    Route::get('/', [FavoriteController::class, 'index'])->name('favorite.index');
+    Route::post('/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
+});
 
 
 

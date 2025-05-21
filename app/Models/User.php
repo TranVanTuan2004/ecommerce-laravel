@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -25,7 +26,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'avatar',
         'address',
         'role',
-        'email_verification_token'
+        'email_verified_at',
+        'email_verification_token',
+        'email_verification_token_created_at'
     ];
 
     /**
@@ -76,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     // Quan hệ với bảng Wishlists
-    public function wishlist()
+    public function wishlist(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'wishlists')->withTimestamps();
     }
@@ -87,5 +90,5 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Payment::class);
     }
 
-    
+
 }

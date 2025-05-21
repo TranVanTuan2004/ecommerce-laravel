@@ -12,6 +12,7 @@ use App\Models\Product;
 use Flasher\Toastr\Laravel\Facade\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Expr\Throw_;
 
 use function Laravel\Prompts\error;
@@ -22,11 +23,21 @@ class CheckoutController extends Controller
     {
         $selectedProducts = $request->input('products');
         $user = Auth::user();
+
         if ($selectedProducts) {
+            $cart = Cart::where('user_id', $user->id)->first();
+
+            if (!$cart) {
+                toastr()->info('Không tìm thấy giỏ hàng', [], 'Thông báo');
+                return redirect()->back();
+            }
+
             $products = Product::join('cart_items', 'products.id', '=', 'cart_items.product_id')
-                ->whereIn('products.id', $selectedProducts)->where('cart_items.cart_id', Auth::id())
+                ->whereIn('products.id', $selectedProducts)
+                ->where('cart_items.cart_id', $cart->id)
                 ->select('products.*', 'cart_items.quantity')
                 ->get();
+
             return view('client.pages.checkout.checkout', compact(['products', 'user']));
         } else {
             toastr()->info('Bạn vẫn chưa chọn sản phẩm nào để mua', [], 'Thông báo');
@@ -46,66 +57,82 @@ class CheckoutController extends Controller
             toastr()->info('Phiên đã hết hạn');
             return redirect()->route('homePage');
         }
+
+        $voucher_code = $request->input('voucher_code');
+        $productIds = $request->input('product_ids');
+
+        if (empty($productIds)) {
+            toastr()->info('Phiên đã hết hạn', [], 'Thông báo');
+            return redirect()->back();
+        }
+
+        $user = Auth::user();
+        // lấy ra được cái cart trước
+        $cart = Cart::where('user_id', $user->id)->first();
+
+        if (!$cart) {
+            toastr()->error('Không tìm thấy giỏ hàng');
+            return redirect()->back();
+        }
+
+        DB::beginTransaction();
         try {
-            $vocher_code = $request->input('voucher_code');
-            $productIds = $request->input('product_ids');
-            if (!empty($productIds)) {
-                $user = Auth::user();
+            $cartItems = CartItem::with('product')
+                ->where('cart_id', $cart->id)
+                ->whereIn('product_id', $productIds)
+                ->get();
 
-                $totalPrice = 0;
-                $discount = 0;
-                $newPrice = 0;
-
-                $cartItems = CartItem::with('product')
-                    ->where('cart_id', $user->id)
-                    ->whereIn('product_id', $productIds)
-                    ->get();
-
-                foreach ($cartItems as $item) {
-                    $totalPrice += $item->product->price * $item->quantity;
-                }
-
-                $coupons = Coupons::where('code', $vocher_code)->first();
-                if ($coupons) {
-                    $percent = $coupons->discount;
-                    $discount = $totalPrice * ($percent / 100);
-                    $newPrice = $totalPrice - $discount;
-                } else {
-                    $newPrice = $totalPrice;
-                }
-
-                $order = Order::create([
-                    'user_id' => $user->id,
-                    'total_price' => $newPrice,
-                    'payment_method' => 'cod',
-                    'status' => 'pending'
-                ]);
-
-                foreach ($cartItems as $item) {
-                    OrderProduct::create([
-                        'order_id' => $order->id,
-                        'product_id' => $item->product->id,
-                        'quantity' => $item->quantity,
-                        'price' => $item->product->price * $item->quantity
-                    ]);
-                }
-
-                // sau khi order xong xóa các sản phẩm đã order trong giỏ hàng
-                $cart = Cart::with('items')->where('user_id', $user->id)->first();
-                if ($cart) {
-                    $cart->items()->whereIn('product_id', $productIds)->delete();
-                }
-
-                session(['order_submitted' => true]);
-                $order = Order::findOrFail($order->id);
-                return view('client.pages.checkout.success', compact('order'));
-            } else {
-                toastr()->info('Phiên đã hết hạn', [], 'Thông báo');
+            if ($cartItems->isEmpty()) {
+                toastr()->info('Không tìm thấy sản phẩm trong giỏ hàng');
                 return redirect()->back();
             }
 
+            $totalPrice = $cartItems->sum(function ($item) {
+                return $item->product->price * $item->quantity;
+            });
+
+            $discount = 0;
+            $percent = 0;
+
+            $coupon = \App\Models\Coupons::where('code', $voucher_code)->first();
+            if ($coupon) {
+                $percent = $coupon->discount;
+                $discount = $totalPrice * ($percent / 100);
+            }
+
+            $finalPrice = $totalPrice - $discount;
+
+            // Tạo đơn hàng
+            $order = Order::create([
+                'user_id' => $user->id,
+                'price' => $finalPrice,
+                'discount' => $discount,
+                'payment_method' => 'cod',
+                'status' => 'pending'
+            ]);
+
+            // Thêm từng sản phẩm vào đơn hàng
+            foreach ($cartItems as $item) {
+                OrderProduct::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item->product->id,
+                    'quantity' => $item->quantity,
+                    'price' => $item->product->price,
+                ]);
+            }
+
+            // Xóa các item khỏi giỏ hàng
+            $cart->items()->whereIn('product_id', $productIds)->delete();
+
+            DB::commit();
+
+            session()->forget('order_submitted');
+            session(['order_submitted' => true]);
+
+            return view('client.pages.checkout.success', compact('order'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Quá trình đặt hàng đang bị lỗi ' . $e->getMessage());
+            DB::rollBack();
+            return redirect()->route('homePage')->with('error', 'Lỗi khi đặt hàng: ' . $e->getMessage());
         }
     }
 }
