@@ -45,9 +45,13 @@
             <div class="header-actions d-flex justify-content-end">
                 <a href="#" class="me-3">Contacts</a>
                 <a href="#" class="me-3"><i class="fas fa-search"></i></a>
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
 
 
-                <a href="#" class="me-3"><i class="far fa-heart"></i></a>
+                <a href={{ route('favorite.index') }} class="me-3"><i class="far fa-heart"></i></a>
                 <a href={{ route('cart.index') }} class="position-relative">
                     <i class="fas fa-shopping-bag"></i>
                     <span class="cart-count">3</span>
