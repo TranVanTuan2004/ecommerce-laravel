@@ -3,7 +3,7 @@
 @section('content')
     <style>
         .category-card {
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); /* Red shadow */
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.3); /* Red shadow */
             border-radius: 12px;
         }
 
@@ -17,7 +17,7 @@
 
     <div class="container center-wrapper">
         <div class="card category-card w-100" style="min-width: 1200px; padding: 50px;">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-success text-white">
                 <h4 class="mb-0" style="padding: 20px"><i class="fa fa-folder-plus"></i> Thêm Danh Mục Mới</h4>
             </div>
 

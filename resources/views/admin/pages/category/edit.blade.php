@@ -18,7 +18,7 @@
 
     <div class="container center-wrapper">
         <div class="card category-card w-100" style="min-width: 900px; padding: 30px;">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-success text-white">
                 <h4 class="mb-0" style="padding: 15px"><i class="fa fa-folder"></i> Sửa Danh Mục</h4>
             </div>
 
