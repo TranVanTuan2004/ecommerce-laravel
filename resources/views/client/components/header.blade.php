@@ -47,7 +47,7 @@
                 <a href="#" class="me-3"><i class="fas fa-search"></i></a>
 
 
-                <a href="#" class="me-3"><i class="far fa-heart"></i></a>
+                <a href={{ route('favorite.index') }} class="me-3"><i class="far fa-heart"></i></a>
                 <a href={{ route('cart.index') }} class="position-relative">
                     <i class="fas fa-shopping-bag"></i>
                     <span class="cart-count">3</span>

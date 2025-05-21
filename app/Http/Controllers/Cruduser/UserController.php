@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Cruduser;
 
-use Throwable;
 use App\Models\User;
 use Illuminate\Http\Request;
-use function Laravel\Prompts\error;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+
+
 
 class UserController extends Controller
 {
@@ -60,9 +61,7 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('success', 'Thanh Cong');
         } catch (Throwable $th) {
             return back()->with('success', false)->with('error', $th->getMessage());
-
         }
-
     }
     public function edit(Request $request)
     {

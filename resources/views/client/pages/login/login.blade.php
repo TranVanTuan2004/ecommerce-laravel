@@ -22,6 +22,7 @@
             width: 100%;
         }
 
+
      .left-panel {
             background-image: url('{{ asset('client/img/bg_login.png') }}');
             background-size: cover;
