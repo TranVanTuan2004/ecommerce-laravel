@@ -13,6 +13,7 @@ class CartController extends Controller
 {
     public function index()
     {
+        session()->forget('order_submitted');
         if (!Auth::check())
             return redirect()->route('login');
         $cart = Cart::with('items.product')->where('user_id', Auth::id())->first();
@@ -50,13 +51,17 @@ class CartController extends Controller
     public function increase($productId)
     {
         try {
-            $userId = Auth::user()->id;
-            $cartItem = CartItem::where('product_id', $productId)
-                ->where('cart_id', $userId)->firstOrFail();
-            if (!$cartItem) {
+            $cart = Cart::where('user_id', Auth::id())->first();
+            if (!$cart)
                 return redirect()->back();
+            $cartItem = CartItem::where('cart_id', $cart->id)
+                ->where('product_id', $productId)
+                ->first();
+
+            if ($cartItem) {
+                $cartItem->increment('quantity');
             }
-            $cartItem->increment('quantity');
+
             return redirect()->back();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Lỗi khi tăng số lượng');
@@ -66,16 +71,23 @@ class CartController extends Controller
     public function decrease($productId)
     {
         try {
-            $userId = Auth::user()->id;
-            $cartItem = CartItem::where('product_id', $productId)
-                ->where('cart_id', $userId)->firstOrFail();
-            if ($cartItem && $cartItem->quantity > 1) {
-                $cartItem->decrement('quantity');
+            $cart = Cart::where('user_id', Auth::id())->first();
+            if (!$cart)
                 return redirect()->back();
-            } else {
-                $cartItem->delete();
-                return redirect()->back();
+
+            $cartItem = CartItem::where('cart_id', $cart->id)
+                ->where('product_id', $productId)
+                ->first();
+
+            if ($cartItem) {
+                if ($cartItem->quantity > 1) {
+                    $cartItem->decrement('quantity');
+                } else {
+                    $cartItem->delete();
+                }
             }
+
+            return redirect()->back();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Lỗi khi giảm số lượng ' . $e->getMessage());
         }
@@ -84,8 +96,12 @@ class CartController extends Controller
     public function destroy($productId)
     {
         try {
-            $userId = Auth::id();
-            CartItem::where('cart_id', $userId)->where('product_id', $productId)->delete();
+            $cart = Cart::where('user_id', Auth::id())->first();
+            if ($cart) {
+                CartItem::where('cart_id', $cart->id)
+                    ->where('product_id', $productId)
+                    ->delete();
+            }
             return redirect()->back();
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Lỗi khi xóa sản phẩm ' . $e->getMessage());
@@ -95,8 +111,10 @@ class CartController extends Controller
     public function clearAllCart()
     {
         try {
-            $userId = Auth::id();
-            CartItem::where('cart_id', $userId)->delete();
+            $cart = Cart::where('user_id', Auth::id())->first();
+            if ($cart) {
+                CartItem::where('cart_id', $cart->id)->delete();
+            }
             return redirect()->back()->with('success', 'Đã xoá toàn bộ giỏ hàng!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Lỗi khi xóa tất cả giỏ hàng ' . $e->getMessage());
