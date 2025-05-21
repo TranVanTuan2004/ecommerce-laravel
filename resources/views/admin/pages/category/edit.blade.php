@@ -1,34 +1,57 @@
 @extends('admin.master')
 
 @section('content')
-<form method="post" action="{{ route('category.update', $category->id) }}" enctype="multipart/form-data"
-    style="max-width: 800px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); margin-top: 80px; padding: 40px;"
-    class="container">
-    @csrf
-    @method('PUT')
+    <style>
+        .category-card {
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+            border-radius: 12px;
+        }
 
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        .center-wrapper {
+            height: 80vh;
+            padding: 40px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+    <div class="container center-wrapper">
+        <div class="card category-card w-100" style="min-width: 900px; padding: 30px;">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0" style="padding: 15px"><i class="fa fa-folder"></i> Sửa Danh Mục</h4>
+            </div>
+
+            <div class="card-body">
+                <form method="POST" action="{{ route('category.update', $category->id) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="form-group mb-3">
+                        <label for="name">Tên danh mục</label>
+                        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
+                               value="{{ old('name', $category->name) }}" placeholder="Nhập tên danh mục...">
+                        @error('name')
+                            <div class="alert alert-danger mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="description">Mô tả</label>
+                        <textarea name="description" id="description" rows="4"
+                                  class="form-control @error('description') is-invalid @enderror"
+                                  placeholder="Nhập mô tả danh mục...">{{ old('description', $category->description) }}</textarea>
+                        @error('description')
+                            <div class="alert alert-danger mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-4">
+                        <a href="{{ route('category.index') }}" class="btn btn-secondary me-2">Quay lại</a>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    @endif
-
-    <h1 class="text-center text-primary">Sửa Danh Mục</h1>
-
-    <div class="mb-3" style="margin-top: 12px">
-        <label for="name" class="form-label">Tên danh mục</label>
-        <input type="text" name="name" class="form-control" id="name" value="{{ $category->name }}">
-    </div>
-
-    <div class="mb-3" style="margin-top: 12px">
-        <label for="description" class="form-label">Mô tả</label>
-        <textarea name="description" class="form-control" id="description" rows="4">{{ $category->description }}</textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary" style="display: block; margin: 20px auto 0 auto;">Cập nhật</button>
-</form>
 @endsection
