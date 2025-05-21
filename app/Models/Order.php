@@ -62,8 +62,6 @@ class Order extends Model
     // Trạng thái dùng cho thanh trạng thái (giữ nguyên status hoặc có thể map)
     public function getStatusForBarAttribute()
     {
-
-
         return match ($this->status) {
             'pending' => 'ordered',
             'shipping' => 'shipping',
@@ -72,6 +70,13 @@ class Order extends Model
             default => 'ordered',
         };
     }
+
+    // Alias cho orderProducts, dùng trong view là $order->orderItems
+    public function getOrderItemsAttribute()
+    {
+        return $this->orderProducts;
+    }
+
 
     // Lấy ra sản phẩm chính để hiển thị (ví dụ: sản phẩm đầu tiên của đơn)
     public function getProductNameAttribute()

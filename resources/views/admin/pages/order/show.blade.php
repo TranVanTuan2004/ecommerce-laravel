@@ -1,27 +1,30 @@
 @extends('admin.master')
 
 @section('content')
-    <div class="row wrapper border-bottom white-bg page-heading mb-3">
+    <div class="row wrapper border-bottom white-bg page-heading mb-4">
         <div class="col-lg-8">
             <h2 class="mt-2">Chi tiết đơn hàng #{{ $order->id }}</h2>
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ route('admin.order.index') }}">Đơn hàng</a></li>
+                <li><a href="{{ route('order.index') }}">Đơn hàng</a></li>
                 <li class="active"><strong>Chi tiết</strong></li>
             </ol>
         </div>
     </div>
 
-    <div class="row mb-4 mt-4">
+    <div class="row mb-4">
         <div class="col-lg-12">
             <div class="ibox">
-                <div class="ibox-title d-flex justify-content-between align-items-center">
-                    <form action="{{ route('admin.orders.update', $order->id) }}" method="POST">
+                <div class="ibox-title d-flex justify-content-between align-items-center bg-light p-3 rounded-top">
+                    <h5 class="mb-0">Cập nhật trạng thái đơn hàng</h5>
+                    <form action="{{ route('order.updateStatus', $order->id) }}" method="POST" class="d-flex">
                         @csrf
                         @method('PUT')
-                        <select name="status" class="form-control form-control-sm" onchange="this.form.submit()">
-                            <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xác nhận</option>
-                            <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử lý</option>
+                        <select name="status" class="form-select form-select-sm me-2" onchange="this.form.submit()">
+                            <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xác nhận
+                            </option>
+                            <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử lý
+                            </option>
                             <option value="shipping" {{ $order->status == 'shipping' ? 'selected' : '' }}>Đang giao</option>
                             <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã giao</option>
                             <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Đã huỷ</option>
@@ -29,11 +32,11 @@
                     </form>
                 </div>
 
-                <div class="ibox-content">
+                <div class="ibox-content p-4">
 
                     {{-- Thông tin đơn hàng --}}
-                    <h5>Thông tin đơn hàng</h5>
-                    <table class="table table-bordered" style="max-width: 600px;">
+                    <h5 class="mb-3">Thông tin đơn hàng</h5>
+                    <table class="table table-bordered w-50">
                         <tbody>
                             <tr>
                                 <th>ID</th>
@@ -42,7 +45,7 @@
                             <tr>
                                 <th>Trạng thái</th>
                                 <td>
-                                    <span class="badge badge-info">{{ $order->status_label }}</span>
+                                    <span class="badge bg-info text-white">{{ $order->status_label }}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -55,14 +58,14 @@
                             </tr>
                             <tr>
                                 <th>Tổng tiền</th>
-                                <td>{{ number_format($order->total_price, 0, ',', '.') }}đ</td>
+                                <td class="text-danger fw-bold">{{ number_format($order->total_price, 0, ',', '.') }}đ</td>
                             </tr>
                         </tbody>
                     </table>
 
                     {{-- Thông tin khách hàng --}}
-                    <h5>Thông tin khách hàng</h5>
-                    <table class="table table-bordered" style="max-width: 600px;">
+                    <h5 class="mt-4 mb-3">Thông tin khách hàng</h5>
+                    <table class="table table-bordered w-50">
                         <tbody>
                             <tr>
                                 <th>Họ tên</th>
@@ -84,13 +87,13 @@
                     </table>
 
                     {{-- Danh sách sản phẩm --}}
-                    <h5>Danh sách sản phẩm</h5>
+                    <h5 class="mt-4 mb-3">Danh sách sản phẩm</h5>
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered align-middle text-center">
-                            <thead class="thead-light">
+                        <table class="table table-hover table-bordered text-center">
+                            <thead class="table-light">
                                 <tr>
                                     <th>#</th>
-                                    <th>Sản phẩm</th>
+                                    <th class="text-start">Sản phẩm</th>
                                     <th>Số lượng</th>
                                     <th>Đơn giá</th>
                                     <th>Thành tiền</th>
@@ -109,14 +112,15 @@
                                                 <div>
                                                     <strong>{{ $item->product->name }}</strong><br>
                                                     @if ($item->variant)
-                                                        <small>Phân loại: {{ $item->variant }}</small>
+                                                        <small class="text-muted">Phân loại: {{ $item->variant }}</small>
                                                     @endif
                                                 </div>
                                             </div>
                                         </td>
                                         <td>{{ $item->quantity }}</td>
                                         <td>{{ number_format($item->price, 0, ',', '.') }}đ</td>
-                                        <td>{{ number_format($item->price * $item->quantity, 0, ',', '.') }}đ</td>
+                                        <td class="text-danger fw-bold">
+                                            {{ number_format($item->price * $item->quantity, 0, ',', '.') }}đ</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -124,28 +128,24 @@
                     </div>
 
                     {{-- Tổng đơn hàng --}}
-                    <div class="text-end font-weight-bold" style="font-size: 18px;">
-                        Tổng đơn hàng: {{ number_format($order->total_price, 0, ',', '.') }}đ
+                    <div class="text-end fw-bold fs-5 mt-3">
+                        Tổng đơn hàng: <span
+                            class="text-danger">{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
                     </div>
 
                     {{-- Nút điều hướng --}}
                     <div class="mt-4">
-                        <a href="{{ route('admin.order.index') }}" class="btn btn-secondary">
-                            <i class="fa fa-arrow-left"></i> Quay lại
-                        </a>
-                        <a href="{{ route('admin.order.edit', $order->id) }}" class="btn btn-primary">
-                            <i class="fa fa-edit"></i> Chỉnh sửa
-                        </a>
-                        <form action="{{ route('admin.order.destroy', $order->id) }}" method="POST"
-                            style="display: inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xoá đơn hàng này?')">
+                        <!-- Các nút chỉnh sửa, hủy đơn, quay lại ở đây -->
+                        <a href="{{ route('order.edit', $order->id) }}" class="btn btn-warning">Chỉnh sửa</a>
+                        <form action="{{ route('order.cancel', $order->id) }}" method="POST"
+                            style="display:inline-block;">
                             @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fas fa-trash-alt"></i> Xoá
-                            </button>
+                            @method('PUT')
+                            <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Bạn có chắc muốn hủy đơn này?')">Hủy đơn</button>
                         </form>
+                        <a href="{{ route('order.index') }}" class="btn btn-secondary">Quay lại</a>
                     </div>
-
                 </div>
             </div>
         </div>

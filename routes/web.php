@@ -209,7 +209,10 @@ Route::group([
     ], function () {
         Route::get('', [OrderControllerAdmin::class, 'index'])->name('order.index');
         Route::get('{id}/show', [OrderControllerAdmin::class, 'show'])->name('order.show');
+        Route::get('{id}/edit', [OrderControllerAdmin::class, 'edit'])->name('order.edit');
         Route::put('{id}/update-status', [OrderControllerAdmin::class, 'updateStatus'])->name('order.updateStatus');
+        Route::put('/order/{id}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
+        Route::delete('{id}', [OrderControllerAdmin::class, 'destroy'])->name('order.destroy');
     });
 
     Route::group([
