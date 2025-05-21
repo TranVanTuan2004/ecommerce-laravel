@@ -10,7 +10,7 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Voucher\VoucherController;
-
+use App\Http\Controllers\Client\BlogClientController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 
@@ -33,8 +33,13 @@ Route::get('/category/{id}', [HomeController::class, 'showProduct'])->name('cate
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
 // Client routes
-Route::get('/blogs', [App\Http\Controllers\Client\BlogClientController::class, 'index'])->name('client.blogs.index');
-Route::get('/blogs/{id}', [App\Http\Controllers\Client\BlogClientController::class, 'show'])->name('client.blogs.show');
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.message');
+Route::get('/blogs', [BlogClientController::class, 'index'])->name('blogs');
+Route::get('/blogs/{id}', [BlogClientController::class, 'show'])->name('blogs.show');
+
+
+
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

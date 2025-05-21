@@ -33,12 +33,13 @@
         <!-- Navigation Right -->
         <div class="col-lg-4 col-md-4 col-6">
             <div class="header-actions d-flex justify-content-end">
-                <a href="#" class="me-3">Contacts</a>
+                <a href="{{ route('blogs') }}" class="me-3">Blogs</a>
+                <a href="#" class="me-2">Contacts</a>
                 <a href="#" class="me-3"><i class="fas fa-search"></i></a>
                 @if (Auth::check())
-                    <a href={{ route('logout') }} class="me-3">Logout</a>
+                <a href={{ route('logout') }} class="me-3">Logout</a>
                 @else
-                    <a href={{ route('login') }} class="me-3">Login</a>
+                <a href={{ route('login') }} class="me-3">Login</a>
                 @endif
 
                 <a href="#" class="me-3"><i class="far fa-heart"></i></a>
