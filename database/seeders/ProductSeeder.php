@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 1,
                 'slide_id' => 1,
-                'image' => 'storage/product/chanel/aochanel.jpg',
+                'image' => 'storage1/product/chanel/aochanel.jpg',
             ],
             [
                 'name' => 'Quần Chanel',
@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 1,
                 'slide_id' => 1,
-                'image' => 'storage/product/chanel/quan.jpg',
+                'image' => 'storage1/product/chanel/quan.jpg',
             ],
             [
                 'name' => 'Giày chanel',
@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 1,
                 'slide_id' => 1,
-                'image' => 'storage/product/chanel/shoe.jpg',
+                'image' => 'storage1/product/chanel/shoe.jpg',
             ],
             [
                 'name' => 'Áo khoác Chanel',
@@ -48,7 +48,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 1,
                 'slide_id' => 1,
-                'image' => 'storage/product/chanel/aokhoac.jpg',
+                'image' => 'storage1/product/chanel/aokhoac.jpg',
             ],
             [
                 'name' => 'Túi xách chanel',
@@ -57,7 +57,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'brand_id' => 1,
                 'slide_id' => 1,
-                'image' => 'storage/product/chanel/bag.jpg',
+                'image' => 'storage1/product/chanel/bag.jpg',
             ],
             [
                 'name' => 'Giày Chanel #2',
@@ -66,7 +66,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 1,
                 'slide_id' => 1,
-                'image' => 'storage/product/chanel/shoe2.jpg',
+                'image' => 'storage1/product/chanel/shoe2.jpg',
             ],
             [
                 'name' => 'Áo Gucci',
@@ -75,7 +75,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 2,
                 'slide_id' => 1,
-                'image' => 'storage/product/gucci/aogucci.jpg',
+                'image' => 'storage1/product/gucci/aogucci.jpg',
             ],
             [
                 'name' => 'Quần Gucci',
@@ -84,7 +84,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 2,
                 'slide_id' => 1,
-                'image' => 'storage/product/gucci/quan.jpg',
+                'image' => 'storage1/product/gucci/quan.jpg',
             ],
             [
                 'name' => 'Giày Gucci',
@@ -93,7 +93,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 2,
                 'slide_id' => 1,
-                'image' => 'storage/product/gucci/shoe1.jpg',
+                'image' => 'storage1/product/gucci/shoe1.jpg',
             ],
             [
                 'name' => 'Túi xách Gucci',
@@ -102,7 +102,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'brand_id' => 2,
                 'slide_id' => 1,
-                'image' => 'storage/product/gucci/bag1.jpg',
+                'image' => 'storage1/product/gucci/bag1.jpg',
             ],
             [
                 'name' => 'Túi xách Gucci #2',
@@ -111,7 +111,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'brand_id' => 2,
                 'slide_id' => 1,
-                'image' => 'storage/product/gucci/bag2.jpg',
+                'image' => 'storage1/product/gucci/bag2.jpg',
             ],
             [
                 'name' => 'Giày Gucci',
@@ -120,7 +120,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 2,
                 'slide_id' => 1,
-                'image' => 'storage/product/gucci/shoe2.jpg',
+                'image' => 'storage1/product/gucci/shoe2.jpg',
             ],
             [
                 'name' => 'Áo Hermes',
@@ -129,7 +129,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 3,
                 'slide_id' => 1,
-                'image' => 'storage/product/hermes/ao.jpg',
+                'image' => 'storage1/product/hermes/ao.jpg',
             ],
             [
                 'name' => 'Quần Hermes',
@@ -138,7 +138,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 3,
                 'slide_id' => 1,
-                'image' => 'storage/product/hermes/quan.jgp',
+                'image' => 'storage1/product/hermes/quan.jgp',
             ],
             [
                 'name' => 'Giày Hermes',
@@ -147,7 +147,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 3,
                 'slide_id' => 1,
-                'image' => 'storage/product/hermes/shoe.jpg',
+                'image' => 'storage1/product/hermes/shoe.jpg',
             ],
             [
                 'name' => 'Túi xách Hermes',
@@ -156,7 +156,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'brand_id' => 3,
                 'slide_id' => 1,
-                'image' => 'storage/product/hermes/bag.jpg',
+                'image' => 'storage1/product/hermes/bag.jpg',
             ],
             [
                 'name' => 'Áo Hermes #2',
@@ -165,7 +165,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 3,
                 'slide_id' => 1,
-                'image' => 'storage/product/hermes/ao2.jpg',
+                'image' => 'storage1/product/hermes/ao2.jpg',
             ],
             [
                 'name' => 'Quần Hermes #2',
@@ -174,7 +174,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 3,
                 'slide_id' => 1,
-                'image' => 'storage/product/hermes/quan2.jpg',
+                'image' => 'storage1/product/hermes/quan2.jpg',
             ],
             [
                 'name' => 'Áo Dior',
@@ -183,7 +183,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 4,
                 'slide_id' => 1,
-                'image' => 'storage/product/dior/ao.jpg',
+                'image' => 'storage1/product/dior/ao.jpg',
             ],
             [
                 'name' => 'Quần Dior',
@@ -192,7 +192,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 4,
                 'slide_id' => 1,
-                'image' => 'storage/product/dior/quan.jpg',
+                'image' => 'storage1/product/dior/quan.jpg',
             ],
             [
                 'name' => 'Giày Dior',
@@ -201,7 +201,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 4,
                 'slide_id' => 1,
-                'image' => 'storage/product/dior/shoe.jpg',
+                'image' => 'storage1/product/dior/shoe.jpg',
             ],
             [
                 'name' => 'Túi xách Dior',
@@ -210,7 +210,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'brand_id' => 4,
                 'slide_id' => 1,
-                'image' => 'storage/product/dior/bag.jpg',
+                'image' => 'storage1/product/dior/bag.jpg',
             ],
             [
                 'name' => 'Túi xách Dior #2',
@@ -219,7 +219,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'brand_id' => 4,
                 'slide_id' => 1,
-                'image' => 'storage/product/dior/bag2.jpg',
+                'image' => 'storage1/product/dior/bag2.jpg',
             ],
             [
                 'name' => 'Áo Dior #2',
@@ -228,7 +228,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 4,
                 'slide_id' => 1,
-                'image' => 'storage/product/dior/ao2.jpg',
+                'image' => 'storage1/product/dior/ao2.jpg',
             ],
             [
                 'name' => 'Áo Adidas',
@@ -237,7 +237,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 5,
                 'slide_id' => 1,
-                'image' => 'storage/product/adidas/ao.jpg',
+                'image' => 'storage1/product/adidas/ao.jpg',
             ],
             [
                 'name' => 'Quần Adidas',
@@ -246,7 +246,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 5,
                 'slide_id' => 1,
-                'image' => 'storage/product/adidas/quan.jpg',
+                'image' => 'storage1/product/adidas/quan.jpg',
             ],
             [
                 'name' => 'Giày Adidas',
@@ -255,7 +255,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 5,
                 'slide_id' => 1,
-                'image' => 'storage/product/adidas/shoe.jpg',
+                'image' => 'storage1/product/adidas/shoe.jpg',
             ],
             [
                 'name' => 'Túi xách Adidas',
@@ -264,7 +264,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'brand_id' => 5,
                 'slide_id' => 1,
-                'image' => 'storage/product/adidas/bag.jpg',
+                'image' => 'storage1/product/adidas/bag.jpg',
             ],
             [
                 'name' => 'Quần Adidas #2',
@@ -273,7 +273,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 5,
                 'slide_id' => 1,
-                'image' => 'storage/product/adidas/quan2.jpg',
+                'image' => 'storage1/product/adidas/quan2.jpg',
             ],
             [
                 'name' => 'Giày Adidas #2',
@@ -282,7 +282,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 5,
                 'slide_id' => 1,
-                'image' => 'storage/product/adidas/shoe2.jpg',
+                'image' => 'storage1/product/adidas/shoe2.jpg',
             ],
             [
                 'name' => 'Áo Nike',
@@ -291,7 +291,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 6,
                 'slide_id' => 1,
-                'image' => 'storage/product/nike/ao.jpg',
+                'image' => 'storage1/product/nike/ao.jpg',
             ],
             [
                 'name' => 'Quần Nike',
@@ -300,7 +300,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 6,
                 'slide_id' => 1,
-                'image' => 'storage/product/nike/quan.jpg',
+                'image' => 'storage1/product/nike/quan.jpg',
             ],
             [
                 'name' => 'Giày Nike',
@@ -309,7 +309,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 6,
                 'slide_id' => 1,
-                'image' => 'storage/product/nike/shoe.jpg',
+                'image' => 'storage1/product/nike/shoe.jpg',
             ],
             [
                 'name' => 'Túi xách Nike',
@@ -318,7 +318,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'brand_id' => 6,
                 'slide_id' => 1,
-                'image' => 'storage/product/nike/bag.jpg',
+                'image' => 'storage1/product/nike/bag.jpg',
             ],
             [
                 'name' => 'Giày Nike #2',
@@ -327,7 +327,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 6,
                 'slide_id' => 1,
-                'image' => 'storage/product/nike/shoe2.jpg',
+                'image' => 'storage1/product/nike/shoe2.jpg',
             ],
             [
                 'name' => 'Áo Nike #2',
@@ -336,7 +336,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 6,
                 'slide_id' => 1,
-                'image' => 'storage/product/nike/ao2.jpg',
+                'image' => 'storage1/product/nike/ao2.jpg',
             ],
             [
                 'name' => 'Áo Zara',
@@ -345,7 +345,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 7,
                 'slide_id' => 1,
-                'image' => 'storage/product/zara/zara.jgp',
+                'image' => 'storage1/product/zara/zara.jgp',
             ],
             [
                 'name' => 'Quần Zara',
@@ -354,7 +354,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 7,
                 'slide_id' => 1,
-                'image' => 'storage/product/zara/quan.jpg',
+                'image' => 'storage1/product/zara/quan.jpg',
             ],
             [
                 'name' => 'Giày Zara',
@@ -363,7 +363,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 3,
                 'brand_id' => 7,
                 'slide_id' => 7,
-                'image' => 'storage/product/zara/shoe.jpg',
+                'image' => 'storage1/product/zara/shoe.jpg',
             ],
             [
                 'name' => 'Túi xách Zara',
@@ -372,7 +372,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 4,
                 'brand_id' => 7,
                 'slide_id' => 1,
-                'image' => 'storage/product/zara/bag.jpg',
+                'image' => 'storage1/product/zara/bag.jpg',
             ],
 
         ];

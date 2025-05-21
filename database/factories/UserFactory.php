@@ -35,7 +35,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'password' => Hash::make('password'),
             'phone' => $this->faker->phoneNumber(),
-            'avatar' => 'storage/' . Arr::random($avatars),
+            'avatar' => 'storage1/' . Arr::random($avatars),
             'address' => $this->faker->address(),
             'role' => fake()->randomElement(['admin', 'user'])
         ];
