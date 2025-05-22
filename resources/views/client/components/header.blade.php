@@ -37,9 +37,9 @@
                 <a href="#" class="me-2">Contacts</a>
                 <a href="#" class="me-3"><i class="fas fa-search"></i></a>
                 @if (Auth::check())
-                <a href={{ route('logout') }} class="me-3">Logout</a>
+                    <a href={{ route('logout') }} class="me-3">Logout</a>
                 @else
-                <a href={{ route('login') }} class="me-3">Login</a>
+                    <a href={{ route('login') }} class="me-3">Login</a>
                 @endif
 
                 <a href="#" class="me-3"><i class="far fa-heart"></i></a>
