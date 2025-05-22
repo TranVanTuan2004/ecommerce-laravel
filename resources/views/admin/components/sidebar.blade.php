@@ -59,6 +59,11 @@
                     <li> <a href={{ route('voucher.index') }}>Quản lý Voucher</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="{{ route('admin.chat.index') }}">
+                    <i class="fa fa-comments"></i> <span class="nav-label">Quản Lý Tin Nhắn</span>
+                </a>
+            </li>
 
         </ul>
 
