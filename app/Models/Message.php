@@ -12,9 +12,10 @@ class Message extends Model
     protected $fillable = [
         'user_id',
         'content',
+        'sender',
     ];
 
-    // Mối quan hệ: Mỗi tin nhắn thuộc về 1 user
+    // Mỗi tin nhắn thuộc về một user
     public function user()
     {
         return $this->belongsTo(User::class);

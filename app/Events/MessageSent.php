@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Message;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -13,33 +14,31 @@ class MessageSent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
-    public $user;
 
-    public function __construct($message, $user)
+    public function __construct(Message $message)
     {
         $this->message = $message;
-        $this->user = $user;
     }
 
-    // Kênh riêng, chỉ người dùng được quyền mới nghe
     public function broadcastOn()
     {
         return new PrivateChannel('chat');
     }
 
-    // Dữ liệu gửi đến phía frontend (JS)
     public function broadcastWith()
     {
         return [
-            'message' => $this->message,
+            'id' => $this->message->id,
+            'content' => $this->message->content,
+            'sender' => $this->message->sender,
             'user' => [
-                'id' => $this->user->id,
-                'name' => $this->user->name,
+                'id' => $this->message->user->id,
+                'name' => $this->message->user->name,
             ],
+            'created_at' => $this->message->created_at->toDateTimeString(),
         ];
     }
 
-    // Tên sự kiện gửi đi
     public function broadcastAs()
     {
         return 'message.sent';
