@@ -65,6 +65,13 @@
                 </a>
             </li>
 
+            <li>
+                <a href={{ route('topusers.show') }}><i class="fa fa-th-large"></i> <span class="nav-label">Top 10
+                        Users</span>
+                    <span class="fa arrow"></span>
+                </a>
+            </li>
+
         </ul>
 
     </div>

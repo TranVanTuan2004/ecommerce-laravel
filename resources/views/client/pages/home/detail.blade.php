@@ -213,6 +213,32 @@
         margin-right: 5px;
     }
 
+    .payment-logos {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .payment-logo {
+        width: 100px;
+        height: 80px;
+        object-fit: contain;
+        padding: 6px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: white;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .payment-logo:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+
     /* Responsive */
     @media (max-width: 768px) {
 
@@ -237,16 +263,21 @@
             <!-- Product Images -->
             <div class="product-gallery">
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/400x450" alt="Product Front">
+                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+
                 </div>
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/400x450" alt="Product Detail">
+                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+
+
                 </div>
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/400x450" alt="Product Back">
+                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+
                 </div>
                 <div class="product-image">
-                    <img src="https://via.placeholder.com/400x450" alt="Product Full">
+                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+
                 </div>
             </div>
 
@@ -276,33 +307,48 @@
                         <input type="text" value="1">
                         <button>+</button>
                     </div>
-                    <button class="add-to-cart-btn">
+                    <button class="add-to-cart-btn" style="border-radius: 6px">
                         🛒 ADD TO CART
                     </button>
                 </div>
 
                 <div class="or-divider">OR</div>
 
-                <button class="buy-now-btn">
-                    ⚡ BUY NOW
-                </button>
+                <div style="width: 100% !important; margin-bottom: 12px">
+                    <button class="add-to-cart-btn" style="display: block !important; width: 100%; border-radius: 6px">
+                        🛒 BUY NOW
+                    </button>
+                </div>
 
                 <div class="action-buttons">
-                    <button class="action-btn">❤</button>
-                    <button class="action-btn">🔄</button>
+                    <form action={{ route('favorite.toggle') }} method="POST">
+                        @csrf
+                        <input type="text" hidden name="product_id" value={{ $product->id }}>
+                        <button type="submit" class="action-btn">
+                            @if (Auth::check())
+                                @if (Auth::user()->wishlist->contains($product->id))
+                                    <i class="fas fa-heart text-danger"></i>
+                                @else
+                                    <i class="fas fa-heart text-secondary"></i>
+                                @endif
+                            @else
+                                <i class="fas fa-heart text-secondary"></i>
+                            @endif
+                        </button>
+                    </form>
                 </div>
 
                 <!-- Payment Info -->
                 <div class="payment-info">
                     <p class="payment-info-title">GUARANTEED SAFE CHECKOUT</p>
-                    <div class="payment-methods">
-                        <img src="/api/placeholder/50/30" alt="Visa">
-                        <img src="/api/placeholder/50/30" alt="MasterCard">
-                        <img src="/api/placeholder/50/30" alt="PayPal">
-                        <img src="/api/placeholder/50/30" alt="American Express">
-                        <img src="/api/placeholder/50/30" alt="Maestro">
-                        <img src="/api/placeholder/50/30" alt="Bitcoin">
+                    <div class="payment-logos">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/vnpay.png') }}" alt="VNPAY">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/momo.png') }}" alt="MOMO">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/zalo.png') }}" alt="ZaloPay">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/paypal.png') }}" alt="PayPal">
+                        <img class="payment-logo" src="{{ asset('storage/paymentlogo/bank.png') }}" alt="Stripe">
                     </div>
+
                     <p class="payment-security">Your Payment is 100% Secure</p>
                 </div>
 

@@ -22,13 +22,13 @@
                 <h4 class="mb-0" style="padding: 20px"><i class="fa fa-ticket"></i> Tạo Voucher Mới</h4>
             </div>
             <div class="card-body">
-                @if (session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
+                @if (session('error'))
+                    <div class="alert alert-danger mt-3">
+                        {{ session('error') }}
+                    </div>
                 @endif
-
                 <form action="{{ route('voucher.store') }}" method="POST">
                     @csrf
-
                     <div class="form-group mb-3">
                         <label>Mã Voucher</label>
                         <input type="text" name="code" class="form-control @error('code') is-invalid @enderror"
@@ -49,8 +49,9 @@
 
                     <div class="form-group mb-3">
                         <label>Ngày Kết Thúc</label>
-                        <input type="date" name="end_date" class="form-control @error('end_date') is-invalid @enderror"
-                            value="{{ old('end_date') }}">
+                        <input type="date" name="expiration_date"
+                            class="form-control @error('expiration_date') is-invalid @enderror"
+                            value="{{ old('expiration_date') }}">
                         @error('expiration_date')
                             <div class="alert alert-danger" style="margin-top: 8px">{{ $message }}</div>
                         @enderror
@@ -62,7 +63,6 @@
                         <button type="submit" class="btn btn-success">Tạo Voucher</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

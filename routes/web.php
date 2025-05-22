@@ -6,11 +6,17 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
+use App\Http\Controllers\Favorite\FavoriteController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\Top10Users\Top10UsersController;
 use App\Http\Controllers\Voucher\VoucherController;
 use App\Http\Controllers\Client\BlogClientController;
+use App\Http\Controllers\Category\CategoryController;
+
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\ClientChatController;
 use App\Http\Controllers\Admin\AdminChatController;
@@ -64,22 +70,43 @@ Route::group([
 
 
 Route::group([
-    'prefix' => '/orders',
-], function () {});
+    'prefix' => '/favorite',
+    'middleware' => 'is_login'
+], function () {
+    Route::get('/', [FavoriteController::class, 'index'])->name('favorite.index');
+    Route::post('/toggle', [FavoriteController::class, 'toggleFavorite'])->name('favorite.toggle');
+});
 
 
 
 Route::group([
     'prefix' => '/user',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {});
+], function () { });
+
+Route::group([
+    'prefix' => '/order',
+], function () {
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+});
+
+
+Route::group([
+    'prefix' => '/dashboard/product',
+], function () { });
+
+Route::group([
+    'prefix' => '/dashboard/category',
+], function () { });
+
 
 
 
@@ -108,6 +135,9 @@ Route::group([
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'postLogin'])->name('login.post');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
 });
 
 Route::group([
@@ -159,6 +189,9 @@ Route::group([
         Route::get('', [VoucherController::class, 'index'])->name('voucher.index');
         Route::get('/create', [VoucherController::class, 'create'])->name('voucher.create');
         Route::post('/store', [VoucherController::class, 'store'])->name('voucher.store');
+        Route::get('/{id}/edit', [VoucherController::class, 'edit'])->name('voucher.edit');
+        Route::put('/{id}', [VoucherController::class, 'update'])->name('voucher.update');
+        Route::delete('/{id}', [VoucherController::class, 'destroy'])->name('voucher.destroy');
     });
     Route::group(['prefix' => 'dashboard/chat'], function () {
         Route::get('', [AdminChatController::class, 'adminView'])->name('admin.chat.index');
@@ -168,9 +201,26 @@ Route::group([
     });
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () {});
+    ], function () { });
+
+    //Chức năng quản lí danh mục
+    Route::group([
+        'prefix' => '/dashboard/category',
+    ], function () {
+        Route::get('', [CategoryController::class, 'index'])->name('category.index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+        Route::post('', [CategoryController::class, 'store'])->name('category.store');
+        Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::put('/{id}', [CategoryController::class, 'update'])->name('category.update');
+        Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    });
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () {});
+    ], function () { });
+
+    //Route danh cho top10
+    Route::group(['prefix' => '/dashboard/top10'], function () {
+        Route::get('/show', [Top10UsersController::class, 'showTopUsers'])->name('topusers.show');
+    });
 });
