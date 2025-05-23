@@ -12,16 +12,13 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Top10Users\Top10UsersController;
 use App\Http\Controllers\Voucher\VoucherController;
-use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\Client\BlogClientController;
+use App\Http\Controllers\Category\CategoryController;
 
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-
-
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Order\OrderController;
 
 // Client
 Route::group([
@@ -42,8 +39,13 @@ Route::get('/category/{id}', [HomeController::class, 'showProduct'])->name('cate
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
 // Client routes
-Route::get('/blogs', [App\Http\Controllers\Client\BlogClientController::class, 'index'])->name('client.blogs.index');
-Route::get('/blogs/{id}', [App\Http\Controllers\Client\BlogClientController::class, 'show'])->name('client.blogs.show');
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
+Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.message');
+Route::get('/blogs', [BlogClientController::class, 'index'])->name('blogs');
+Route::get('/blogs/{id}', [BlogClientController::class, 'show'])->name('blogs.show');
+
+
+
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -88,7 +90,6 @@ Route::group([
 });
 
 
-
 Route::group([
     'prefix' => '/dashboard/product',
 ], function () {});
@@ -117,7 +118,7 @@ Route::group([
 Route::post('/send-message', [ChatController::class, 'sendMessage'])->middleware('auth');
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
-Route::post('/comment/{product_id}', [HomeController::class, 'storeReview'])->name('review.store');
+Route::post('/comment/{product_id}/{user_id}', [HomeController::class, 'storeReview'])->name('review.store');
 
 Route::group([
     'prefix' => '/auth',
@@ -125,7 +126,6 @@ Route::group([
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'postLogin'])->name('login.post');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
@@ -133,8 +133,7 @@ Route::group([
 
 Route::group([
     'prefix' => '',
-    'middleware' => 'is_admin',
-    'verified'
+    'middleware' => 'is_admin'
 ], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('is_admin');
 
@@ -144,7 +143,7 @@ Route::group([
     ], function () {
         Route::get('', [UserController::class, 'index'])->name('users.index');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
-        Route::post('', [UserController::class, 'store'])->name('users.store');
+        Route::post('dashboard/users', [UserController::class, 'store'])->name('users.store');
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
         Route::put('/{id}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('users.destroy');
@@ -157,7 +156,7 @@ Route::group([
     ], function () {
         Route::get('', [BrandController::class, 'index'])->name('brand.index');
         Route::get('/create', [BrandController::class, 'create'])->name('brand.create');
-        Route::post('', [BrandController::class, 'store'])->name('brand.store');
+        Route::post('dashboard/brand', [BrandController::class, 'store'])->name('brand.store');
         Route::get('/{id}/edit', [BrandController::class, 'edit'])->name('brand.edit');
         Route::put('/{id}', [BrandController::class, 'update'])->name('brand.update');
         Route::delete('/{id}', [BrandController::class, 'destroy'])->name('brand.destroy');
@@ -190,9 +189,17 @@ Route::group([
         'prefix' => '/dashboard/product',
     ], function () {});
 
+    //Chức năng quản lí danh mục
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () {});
+    ], function () {
+        Route::get('', [CategoryController::class, 'index'])->name('category.index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+        Route::post('', [CategoryController::class, 'store'])->name('category.store');
+        Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::put('/{id}', [CategoryController::class, 'update'])->name('category.update');
+        Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    });
 
     Route::group([
         'prefix' => '/dashboard/category',
