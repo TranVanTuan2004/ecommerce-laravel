@@ -1,6 +1,5 @@
 <div class="comments-container">
     @foreach ($reviews as $review)
-
         <div class="comment-box">
             <div class="comment-header">
                 <div class="avatar">
@@ -97,7 +96,6 @@
             });
         }
     </script>
-
 @endsection
 
 

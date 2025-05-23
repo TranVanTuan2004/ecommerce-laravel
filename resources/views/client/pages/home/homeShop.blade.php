@@ -16,6 +16,7 @@
             @endif
         </h2>
 
+<<<<<<< HEAD
         <div class="row">
             @forelse ($products as $product)
                 <div class="col-md-3 col-6 mb-4">
@@ -28,6 +29,40 @@
                                 <button class="color-btn me-1" style="background-color: #000000;"></button>
                                 <button class="color-btn me-1" style="background-color: #CC0000;"></button>
                                 <button class="color-btn" style="background-color: #3399CC;"></button>
+=======
+            <div class="row">
+                @forelse ($products as $product)
+                    <div class="col-md-3 col-6 mb-4">
+                        <div class="product-card">
+                            <div class="product-image">
+                                <a href="{{ route('productDetail', $product->id) }}">
+                                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="img-fluid">
+                                </a>
+                                <div class="color-options position-absolute bottom-0 start-0 p-2">
+                                    <button class="color-btn me-1" style="background-color: #000000;"></button>
+                                    <button class="color-btn me-1" style="background-color: #CC0000;"></button>
+                                    <button class="color-btn" style="background-color: #3399CC;"></button>
+                                </div>
+                            </div>
+                            <div class="product-info py-2">
+                                <h3 class="product-title h6">
+                                    <a href="{{ route('productDetail', $product->id) }}"
+                                        class="text-dark text-decoration-none">
+                                        {{ $product->name }}
+                                    </a>
+                                </h3>
+                                <p class="product-brand text-muted small">
+                                    {{ $product->brand->name ?? 'No brand' }}
+                                </p>
+                                <div class="product-price">
+                                    <span class="sale-price">{{ number_format($product->price) }} VNĐ</span>
+                                </div>
+                                <form action="{{ route('cart.addToCart') }}" method="POST">
+                                    @csrf
+                                    <input type="text" hidden name="product_id" value="{{ $product->id }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-dark w-100">ADD TO CART</button>
+                                </form>
+>>>>>>> 7acfa734d5c3499fd250030a966e397b764a85bb
                             </div>
                         </div>
                         <div class="product-info py-2">
