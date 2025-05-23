@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Coupons;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -15,7 +17,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $status = $request->query('status');
-        $query = Order::where('user_id', Auth::id());
+        $query = Order::with(['voucher', 'orderProducts.product'])->where('user_id', Auth::id());
 
         if ($status && $status != 'all') {
             $query->where('status', $status);
@@ -37,10 +39,61 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
-        //
+        // Lấy giỏ hàng hiện tại theo user
+        $cart = Cart::with('items.product')->where('user_id', Auth::id())->first();
+
+        if (!$cart || $cart->items->isEmpty()) {
+            return redirect()->back()->with('error', 'Giỏ hàng đang trống.');
+        }
+
+        // Tính tổng tiền
+        $subtotal = $cart->items->sum(function ($item) {
+            return $item->product->price * $item->quantity;
+        });
+
+        $voucherCode = $request->input('voucher_code');
+        $discount = 0;
+
+        if ($voucherCode) {
+            $voucher = Coupons::where('code', $voucherCode)
+                ->where('expiration_date', '>=', now())
+                ->first();
+
+            if ($voucher && $subtotal >= $voucher->min_order_value) {
+                $discount = $subtotal * ($voucher->discount / 100);
+            }
+        }
+
+        $finalTotal = $subtotal - $discount;
+
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'voucher_code' => $voucherCode,
+            'discount_price' => $discount,
+            'price' => $finalTotal,
+            'payment_method' => $request->input('payment_method'),
+            'status' => 'pending',
+            'ordered_at' => now(),
+        ]);
+
+        // Gắn sản phẩm từ giỏ hàng vào đơn hàng
+        foreach ($cart->items as $item) {
+            $order->orderProducts()->create([
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $item->product->price,
+            ]);
+        }
+
+        // Xóa giỏ hàng sau khi đặt hàng
+        $cart->items()->delete();
+
+        return redirect()->route('orders.show', $order->id);
     }
+
 
     /**
      * Display the specified resource.
@@ -51,10 +104,6 @@ class OrderController extends Controller
         $order->load('orderProducts.product');
         return view('client.pages.orders.show', compact('order'));
     }
-
-
-
-
 
     /**
      * Show the form for editing the specified resource.

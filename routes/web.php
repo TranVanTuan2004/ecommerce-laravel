@@ -87,6 +87,7 @@ Route::group([
 ], function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/order-status/{id}', [OrderController::class, 'getOrderStatus']);
 });
 
 
