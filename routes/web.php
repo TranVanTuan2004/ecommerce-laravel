@@ -118,7 +118,7 @@ Route::group([
 Route::post('/send-message', [ChatController::class, 'sendMessage'])->middleware('auth');
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
-Route::post('/comment/{product_id}/{user_id}', [HomeController::class, 'storeReview'])->name('review.store');
+Route::post('/comment/{product_id}', [HomeController::class, 'storeReview'])->name('review.store');
 
 Route::group([
     'prefix' => '/auth',
@@ -126,7 +126,7 @@ Route::group([
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'postLogin'])->name('login.post');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.show');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
 });
