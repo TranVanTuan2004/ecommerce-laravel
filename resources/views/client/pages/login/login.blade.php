@@ -175,7 +175,8 @@
                 <form method="POST" action="{{ route('login') }}" class="form-card">
                     @csrf
                     <h3 style="text-align: center">Login Now</h3>
-                    <p style="text-align: center">Don't have an account? <a href="{{ route('register') }}">Register</a>
+                    <p style="text-align: center">Don't have an account? <a
+                            href="{{ route('register.show') }}">Register</a>
                     </p>
                     <div class="social-btns">
                         <button class="facebook" type="button">Facebook</button>
