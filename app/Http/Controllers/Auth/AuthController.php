@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
+use Illuminate\Support\Facades\Storage;
 
 
 use function Flasher\Toastr\Prime\toastr;
@@ -139,5 +140,111 @@ class AuthController extends Controller
         ]);
 
         return redirect()->route('login')->with('success', 'Xác thực email thành công! Bạn có thể đăng nhập.');
+    }
+
+
+    public function showProfile()
+    {
+        $user = Auth::user(); // Lấy thông tin người dùng đang đăng nhập
+        return view('client.pages.profile.profile', compact('user'));
+    }
+
+    public function changePassword(Request $request)
+    {
+        
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => [
+                'required',
+                'min:6',
+                'max:14',
+                'regex:/^\S*$/',
+                'different:old_password'  // Mật khẩu mới phải khác mật khẩu cũ
+            ],
+        ], [
+            'old_password.required' => 'Bạn phải nhập mật khẩu cũ.',
+            'new_password.required' => 'Bạn phải nhập mật khẩu mới.',
+            'new_password.min' => 'Mật khẩu mới phải có ít nhất 6 ký tự.',
+            'new_password.max' => 'Mật khẩu mới không được quá 14 ký tự.',
+            'new_password.different' => 'Mật khẩu mới phải khác mật khẩu cũ.',
+             'new_password.regex' => 'Mật khẩu không được chứa khoảng trắng.'
+        ]);
+
+
+        $user = Auth::user();
+
+        // Kiểm tra xem mật khẩu cũ có đúng không
+        if (!Hash::check($request->old_password, $user->password)) {
+            return back()->withErrors(['old_password' => 'Mật khẩu cũ không đúng.']);
+        }
+
+        // Cập nhật mật khẩu mới
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return back()->with('success', 'Mật khẩu đã được thay đổi thành công.');
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|min:3|max:20',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|regex:/^[0-9]{10,15}$/',
+        ], [
+            'name.required' => 'Vui lòng nhập họ và tên.',
+            'name.min' => 'Họ và tên phải có ít nhất :min ký tự.',
+            'name.max' => 'Họ và tên không được vượt quá :max ký tự.',
+            'address.required' => 'Vui lòng nhập địa chỉ.',
+            'phone.required' => 'Vui lòng nhập số điện thoại.',
+            'phone.regex' => 'Số điện thoại không hợp lệ (chỉ chấp nhận 10-15 chữ số).',
+        ]);
+
+        // Cập nhật thông tin người dùng
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Cập nhật thông tin thành công.');
+
+        Auth::user()->update($request->only('name', 'address', 'email', 'phone'));
+
+        return back()->with('success', 'Cập nhật thông tin thành công!');
+    }
+
+
+    //uploadAvatar
+    public function uploadAvatar(Request $request)
+    {
+        $request->validate(
+            [
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif',
+            ],
+            [
+                'avatar.required' => 'Vui lòng chọn ảnh.',
+                'avatar.image' => 'Tập tin phải là hình ảnh.',
+                'avatar.mimes' => 'Chỉ chấp nhận các định dạng: jpeg, png, jpg, gif.',
+            ]
+        );
+
+        $user = Auth::user();
+
+        // Xoá ảnh cũ nếu không phải mặc định
+        if ($user->avatar && $user->avatar !== 'default.png') {
+            $filename = basename($user->avatar);
+            Storage::disk('public')->delete('avatars/' . $filename);
+        }
+
+        $file = $request->file('avatar');
+        $filename = time() . '.' . $file->getClientOriginalExtension();
+
+        $file->storeAs('avatars', $filename, 'public');
+
+        $user->avatar = 'storage/avatars/' . $filename;
+        $user->save();
+
+        return back()->with('success', 'Ảnh đại diện đã được cập nhật!');
     }
 }

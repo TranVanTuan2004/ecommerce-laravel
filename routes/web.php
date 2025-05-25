@@ -59,22 +59,21 @@ Route::group([
 
 Route::group([
     'prefix' => '/orders',
-], function () {
-});
+], function () {});
 
 
 
 Route::group([
     'prefix' => '/user',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/order',
@@ -86,11 +85,11 @@ Route::group([
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () { });
+], function () {});
 
 
 
@@ -125,6 +124,15 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
 });
+
+Route::group(['prefix' => 'auth', 'middleware' => 'auth'], function () {
+    Route::get('/profile', [AuthController::class, 'showProfile'])->name('auth.profile');
+    Route::put('/profile/update', [AuthController::class, 'update'])->name('auth.profile.update');
+    Route::put('/profile/change-password', [AuthController::class, 'changePassword'])->name('auth.profile.changePassword');
+    Route::post('/profile/upload-avatar', [AuthController::class, 'uploadAvatar'])->name('auth.profile.uploadAvatar');
+});
+
+
 
 Route::group([
     'prefix' => '',
@@ -183,15 +191,15 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () { });
+    ], function () {});
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () { });
+    ], function () {});
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () { });
+    ], function () {});
 
     //Route danh cho top10
     Route::group(['prefix' => '/dashboard/top10'], function () {
