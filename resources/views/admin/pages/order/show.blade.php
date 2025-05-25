@@ -23,12 +23,15 @@
                         <select name="status" class="form-select form-select-sm me-2" onchange="this.form.submit()">
                             <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xác nhận
                             </option>
-                            <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử lý
+                            <option value="shipping" {{ $order->status == 'shipping' ? 'selected' : '' }}>Đã xác nhận
                             </option>
-                            <option value="shipping" {{ $order->status == 'shipping' ? 'selected' : '' }}>Đang giao</option>
+                            <option value="delivering" {{ $order->status == 'delivering' ? 'selected' : '' }}>Đang giao
+                            </option>
                             <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã giao</option>
-                            <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Đã huỷ</option>
+                            <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Hủy đơn hàng
+                            </option>
                         </select>
+
                     </form>
                 </div>
 
@@ -45,7 +48,16 @@
                             <tr>
                                 <th>Trạng thái</th>
                                 <td>
-                                    <span class="badge bg-info text-white">{{ $order->status_label }}</span>
+                                    <span
+                                        class="badge 
+                                        @if ($order->status == 'pending') bg-warning
+                                        @elseif($order->status == 'confirmed') bg-secondary
+                                        @elseif($order->status == 'shipping') bg-info
+                                        @elseif($order->status == 'delivering') bg-primary
+                                        @elseif($order->status == 'delivered') bg-success
+                                        @elseif($order->status == 'cancelled') bg-danger @endif
+                                        text-white">{{ $order->status_label }}</span>
+
                                 </td>
                             </tr>
                             <tr>

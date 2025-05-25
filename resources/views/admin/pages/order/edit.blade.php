@@ -57,15 +57,18 @@
                             <select id="status" name="status" class="form-control form-control-sm" required>
                                 <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xác nhận
                                 </option>
-                                <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử
+                                <option value="confirmed" {{ $order->status == 'confirmed' ? 'selected' : '' }}>Đã xác
+                                    nhận
                                     lý</option>
                                 <option value="shipping" {{ $order->status == 'shipping' ? 'selected' : '' }}>Đang giao
                                 </option>
                                 <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã giao
                                 </option>
-                                <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Đã huỷ
+                                <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Hủy đơn
+                                    hàng
                                 </option>
                             </select>
+
                         </div>
 
                         <div class="mb-3">

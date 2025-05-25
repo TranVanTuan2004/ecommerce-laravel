@@ -142,8 +142,12 @@
     }
 
     .d-flex.border.p-3.mb-3.align-items-center img {
-        border-radius: 6px;
+        width: 150px;
+        /* Nên cố định width hoặc max-width để tránh ảnh quá lớn */
+        height: 100px;
+        /* Cố định chiều cao để ảnh không làm layout lệch */
         object-fit: cover;
+        border-radius: 6px;
     }
 
     .d-flex.border.p-3.mb-3.align-items-center p {
@@ -265,6 +269,7 @@
                 @php
                     $statusColors = [
                         'pending' => 'warning',
+                        'confirmed' => 'secondary',
                         'shipping' => 'info',
                         'delivering' => 'primary',
                         'delivered' => 'success',
@@ -280,11 +285,12 @@
             {{-- Trạng thái đơn hàng chính --}}
             <div class="my-3">
                 <strong>Trạng thái: </strong>
-                <span id="order-status-text"
+                <span id="order-status-text" data-status="{{ $order->status }}"
                     class="badge rounded-pill px-3 py-2 bg-{{ $color }} text-white text-capitalize shadow-sm"
                     style="font-size: 0.875rem;">
                     {{ $order->status_label }}
                 </span>
+                x
 
             </div>
 
@@ -296,7 +302,7 @@
                     @foreach ($order->orderProducts as $item)
                         <div class="d-flex border p-3 mb-3 align-items-center">
                             <img src="{{ asset($item->product->image) }}" width="150" class="me-4"
-                                alt="Ảnh sản phẩm" />
+                                alt="Ảnh sản phẩm {{ $item->product->name }}" />
 
                             <div>
                                 <p>
@@ -353,7 +359,7 @@
             {{-- Nút hành động --}}
             <div class="mt-4">
                 @if ($order->status == 'delivered')
-                    <a href="{{ route('orders.review', $order) }}" class="btn btn-outline-primary">Đánh giá sản phẩm</a>
+                    <a href="{{ route('orders.show', $order) }}" class="btn btn-outline-primary">Đánh giá sản phẩm</a>
                 @elseif($order->status == 'cancelled')
                     <span class="text-muted">Đơn hàng đã hủy</span>
                 @endif
@@ -361,38 +367,41 @@
         </div>
     </div>
     <script>
-        function getStatusColor(statusText) {
-            switch (statusText) {
-                case 'Chờ xử lý':
-                case 'Chờ thanh toán':
+        function getStatusColor(statusCode) {
+            switch (statusCode) {
+                case 'pending':
                     return 'bg-warning';
-                case 'Đang vận chuyển':
-                case 'Vận chuyển':
+                case 'confirmed':
+                    return 'bg-secondary';
+                case 'shipping':
                     return 'bg-info';
-                case 'Chờ giao hàng':
+                case 'delivering':
                     return 'bg-primary';
-                case 'Đã giao':
-                case 'Hoàn thành':
+                case 'delivered':
                     return 'bg-success';
-                case 'Đã hủy':
+                case 'cancelled':
                     return 'bg-danger';
                 default:
                     return 'bg-secondary';
             }
         }
 
+
         function updateOrderStatus() {
             fetch(`/api/order-status/{{ $order->id }}`)
                 .then(response => response.json())
                 .then(data => {
                     const el = document.getElementById('order-status-text');
-                    if (el && el.textContent.trim() !== data.status) {
-                        el.textContent = data.status;
-                        el.className = 'badge text-white ' + getStatusColor(data.status);
+                    if (el && el.dataset.status !== data.status) {
+                        el.textContent = data.status_label; // Cập nhật text hiển thị (tiếng Việt)
+                        el.dataset.status = data.status; // Cập nhật trạng thái code mới
+                        el.className = 'badge text-white ' + getStatusColor(data.status_label);
                     }
                 })
+
                 .catch(err => console.error('Lỗi cập nhật trạng thái:', err));
         }
+
 
         setInterval(updateOrderStatus, 10000); // cập nhật mỗi 10 giây
     </script>
