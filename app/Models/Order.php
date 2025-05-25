@@ -19,7 +19,7 @@ class Order extends Model
         'ordered_at',
         'payment_method',
         'price',
-        'voucher_id',
+        'voucher_code',
         'discount_price',
     ];
 

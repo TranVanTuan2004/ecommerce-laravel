@@ -94,7 +94,7 @@ class CheckoutController extends Controller
             $discount = 0;
             $percent = 0;
 
-            $coupon = \App\Models\Coupons::where('code', $voucher_code)->first();
+            $coupon = Coupons::where('code', $voucher_code)->first();
             if ($coupon) {
                 $percent = $coupon->discount;
                 $discount = $totalPrice * ($percent / 100);
@@ -106,7 +106,8 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'user_id' => $user->id,
                 'price' => $finalPrice,
-                'discount' => $discount,
+                'discount_price' => $discount,
+                'voucher_code' => $voucher_code,
                 'payment_method' => 'cod',
                 'status' => 'pending'
             ]);
