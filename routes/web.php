@@ -9,6 +9,7 @@ use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Favorite\FavoriteController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\OrderControllerAdmin;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Top10Users\Top10UsersController;
 use App\Http\Controllers\Voucher\VoucherController;
@@ -191,7 +192,7 @@ Route::group([
         'prefix' => '/dashboard/product',
     ], function () {});
 
-    //Chức năng quản lí danh mục
+    //Chức năng quản lí danh mục_Quynh
     Route::group([
         'prefix' => '/dashboard/category',
     ], function () {
@@ -201,6 +202,18 @@ Route::group([
         Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
         Route::put('/{id}', [CategoryController::class, 'update'])->name('category.update');
         Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    });
+
+    //Chức năng quản lí đơn hàng_Quynh
+    Route::group([
+        'prefix' => '/dashboard/order',
+    ], function () {
+        Route::get('', [OrderControllerAdmin::class, 'index'])->name('order.index');
+        Route::get('{id}/show', [OrderControllerAdmin::class, 'show'])->name('order.show');
+        Route::get('{id}/edit', [OrderControllerAdmin::class, 'edit'])->name('order.edit');
+        Route::put('{id}/update-status', [OrderControllerAdmin::class, 'updateStatus'])->name('order.updateStatus');
+        Route::put('/order/{id}/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
+        Route::delete('{id}', [OrderControllerAdmin::class, 'destroy'])->name('order.destroy');
     });
 
     Route::group([

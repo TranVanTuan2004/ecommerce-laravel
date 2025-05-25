@@ -82,6 +82,13 @@ class Order extends Model
         };
     }
 
+    // Alias cho orderProducts, dùng trong view là $order->orderItems
+    public function getOrderItemsAttribute()
+    {
+        return $this->orderProducts;
+    }
+
+
     // Lấy ra sản phẩm chính để hiển thị (ví dụ: sản phẩm đầu tiên của đơn)
     public function getProductNameAttribute()
     {
