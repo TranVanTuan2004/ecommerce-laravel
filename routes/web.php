@@ -134,6 +134,15 @@ Route::group([
     Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
 });
 
+Route::group(['prefix' => 'auth', 'middleware' => 'auth'], function () {
+    Route::get('/profile', [AuthController::class, 'showProfile'])->name('auth.profile');
+    Route::put('/profile/update', [AuthController::class, 'update'])->name('auth.profile.update');
+    Route::put('/profile/change-password', [AuthController::class, 'changePassword'])->name('auth.profile.changePassword');
+    Route::post('/profile/upload-avatar', [AuthController::class, 'uploadAvatar'])->name('auth.profile.uploadAvatar');
+});
+
+
+
 Route::group([
     'prefix' => '',
     'middleware' => 'is_admin'
