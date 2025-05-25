@@ -49,7 +49,7 @@
     }
 
     .container>div.w-25 ul li a:hover {
-        background-color: #6366f1;
+        background-color: #7fcad2;
         /* tím chủ đạo */
         color: #fff;
     }
@@ -261,7 +261,7 @@
             <h4>Chi tiết Đơn hàng #{{ $order->id }}</h4>
 
             {{-- Thanh trạng thái --}}
-            @if ($order->status_for_bar)
+            @if ($order->status)
                 @php
                     $statusColors = [
                         'pending' => 'warning',
@@ -270,17 +270,18 @@
                         'delivered' => 'success',
                         'cancelled' => 'danger',
                     ];
-                    $color = $statusColors[$order->status_for_bar] ?? 'secondary';
+                    $color = $statusColors[$order->status] ?? 'secondary';
                 @endphp
                 <span class="badge bg-{{ $color }} text-white px-3 py-1 mb-3 d-inline-block">
-                    {{ ucfirst($order->status_for_bar) }}
+                    {{ ucfirst($order->status) }}
                 </span>
             @endif
 
             {{-- Trạng thái đơn hàng chính --}}
             <div class="my-3">
                 <strong>Trạng thái: </strong>
-                <span class="badge rounded-pill px-3 py-2 bg-{{ $color }} text-white text-capitalize shadow-sm"
+                <span id="order-status-text"
+                    class="badge rounded-pill px-3 py-2 bg-{{ $color }} text-white text-capitalize shadow-sm"
                     style="font-size: 0.875rem;">
                     {{ $order->status_label }}
                 </span>
@@ -294,15 +295,23 @@
                 @if ($order->orderProducts->count() > 0)
                     @foreach ($order->orderProducts as $item)
                         <div class="d-flex border p-3 mb-3 align-items-center">
-                            <img src="{{ optional($item->product)->image_url ?? 'https://via.placeholder.com/150' }}"
-                                width="150" class="me-4" alt="Ảnh sản phẩm" />
+                            <img src="{{ asset($item->product->image) }}" width="150" class="me-4"
+                                alt="Ảnh sản phẩm" />
 
                             <div>
-                                <p><strong>{{ optional($item->product)->name ?? 'Sản phẩm không xác định' }}</strong></p>
+                                <p>
+                                    <strong>
+                                        <a href="{{ route('productDetail', $item->product->id) }}"
+                                            class="text-dark fw-bold text-decoration-none">
+                                            {{ $item->product->name }}
+                                        </a>
+                                    </strong>
+                                </p>
+
                                 <p>Phân loại: {{ $item->variant ?? 'Chưa có' }}</p>
                                 <p>Số lượng: {{ $item->quantity }}</p>
                                 <p>Đơn giá: ₫{{ number_format($item->price ?? 0, 0, ',', '.') }}</p>
-                                <p class="fw-bold text-danger">Thành tiền:
+                                <p class="fw-bold text-success">Thành tiền:
                                     ₫{{ number_format($item->quantity * ($item->price ?? 0), 0, ',', '.') }}</p>
                             </div>
                         </div>
@@ -319,12 +328,19 @@
                     $discountAmount = max(0, $originalTotal - $order->price);
                 @endphp
 
-                <p><strong>Tổng tạm tính:</strong> ₫{{ number_format($originalTotal, 0, ',', '.') }}</p>
+                <p>
+                    <strong>Tổng tạm tính:</strong>
+                    ₫{{ number_format($originalTotal, 0, ',', '.') }}
+                </p>
 
-                @if ($order->voucher)
-                    <p><strong>Voucher:</strong> {{ optional($order->voucher)->code }}
-                        (-{{ optional($order->voucher)->discount }}%)</p>
+                @php
+                    $voucher = optional($order->voucher);
+                @endphp
+
+                @if ($voucher->code)
+                    <p><strong>Voucher:</strong> {{ $voucher->code }} (-{{ $voucher->discount }}%)</p>
                 @endif
+
 
                 @if ($discountAmount > 0)
                     <p><strong>Số tiền giảm giá:</strong> -₫{{ number_format($discountAmount, 0, ',', '.') }}</p>

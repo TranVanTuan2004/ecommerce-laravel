@@ -105,6 +105,25 @@ class OrderController extends Controller
         return view('client.pages.orders.show', compact('order'));
     }
 
+    public function cancel(Order $order)
+    {
+        // Kiểm tra người dùng có quyền hủy không
+        if ($order->user_id !== Auth::id()) {
+            abort(403, 'Bạn không có quyền hủy đơn hàng này.');
+        }
+
+        // Chỉ cho hủy nếu chưa giao
+        if (in_array($order->status, ['delivered', 'cancelled'])) {
+            return back()->with('error', 'Không thể hủy đơn hàng này.');
+        }
+
+        // Cập nhật trạng thái
+        $order->status = 'cancelled';
+        $order->save();
+
+        return back()->with('success', 'Đơn hàng đã được hủy thành công.');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

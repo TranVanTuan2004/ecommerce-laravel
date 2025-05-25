@@ -245,6 +245,15 @@
 @extends('client.master')
 
 @section('content')
+    {{-- THÔNG BÁO --}}
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
     <div class="container d-flex">
         {{-- Sidebar trái --}}
         <div class="w-25 p-3 border-end">
@@ -286,9 +295,8 @@
                     {{-- Header đơn hàng --}}
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex align-items-center gap-2">
-                            <img src="https://via.placeholder.com/28x18?text=Mall" alt="mall" height="18">
-                            <strong>Shop
-                                {{ optional(optional($order->orderProducts->first())->product)->shop_name ?? 'Official Store' }}</strong>
+                            <strong>Happy
+                                {{ optional(optional($order->orderProducts->first())->product)->shop_name ?? 'Shop' }}</strong>
                         </div>
 
                         <div class="text-end">
@@ -300,9 +308,9 @@
                                     'delivered' => 'success',
                                     'cancelled' => 'danger',
                                 ];
-                                $color = $statusColors[$order->status_for_bar] ?? 'secondary';
+                                $color = $statusColors[$order->status] ?? 'secondary';
                             @endphp
-                            <span
+                            <span id="order-status-{{ $order->id }}"
                                 class="badge rounded-pill px-3 py-2 bg-{{ $color }} text-white text-capitalize shadow-sm"
                                 style="font-size: 0.875rem;">
                                 {{ $order->status_label }}
@@ -314,20 +322,26 @@
                     {{-- Danh sách sản phẩm --}}
                     @foreach ($order->orderProducts as $item)
                         <div class="d-flex border-top pt-3 gap-3">
-                            <img src="{{ $item->product->image_url ?? 'https://via.placeholder.com/80' }}" width="80"
-                                height="80" class="border rounded" alt="Product Image">
+                            <img src="{{ asset($item->product->image) }}" width="80" height="80"
+                                class="border rounded" alt="Product Image">
                             <div class="flex-grow-1">
-                                <p class="mb-1 fw-bold">{{ $item->product->name }}</p>
+                                <p class="mb-1 fw-bold text-dark">{{ $item->product->name }}</p>
                                 <p class="mb-1">Phân loại hàng: {{ $item->variant ?? 'N/A' }}</p>
-                                <p class="mb-0">x{{ $item->quantity }}</p>
+                                <p class="mb-1">Số lượng: x{{ $item->quantity }}</p>
+                                <p class="mb-0">
+                                    Thành tiền:
+                                    <strong class="text-danger">
+                                        ₫{{ number_format($item->quantity * $item->product->price, 0, ',', '.') }}
+                                    </strong>
+                                </p>
                             </div>
                             <div class="text-end">
                                 @if ($item->product->old_price)
                                     <span
-                                        class="text-decoration-line-through text-muted">₫{{ number_format($item->product->old_price, 0, ',', '.') }}</span><br>
+                                        class="text-decoration-line-through text-muted d-block">₫{{ number_format($item->product->old_price, 0, ',', '.') }}</span>
                                 @endif
                                 <span
-                                    class="text-danger fw-bold">₫{{ number_format($item->product->price, 0, ',', '.') }}</span>
+                                    class="text-success fw-bold d-block">₫{{ number_format($item->product->price, 0, ',', '.') }}</span>
                             </div>
                         </div>
                     @endforeach
@@ -335,29 +349,48 @@
                     {{-- Thành tiền + nút --}}
                     <div class="border-top pt-3 d-flex justify-content-between align-items-center mt-3">
                         <div>
-                            <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-success">Xem chi
+                            <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-outline-success"
+                                style="display:inline-block;">Xem chi
                                 tiết</a>
+                            @if (!in_array($order->status, ['delivered', 'cancelled']))
+                                <form method="POST" action="{{ route('orders.cancel', $order->id) }}"
+                                    onsubmit="return confirm('Bạn có chắc muốn hủy đơn hàng này không?');"
+                                    style="display:inline-block;">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button class="btn btn-sm btn-outline-danger">Hủy đơn hàng</button>
+                                </form>
+                            @endif
                         </div>
-                        <div class="text-end">
-                            <p class="mb-1">Thành tiền:</p>
+                        <div class="text-end border-top pt-3">
+                            @php
+                                $originalTotal = $order->orderProducts->sum(
+                                    fn($item) => $item->quantity * $item->price,
+                                );
+                                $discountAmount = max(0, $originalTotal - $order->price);
+                            @endphp
 
-                            @if ($order->voucher)
-                                <p class="mb-1 text-success">
-                                    Voucher: <strong>{{ $order->voucher->code }}</strong> - Giảm giá:
-                                    -₫{{ number_format($order->discount_price, 0, ',', '.') }}
-                                </p>
-                            @endif
-
-                            @if ($order->discount_price > 0)
-                                <p class="mb-1 text-muted">
-                                    Giá gốc:
-                                    ₫{{ number_format($order->price + $order->discount_price, 0, ',', '.') }}
-                                </p>
-                            @endif
-
-                            <p class="text-danger fw-bold fs-5">
-                                Tổng thanh toán: ₫{{ number_format($order->price, 0, ',', '.') }}
+                            <p>
+                                <strong>Tổng tạm tính:</strong>
+                                ₫{{ number_format($originalTotal, 0, ',', '.') }}
                             </p>
+
+                            @php
+                                $voucher = optional($order->voucher);
+                            @endphp
+
+                            @if ($voucher->code)
+                                <p><strong>Voucher:</strong> {{ $voucher->code }} (-{{ $voucher->discount }}%)</p>
+                            @endif
+
+
+                            @if ($discountAmount > 0)
+                                <p><strong>Số tiền giảm giá:</strong> -₫{{ number_format($discountAmount, 0, ',', '.') }}
+                                </p>
+                            @endif
+
+                            <p class="text-danger fs-5 fw-bold">Tổng thanh toán:
+                                ₫{{ number_format($order->price, 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -409,5 +442,14 @@
         }
 
         setInterval(checkAllOrderStatuses, 10000); // 10 giây cập nhật 1 lần
+
+        // Thông báo tự động ẩn sau 4 giây 
+        setTimeout(() => {
+            document.querySelectorAll('.alert').forEach(alert => {
+                alert.style.transition = 'opacity 0.5s';
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 4000); // 4 giây
     </script>
 @endsection
