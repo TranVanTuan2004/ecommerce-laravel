@@ -13,6 +13,11 @@ return new class extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            // Thêm voucher
+            $table->string('voucher_code')->nullable(); // Mã voucher
+            $table->decimal('discount_price', 10, 3)->default(0); // Số tiền được giảm
+
             $table->decimal('price', 10, 3)->default(0);
             $table->string('payment_method')->nullable();
             $table->string('status')->default('pending');

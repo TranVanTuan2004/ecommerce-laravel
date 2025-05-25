@@ -8,7 +8,6 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Favorite\FavoriteController;
 use App\Http\Controllers\Home\HomeController;
-use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Top10Users\Top10UsersController;
@@ -19,6 +18,7 @@ use App\Http\Controllers\Category\CategoryController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Order\OrderController;
 
 // Client
 Route::group([
@@ -72,31 +72,33 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/order',
 ], function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::get('/order-status/{id}', [OrderController::class, 'getOrderStatus']);
+    Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 });
 
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () { });
+], function () {});
 
 
 
@@ -187,7 +189,7 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () { });
+    ], function () {});
 
     //Chức năng quản lí danh mục
     Route::group([
@@ -203,7 +205,7 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () { });
+    ], function () {});
 
     //Route danh cho top10
     Route::group(['prefix' => '/dashboard/top10'], function () {
