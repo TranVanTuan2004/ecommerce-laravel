@@ -83,7 +83,7 @@
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li> <a href={{ route('oder.index') }}>Quản lý Đơn Hàng</a></li>
+                    <li> <a href={{ route('order.index') }}>Quản lý Đơn Hàng</a></li>
                 </ul>
             </li>
 

@@ -105,7 +105,7 @@
                                                         {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xác nhận
                                                     </option>
                                                     <option value="processing"
-                                                        {{ $order->status == 'processing' ? 'selected' : '' }}>Đang xử lý
+                                                        {{ $order->status == 'processing' ? 'selected' : '' }}>Xác nhận đơn
                                                     </option>
                                                     <option value="shipping"
                                                         {{ $order->status == 'shipping' ? 'selected' : '' }}>Đang giao

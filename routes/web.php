@@ -73,15 +73,15 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/order',
@@ -95,11 +95,11 @@ Route::group([
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {});
+], function () { });
 
 
 
@@ -190,7 +190,7 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () {});
+    ], function () { });
 
     //Chức năng quản lí danh mục_Quynh
     Route::group([
@@ -218,7 +218,7 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () {});
+    ], function () { });
 
     //Route danh cho top10
     Route::group(['prefix' => '/dashboard/top10'], function () {
