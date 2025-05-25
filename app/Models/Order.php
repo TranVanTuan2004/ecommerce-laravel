@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Voucher\VoucherController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Voucher;
 
 class Order extends Model
 {
@@ -16,6 +19,8 @@ class Order extends Model
         'ordered_at',
         'payment_method',
         'price',
+        'voucher_id',
+        'discount_price',
     ];
 
 
@@ -46,6 +51,12 @@ class Order extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function voucher()
+    {
+        return $this->belongsTo(Coupons::class);
+    }
+
+
     // Trạng thái dạng đẹp cho giao diện
     public function getStatusLabelAttribute()
     {
@@ -62,8 +73,6 @@ class Order extends Model
     // Trạng thái dùng cho thanh trạng thái (giữ nguyên status hoặc có thể map)
     public function getStatusForBarAttribute()
     {
-
-
         return match ($this->status) {
             'pending' => 'ordered',
             'shipping' => 'shipping',
@@ -72,6 +81,13 @@ class Order extends Model
             default => 'ordered',
         };
     }
+
+    // Alias cho orderProducts, dùng trong view là $order->orderItems
+    public function getOrderItemsAttribute()
+    {
+        return $this->orderProducts;
+    }
+
 
     // Lấy ra sản phẩm chính để hiển thị (ví dụ: sản phẩm đầu tiên của đơn)
     public function getProductNameAttribute()
@@ -112,5 +128,18 @@ class Order extends Model
         return $this->orderProducts->sum(function ($item) {
             return $item->quantity * $item->price;
         });
+    }
+
+    public function getHasDiscountAttribute()
+    {
+        return $this->discount_price > 0 && $this->voucher;
+    }
+
+    public function getOrderStatus($id)
+    {
+        $order = Order::findOrFail($id);
+        return response()->json([
+            'status' => $order->status_text //Lấy qua assessor
+        ]);
     }
 }

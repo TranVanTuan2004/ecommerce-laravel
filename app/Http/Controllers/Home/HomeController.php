@@ -9,17 +9,16 @@ use App\Models\Category;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use User;
 
 
 
 class HomeController extends Controller
 {
-    public function index()
-    {
-        $products = Product::latest()->paginate(10);
-        return view('client.pages.home.homeShop', compact('products'));
-    }
+    // public function index()
+    // {
+    //     $products = Product::latest()->paginate(10);
+    //     return view('client.pages.home.home', compact('products'));
+    // }
 
     public function showProduct(Request $request)
     {
@@ -101,9 +100,6 @@ class HomeController extends Controller
     public function storeReview($product_id, Request $request)
     {
         $user_id = Auth::id();
-        if (is_null($user_id)) {
-            return redirect()->route('login')->with('error', "Ban phai dang nhap");
-        }
         $request->validate([
             'review_text' => 'required|string|max:1000',
             'rating' => 'required|integer|min:1|max:5',

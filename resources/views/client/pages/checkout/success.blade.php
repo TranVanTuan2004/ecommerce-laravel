@@ -13,7 +13,7 @@
             <p><strong>Ngày đặt:</strong> {{ $order->created_at }}</p>
             <p><strong>Tổng tiền:</strong> <span class="text-danger">{{ number_format($order?->price, 3) }}đ</span></p>
             <p><strong>Trạng thái:</strong> <span class="text-success">Đang xử lý</span></p>
-            <p><strong>Phương thức thanh toán:</strong>Thanh toán khi nhận hàng {{ $order->payment_method }}</p>
+            <p><strong>Phương thức thanh toán:</strong> Thanh toán khi nhận hàng ({{ $order->payment_method }})</p>
         </div>
 
         <div class="mt-4">
