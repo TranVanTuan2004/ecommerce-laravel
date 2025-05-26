@@ -33,7 +33,7 @@
                             </colgroup>
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="text-center"><input type="checkbox" id="checkAll">
+                                    <th class="text-center">STT
                                     </th>
                                     <th class="text-center">Tên Brand</th>
                                     <th class="text-center" width="200px">Logo</th>
@@ -43,10 +43,12 @@
                             </thead>
                             <tbody>
                                 @if (isset($brands) && is_object($brands))
+                                    @php
+                                        $start = ($brands->currentPage() - 1) * $brands->perPage();
+                                    @endphp
                                     @foreach ($brands as $brand)
                                         <tr>
-                                            <td style="vertical-align: middle;"><input type="checkbox" class="checkBoxItem">
-                                            </td>
+                                            <td style="vertical-align: middle;">{{ $start + $loop->iteration }}</td>
                                             <td style="vertical-align: middle;">{{ $brand->name }}</td>
                                             <td style="vertical-align: middle;">
                                                 <img src={{ asset('storage/' . $brand->logo) }}
@@ -87,4 +89,11 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('brand-form').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true; // disable button để tránh click lại
+            btn.innerText = 'Đang xử lý...'; // thay đổi text để người dùng biết
+        });
+    </script>
 @endsection

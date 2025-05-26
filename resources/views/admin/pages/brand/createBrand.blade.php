@@ -31,7 +31,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('brand.store') }}" enctype="multipart/form-data">
+                <form method="POST" id="brand-form" action="{{ route('brand.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group mb-3">
@@ -53,10 +53,17 @@
 
                     <div class="d-flex justify-content-end">
                         <a href="{{ route('brand.index') }}" class="btn btn-secondary me-2">Quay lại</a>
-                        <button type="submit" class="btn btn-success">Thêm Brand</button>
+                        <button type="submit" id="submit-btn" class="btn btn-success">Thêm Brand</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('brand-form').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true; // disable button để tránh click lại
+            btn.innerText = 'Đang xử lý...'; // thay đổi text để người dùng biết
+        });
+    </script>
 @endsection

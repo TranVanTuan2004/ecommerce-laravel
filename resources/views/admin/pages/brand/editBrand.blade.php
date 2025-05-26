@@ -36,7 +36,7 @@
                 <form method="POST" action="{{ route('brand.update', $brand->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-
+                    <input type="hidden" name="updated_at" value="{{ $brand->updated_at }}">
                     <div class="form-group mb-3">
                         <label for="name">Tên Brand</label>
                         <input type="text" name="name" id="name" class="form-control"
