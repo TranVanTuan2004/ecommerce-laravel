@@ -239,6 +239,12 @@
         .container>div.w-25 {
             border-bottom: 1px solid #e5e7eb;
         }
+
+        .container>div.w-25 ul li a.active-sidebar {
+            background-color: #6366f1;
+            color: #fff;
+        }
+
     }
 </style>
 
@@ -261,7 +267,10 @@
             <ul class="list-unstyled">
                 <li><a href="#"><i class="ri-notification-3-line"></i> Thông báo</a></li>
                 <li><a href="#"><i class="ri-account-circle-line"></i> Tài khoản Của Tôi</a></li>
-                <li><a href="{{ route('orders.index') }}"><i class="ri-store-line"></i> Đơn Mua</a></li>
+                <li><a href="{{ route('orders.index') }}"
+                        class="{{ request()->routeIs('orders.*') ? 'active-sidebar' : '' }}"><i class="ri-store-line"></i>
+                        Đơn Mua</a></li>
+
             </ul>
         </div>
 
@@ -272,7 +281,8 @@
                 @php
                     $statuses = [
                         'all' => 'Tất cả',
-                        'pending' => 'Chờ thanh toán',
+                        'pending' => 'Chờ xác nhận',
+                        'confirmed' => 'Đã xác nhận',
                         'shipping' => 'Vận chuyển',
                         'delivering' => 'Chờ giao hàng',
                         'delivered' => 'Hoàn thành',
@@ -303,6 +313,7 @@
                             @php
                                 $statusColors = [
                                     'pending' => 'warning',
+                                    'confirmed' => 'secondary',
                                     'shipping' => 'info',
                                     'delivering' => 'primary',
                                     'delivered' => 'success',
@@ -310,11 +321,12 @@
                                 ];
                                 $color = $statusColors[$order->status] ?? 'secondary';
                             @endphp
-                            <span id="order-status-{{ $order->id }}"
+                            <span id="order-status-{{ $order->id }}" data-status="{{ $order->status }}"
                                 class="badge rounded-pill px-3 py-2 bg-{{ $color }} text-white text-capitalize shadow-sm"
                                 style="font-size: 0.875rem;">
                                 {{ $order->status_label }}
                             </span>
+
 
                         </div>
                     </div>
@@ -325,7 +337,14 @@
                             <img src="{{ asset($item->product->image) }}" width="80" height="80"
                                 class="border rounded" alt="Product Image">
                             <div class="flex-grow-1">
-                                <p class="mb-1 fw-bold text-dark">{{ $item->product->name }}</p>
+                                <p>
+                                    <strong>
+                                        <a href="{{ route('productDetail', $item->product->id) }}"
+                                            class="text-dark fw-bold text-decoration-none">
+                                            {{ $item->product->name }}
+                                        </a>
+                                    </strong>
+                                </p>
                                 <p class="mb-1">Phân loại hàng: {{ $item->variant ?? 'N/A' }}</p>
                                 <p class="mb-1">Số lượng: x{{ $item->quantity }}</p>
                                 <p class="mb-0">
@@ -409,20 +428,31 @@
     <script>
         const orderIds = @json($orders->pluck('id'));
 
-        function getStatusColor(status) {
-            switch (status) {
-                case 'Chờ thanh toán':
-                    return 'text-warning';
-                case 'Vận chuyển':
-                    return 'text-info';
-                case 'Chờ giao hàng':
-                    return 'text-primary';
-                case 'Hoàn thành':
-                    return 'text-success';
-                case 'Đã hủy':
-                    return 'text-danger';
+        const statusLabels = {
+            pending: 'Chờ xác nhận',
+            confirmed: 'Đã xác nhận',
+            shipping: 'Vận chuyển',
+            delivering: 'Chờ giao hàng',
+            delivered: 'Hoàn thành',
+            cancelled: 'Đã hủy',
+        };
+
+        function getStatusBadgeClass(statusKey) {
+            switch (statusKey) {
+                case 'pending':
+                    return 'badge bg-warning';
+                case 'confirmed':
+                    return 'badge bg-secondary';
+                case 'shipping':
+                    return 'badge bg-info';
+                case 'delivering':
+                    return 'badge bg-primary';
+                case 'delivered':
+                    return 'badge bg-success';
+                case 'cancelled':
+                    return 'badge bg-danger';
                 default:
-                    return 'text-secondary';
+                    return 'badge bg-secondary';
             }
         }
 
@@ -432,9 +462,11 @@
                     .then(res => res.json())
                     .then(data => {
                         const el = document.getElementById(`order-status-${id}`);
-                        if (el && el.textContent.trim() !== data.status) {
-                            el.textContent = data.status;
-                            el.className = getStatusColor(data.status) + ' fw-bold';
+                        if (el && el.dataset.status !== data.status) {
+                            el.textContent = statusLabels[data.status] || 'Không xác định';
+                            el.className = getStatusBadgeClass(data.status) +
+                                ' rounded-pill px-3 py-2 text-white text-capitalize shadow-sm';
+                            el.dataset.status = data.status; // cập nhật data-status
                         }
                     })
                     .catch(err => console.error('Lỗi trạng thái đơn hàng:', err));

@@ -61,7 +61,8 @@ class Order extends Model
     public function getStatusLabelAttribute()
     {
         return match ($this->status) {
-            'pending' => 'Chờ xử lý',
+            'pending' => 'Chờ xác nhận',
+            'confirmed' => 'Đã xác nhận',
             'shipping' => 'Đang vận chuyển',
             'delivering' => 'Chờ giao hàng',
             'delivered' => 'Đã giao',
@@ -139,7 +140,7 @@ class Order extends Model
     {
         $order = Order::findOrFail($id);
         return response()->json([
-            'status' => $order->status_text //Lấy qua assessor
+            'status' => $order->status_label //Lấy qua assessor
         ]);
     }
 }

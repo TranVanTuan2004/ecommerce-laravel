@@ -104,43 +104,49 @@
                                                     <option value="pending"
                                                         {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xác nhận
                                                     </option>
-                                                    <option value="processing"
-                                                        {{ $order->status == 'processing' ? 'selected' : '' }}>Xác nhận đơn
+                                                    <option value="confirmed"
+                                                        {{ $order->status == 'confirmed' ? 'selected' : '' }}>Đã xác nhận
                                                     </option>
                                                     <option value="shipping"
-                                                        {{ $order->status == 'shipping' ? 'selected' : '' }}>Đang giao
+                                                        {{ $order->status == 'shipping' ? 'selected' : '' }}>Đang vận
+                                                        chuyển
+                                                    </option>
+                                                    <option value="delivering"
+                                                        {{ $order->status == 'delivering' ? 'selected' : '' }}>Đang giao
                                                     </option>
                                                     <option value="delivered"
                                                         {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã giao
                                                     </option>
                                                     <option value="cancelled"
-                                                        {{ $order->status == 'cancelled' ? 'selected' : '' }}>Đã huỷ
+                                                        {{ $order->status == 'cancelled' ? 'selected' : '' }}>Huỷ đơn hàng
                                                     </option>
                                                 </select>
+
                                             </form>
                                         </td>
                                         <td>
                                             @php
                                                 $statusLabels = [
                                                     'pending' => 'Chờ xác nhận',
-                                                    'processing' => 'Đang xử lý',
-                                                    'shipping' => 'Đang giao',
+                                                    'confirmed' => 'Đã xác nhận',
+                                                    'shipping' => 'Đang vận chuyển',
+                                                    'delivering' => 'Đang giao',
                                                     'delivered' => 'Đã giao',
-                                                    'cancelled' => 'Đã huỷ',
-                                                    'completed' => 'Hoàn tất',
+                                                    'cancelled' => 'Huỷ đơn hàng',
                                                 ];
                                             @endphp
 
                                             <span
                                                 class="badge 
-                                                @if ($order->status == 'pending') badge-warning 
-                                                @elseif($order->status == 'processing') badge-info 
-                                                @elseif($order->status == 'shipping') badge-primary 
-                                                @elseif($order->status == 'delivered') badge-success 
-                                                @elseif($order->status == 'cancelled') badge-danger 
-                                                @elseif($order->status == 'completed') badge-secondary @endif">
-                                                {{ $statusLabels[$order->status] ?? ucfirst($order->status) }}
+                                                @if ($order->status == 'pending') badge-warning
+                                                @elseif($order->status == 'confirmed') badge-secondary
+                                                @elseif($order->status == 'shipping') badge-info
+                                                @elseif($order->status == 'delivering') badge-primary
+                                                @elseif($order->status == 'delivered') badge-success
+                                                @elseif($order->status == 'cancelled') badge-danger @endif">
+                                                {{ $order->status_label }}
                                             </span>
+
 
                                         </td>
                                         <td>{{ ucfirst($order->payment_method) }}</td>
@@ -156,19 +162,6 @@
                                                     class="btn btn-sm btn-warning" title="Sửa">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-
-
-                                                @if ($order->status != 'cancelled' && $order->status != 'delivered')
-                                                    <form action="{{ route('order.cancel', $order->id) }}" method="POST"
-                                                        style="display:inline-block;">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="btn btn-sm btn-danger" title="Hủy đơn"
-                                                            onclick="return confirm('Bạn có chắc muốn hủy đơn này?')">
-                                                            <i class="fa fa-ban"></i>
-                                                        </button>
-                                                    </form>
-                                                @endif
                                             </div>
                                         </td>
 
@@ -193,6 +186,12 @@
 
 @push('scripts')
     <script>
+        document.getElementById('checkAll').addEventListener('change', function() {
+            const checked = this.checked;
+            document.querySelectorAll('.checkBoxItem').forEach(cb => cb.checked = checked);
+        });
+
+
         function toggleMoreProducts(orderId) {
             const items = document.querySelectorAll('.extra-products-' + orderId);
             items.forEach(item => {

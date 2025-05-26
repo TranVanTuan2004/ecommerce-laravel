@@ -30,7 +30,7 @@ class OrderControllerAdmin extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:pending,processing,shipping,delivered,cancelled'
+            'status' => 'required|in:pending,confirmed,shipping,delivering,delivered,cancelled,'
         ]);
 
         $order = Order::findOrFail($id);
@@ -51,15 +51,6 @@ class OrderControllerAdmin extends Controller
         }
 
         return redirect()->back()->with('success', 'Đơn hàng đã được hủy.');
-    }
-
-    public function update(Request $request, $id)
-    {
-        $order = Order::findOrFail($id);
-        $order->status = $request->input('status');
-        $order->save();
-
-        return redirect()->back()->with('success', 'Cập nhật trạng thái thành công!');
     }
 
     // Hiển thị form sửa đơn hàng (nếu cần)
