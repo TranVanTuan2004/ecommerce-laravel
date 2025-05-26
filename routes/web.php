@@ -24,6 +24,7 @@ use App\Http\Controllers\Order\OrderController;
 // Client
 Route::group([
     'prefix' => '/cart',
+    'middleware' => 'is_login'
 ], function () {
     Route::get('/', [CartController::class, 'index'])->name('cart.index');
     Route::post('/addToCart', [CartController::class, 'addToCart'])->name('cart.addToCart');
@@ -85,6 +86,7 @@ Route::group([
 
 Route::group([
     'prefix' => '/order',
+    'middleware' => 'is_login'
 ], function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
@@ -134,7 +136,7 @@ Route::group([
     Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
 });
 
-Route::group(['prefix' => 'auth', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'auth', 'middleware' => 'is_login'], function () {
     Route::get('/profile', [AuthController::class, 'showProfile'])->name('auth.profile');
     Route::put('/profile/update', [AuthController::class, 'update'])->name('auth.profile.update');
     Route::put('/profile/change-password', [AuthController::class, 'changePassword'])->name('auth.profile.changePassword');

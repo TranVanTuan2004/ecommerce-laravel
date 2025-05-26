@@ -50,11 +50,10 @@ class AuthController extends Controller
             }
             $request->session()->regenerate();
 
-            toastr()->success('Hello ' . $user->name);
             if ($user->role === 'admin') {
-                return redirect()->intended('/dashboard');
+                return redirect()->route('dashboard')->with(['success' => 'Hello ' . $user->name]);
             } else {
-                return redirect()->intended('/');
+                return redirect()->route('homePage')->with(['success' => 'Hello ' . $user->name]);
             }
         } else {
             toastr()->error('Thông tin đăng nhập không chính xác');
@@ -68,8 +67,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        toastr()->success('Đăng xuất thành công');
-        return redirect()->route('homePage');
+        return redirect()->route('homePage')->with(['success' => 'Đăng xuất thành công']);
     }
 
     //chức năng đăng ký
@@ -153,7 +151,7 @@ class AuthController extends Controller
 
     public function changePassword(Request $request)
     {
-        
+
         $request->validate([
             'old_password' => 'required',
             'new_password' => [
@@ -169,7 +167,7 @@ class AuthController extends Controller
             'new_password.min' => 'Mật khẩu mới phải có ít nhất 6 ký tự.',
             'new_password.max' => 'Mật khẩu mới không được quá 14 ký tự.',
             'new_password.different' => 'Mật khẩu mới phải khác mật khẩu cũ.',
-             'new_password.regex' => 'Mật khẩu không được chứa khoảng trắng.'
+            'new_password.regex' => 'Mật khẩu không được chứa khoảng trắng.'
         ]);
 
 
