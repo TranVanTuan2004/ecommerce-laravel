@@ -6,7 +6,8 @@
 @include('client.components.search_form', ['categories' => $categories, 'brands' => $brands])
 @include('client.components.chat')
 
-
+<!-- Phần hiển thị sản phẩm như hiện tại -->
+>>>>>>> 44208922116de257651089850493e7697c141733
 <div class="container my-4">
     <h2 class="mb-4">
         @if (request()->category_id)
