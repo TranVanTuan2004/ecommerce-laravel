@@ -44,7 +44,7 @@
                                         <td class="align-middle">{{ $user->email }}</td>
                                         <td class="text-end align-middle fw-{{ $index < 3 ? 'bold' : 'normal' }}">
                                             <span class="{{ $index < 3 ? 'text-primary' : '' }}">
-                                                {{ number_format($user->total_spent, 0, ',', '.') }}₫
+                                                {{ number_format($user->total_spent, 0, ',', ',') }},000₫
                                             </span>
                                         </td>
                                     </tr>
@@ -100,7 +100,7 @@
                         @foreach ($topUsers as $user)
                             "{{ $user->name }}",
                         @endforeach
-                                                                                                            ],
+                                                                                                                    ],
                     crosshair: true,
                     accessibility: { description: 'Tên người dùng' }
                 },
@@ -118,7 +118,7 @@
                         @foreach ($topUsers as $user)
                             {{ $user->total_spent }},
                         @endforeach
-                                                                                                            ],
+                                                                                                                    ],
                     color: '#007bff' // màu xanh dương
                 }]
             });

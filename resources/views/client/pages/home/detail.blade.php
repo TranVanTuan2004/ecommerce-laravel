@@ -263,20 +263,20 @@
             <!-- Product Images -->
             <div class="product-gallery">
                 <div class="product-image">
-                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+                    <img src="{{ asset($product->image) }}" alt="Avatar">
 
                 </div>
                 <div class="product-image">
-                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+                    <img src="{{ asset($product->image) }}" alt="Avatar">
 
 
                 </div>
                 <div class="product-image">
-                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+                    <img src="{{ asset($product->image) }}" alt="Avatar">
 
                 </div>
                 <div class="product-image">
-                    <img src="{{ asset('storage/product.jpg') }}" alt="Avatar">
+                    <img src="{{ asset($product->image) }}" alt="Avatar">
 
                 </div>
             </div>

@@ -1,4 +1,22 @@
 <style>
+    .star {
+        font-size: 28px;
+        cursor: pointer;
+        color: transparent;
+        /* ẩn màu fill mặc định */
+        -webkit-text-stroke: 1.5px gold;
+        /* viền ngoài vàng */
+        transition: color 0.3s, -webkit-text-stroke-color 0.3s;
+    }
+
+    /* Khi active (đã được chọn) */
+    .star.fas {
+        color: gold;
+        /* fill vàng */
+        -webkit-text-stroke: 0;
+        /* bỏ viền */
+    }
+
     /* === Toàn bộ layout container === */
     .container.d-flex {
         min-height: 100vh;
@@ -245,6 +263,9 @@
             color: #fff;
         }
 
+
+
+
     }
 </style>
 
@@ -334,8 +355,8 @@
                     {{-- Danh sách sản phẩm --}}
                     @foreach ($order->orderProducts as $item)
                         <div class="d-flex border-top pt-3 gap-3">
-                            <img src="{{ asset($item->product->image) }}" width="80" height="80"
-                                class="border rounded" alt="Product Image">
+                            <img src="{{ asset($item->product->image) }}" width="80" height="80" class="border rounded"
+                                alt="Product Image">
                             <div class="flex-grow-1">
                                 <p>
                                     <strong>
@@ -363,6 +384,14 @@
                                     class="text-success fw-bold d-block">₫{{ number_format($item->product->price, 0, ',', '.') }}</span>
                             </div>
                         </div>
+                        @if ($order->status === 'delivered')
+                            <div class="text-end mt-2">
+                                <button class="btn btn-sm btn-outline-primary px-3 py-1 mb-10"
+                                    onclick="openReviewForm({{ $item->product->id }})">
+                                    Đánh giá
+                                </button>
+                            </div>
+                        @endif
                     @endforeach
 
                     {{-- Thành tiền + nút --}}
@@ -485,3 +514,78 @@
         }, 4000); // 4 giây
     </script>
 @endsection
+
+<div id="reviewModal" class="modal"
+    style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.4); z-index:9999;">
+    <div class="modal-content"
+        style="background:#fff; margin:10% auto; padding:20px; border-radius:8px; width:90%; max-width:500px; position:relative;">
+        <span class="close" onclick="closeReviewForm()"
+            style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer;">&times;</span>
+        <form id="reviewForm" method="POST" action="">
+            @csrf
+            <input type="hidden" name="product_id" id="reviewProductId">
+            <div class="user-info mb-2">
+                <strong>{{ Auth::check() ? Auth::user()->name : 'Khách' }}</strong>
+                <span class="badge bg-secondary">{{ Auth::check() ? Auth::user()->role : 'Unknown' }}</span>
+            </div>
+            <div class="mb-2">
+                <textarea name="review_text" rows="4" placeholder="Viết đánh giá của bạn..." required
+                    class="form-control"></textarea>
+            </div>
+            <input type="hidden" name="rating" id="ratingInput" value="0">
+            <div class="rating" id="starContainer">
+                <i class="far fa-star star" data-value="1"></i>
+                <i class="far fa-star star" data-value="2"></i>
+                <i class="far fa-star star" data-value="3"></i>
+                <i class="far fa-star star" data-value="4"></i>
+                <i class="far fa-star star" data-value="5"></i>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Gửi đánh giá</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function openReviewForm(productId) {
+        const form = document.getElementById('reviewForm');
+        form.action = `/order/comment/${productId}`; // hoặc dùng route nếu muốn: "{{ route('review.store', ':id') }}".replace(':id', productId)
+        document.getElementById('reviewProductId').value = productId;
+        document.getElementById('reviewModal').style.display = 'block';
+    }
+
+    function closeReviewForm() {
+        document.getElementById('reviewModal').style.display = 'none';
+        document.getElementById('reviewForm').reset();
+        document.querySelectorAll('.star').forEach(star => {
+            star.classList.remove('fas');
+            star.classList.add('far');
+        });
+        document.getElementById('ratingInput').value = 0;
+    }
+
+    document.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', function () {
+            const value = this.getAttribute('data-value');
+            document.getElementById('ratingInput').value = value;
+
+            document.querySelectorAll('.star').forEach(s => {
+                s.classList.remove('fas');
+                s.classList.add('far');
+            });
+
+            for (let i = 1; i <= value; i++) {
+                document.querySelector(`.star[data-value="${i}"]`).classList.add('fas');
+                document.querySelector(`.star[data-value="${i}"]`).classList.remove('far');
+            }
+        });
+    });
+
+    // Đóng khi click ngoài modal
+    window.addEventListener('click', function (e) {
+        const modal = document.getElementById('reviewModal');
+        if (e.target === modal) {
+            closeReviewForm();
+        }
+    });
+</script>
