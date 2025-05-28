@@ -195,7 +195,7 @@
             <div class="mb-1">Tổng tiền hàng: <strong>đ{{ number_format($totalPrice, 0) }}</strong></div>
             <div class="mb-1 discount">Giảm giá: <strong>₫0</strong></div>
             <div class="h5 text-danger total">Tổng thanh toán:
-                <strong>₫{{ number_format($totalPrice, 3) }}</strong>
+                <strong>₫{{ number_format($totalPrice, 0) }}</strong>
             </div>
         </div>
 
