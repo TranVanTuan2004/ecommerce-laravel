@@ -56,7 +56,9 @@
         </div>
         @endforelse
     </div>
+
 </div>
+
 
 <!-- Pagination -->
 <div class="pagination-container">
