@@ -22,10 +22,11 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->sentence(),
-            'price' => $this->faker->randomFloat(2, 10, 1000), // từ 10 đến 1000
+            'price' => $this->faker->randomFloat(2, 10, 1000),
             'category_id' => Category::inRandomOrder()->first()?->id,
             'brand_id' => Brand::inRandomOrder()->first()?->id,
             'slide_id' => Slide::inRandomOrder()->first()?->id,
+            'views' => $this->faker->numberBetween(0, 5000),
         ];
     }
 }

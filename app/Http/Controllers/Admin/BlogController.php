@@ -37,7 +37,7 @@ class BlogController extends Controller
         Blog::create([
             'title' => $request->title,
             'content' => $request->content,
-            'image' => isset($imagePath) ? Storage::url($imagePath) : null,
+            'image' => 'storage/' . $imagePath, // lưu đường dẫn tương đối
             'user_id' => Auth::id(),
         ]);
 
@@ -63,8 +63,8 @@ class BlogController extends Controller
         $blog->content = $request->content;
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('blog_images', 'public');
-            $blog->image = Storage::url($imagePath); // Lưu đường dẫn ảnh
+            $path = $request->file('image')->store('blog_images', 'public');
+            $blog->image = 'storage/' . $path;
         }
 
         $blog->save(); // Lưu cập nhật

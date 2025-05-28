@@ -12,7 +12,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->integer('views')->default(0); // độ phổ biến
+            $table->unsignedInteger('views')->default(0);
             $table->decimal('discount', 10, 2)->nullable(); // giảm giá
         });
     }

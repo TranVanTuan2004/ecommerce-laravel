@@ -7,8 +7,6 @@
                     <select class="form-select" name="sort_by" onchange="this.form.submit()">
                         <option value="">-- Sắp xếp --</option>
                         <option value="popular" {{ request('sort_by') == 'popular' ? 'selected' : '' }}>Phổ biến</option>
-                        <option value="rating" {{ request('sort_by') == 'rating' ? 'selected' : '' }}>Đánh giá</option>
-                        <option value="latest" {{ request('sort_by') == 'latest' ? 'selected' : '' }}>Mới nhất</option>
                         <option value="price_asc" {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần</option>
                         <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Giá giảm dần</option>
                     </select>

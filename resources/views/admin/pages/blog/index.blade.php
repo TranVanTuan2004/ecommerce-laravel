@@ -39,7 +39,7 @@
                 <tbody>
                     @forelse ($blogs as $key => $blog)
                     <tr>
-                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $blogs->firstItem() + $key }}</td>
                         <td>{{ $blog->title }}</td>
                         <td>
                             @if ($blog->image)
