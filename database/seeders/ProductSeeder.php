@@ -138,7 +138,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 2,
                 'brand_id' => 3,
                 'slide_id' => 1,
-                'image' => 'storage/product/hermes/quan.jgp',
+                'image' => 'storage/product/hermes/quan.jpg',
             ],
             [
                 'name' => 'Giày Hermes',
@@ -345,7 +345,7 @@ class ProductSeeder extends Seeder
                 'category_id' => 1,
                 'brand_id' => 7,
                 'slide_id' => 1,
-                'image' => 'storage/product/zara/zara.jgp',
+                'image' => 'storage/product/zara/zara.jpg',
             ],
             [
                 'name' => 'Quần Zara',

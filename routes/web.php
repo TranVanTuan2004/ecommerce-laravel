@@ -91,6 +91,7 @@ Route::group([
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::get('/order-status/{id}', [OrderController::class, 'getOrderStatus']);
+    Route::post('/comment/{product_id}', [HomeController::class, 'storeReview'])->name('review.store');
     Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 });
 
@@ -123,7 +124,6 @@ Route::group([
 Route::post('/send-message', [ChatController::class, 'sendMessage'])->middleware('auth');
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
-Route::post('/comment/{product_id}', [HomeController::class, 'storeReview'])->name('review.store');
 
 Route::group([
     'prefix' => '/auth',
