@@ -91,15 +91,20 @@
                 <strong class="text-danger">Địa Chỉ Nhận Hàng</strong>
             </div>
 
-            <div class="d-flex flex-wrap align-items-center">
+            <div class="">
                 <div class="me-2">
-                    <strong>{{ $user->name }}</strong> (<strong>(+84) {{ $user->phone }}</strong>)
+                    Tên: <strong>{{ $user->name }}</strong> <br> Số điện thoại: <strong>
+                        {{ $user->phone }}</strong>
                 </div>
                 <div class="me-2">
-                    {{ $user->address }}
+                    Địa chỉ: <strong>{{ $user->address }}</strong>
                 </div>
-                <span class="badge bg-light text-danger border border-danger me-2">Mặc Định</span>
-                <a href="#" class="text-primary">Thay Đổi</a>
+                <div class="mt-2">
+                    <a href={{ route('auth.profile') }}
+                        class="btn btn-adn outline-amber-700 badge bg-light text-danger border border-danger me-2"
+                        style="color: #ee4d2d; text-decoration: none">Thay Đổi</a>
+                </div>
+
             </div>
         </div>
     </div>
@@ -119,15 +124,15 @@
                         $totalPrice += $product->price * $product->quantity;
                     @endphp
                     <div class="d-flex mb-2 align-products-start border-bottom pb-2">
-                        <img src="https://via.placeholder.com/40" class="product-img me-2"
+                        <img src={{ asset($product->image) }} class="product-img me-2"
                             style="width: 80px; height: 80px; object-fit: cover;" alt="Sữa rửa mặt">
                         <div class="flex-grow-1">
                             <div>{{ $product->name }}</div>
-                            <div class="text-small text-muted">₫{{ number_format($product->price, 3) }}</div>
+                            <div class="text-small text-muted">₫{{ number_format($product->price, 0) }}</div>
                         </div>
                         <div class="me-3">{{ $product->quantity }}</div>
                         <div class="ms-3" style="min-width: 100px">
-                            {{ number_format($product->price * $product->quantity, 3) }}</div>
+                            {{ number_format($product->price * $product->quantity, 0) }}</div>
                     </div>
                 @endforeach
 
@@ -139,7 +144,7 @@
                     </div>
                     <div class="col-md-6 text-end">
                         <strong>Tổng số tiền ({{ $totalProduct }} sản phẩm):</strong><br>
-                        <span class="fs-5 text-danger">₫{{ number_format($totalPrice, 3) }}</span>
+                        <span class="fs-5 text-danger">₫{{ number_format($totalPrice, 0) }}</span>
                     </div>
                 </div>
         </div>
@@ -179,19 +184,15 @@
         <div class="border-top border-bottom py-3 mb-3">
             <h6>Phương thức thanh toán</h6>
             <div class="btn-group mb-2" role="group">
-                <button type="button" class="btn btn-outline-secondary">Thẻ Tín dụng/Ghi nợ</button>
+                <button onclick="return message()" type="button" class="btn btn-outline-secondary">Thẻ Tín dụng/Ghi
+                    nợ</button>
                 <button type="button" class="btn btn-outline-danger active">Thanh toán khi nhận hàng</button>
-            </div>
-            <div class="text-muted">
-                Thanh toán khi nhận hàng &nbsp; | &nbsp; Phí thu hộ: ₫0 VND. Ưu đãi về phí vận chuyển (nếu có) áp dụng
-                cả
-                với phí thu hộ.
             </div>
         </div>
 
         <!-- Tổng tiền -->
         <div class="text-end">
-            <div class="mb-1">Tổng tiền hàng: <strong>đ{{ number_format($totalPrice, 3) }}</strong></div>
+            <div class="mb-1">Tổng tiền hàng: <strong>đ{{ number_format($totalPrice, 0) }}</strong></div>
             <div class="mb-1 discount">Giảm giá: <strong>₫0</strong></div>
             <div class="h5 text-danger total">Tổng thanh toán:
                 <strong>₫{{ number_format($totalPrice, 3) }}</strong>
@@ -199,11 +200,7 @@
         </div>
 
         <!-- Ghi chú và nút đặt hàng -->
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <small class="text-muted">
-                Khi nhấn 'Đặt hàng', bạn xác nhận rằng bạn đồng ý với
-                <a href="#" class="text-primary">Điều khoản</a> của chúng tôi.
-            </small>
+        <div class="d-flex justify-content-end align-items-center mt-3">
             <button type="submit" class="btn btn-danger px-4">Đặt hàng</button>
         </div>
         </form>
@@ -213,9 +210,13 @@
             return new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
                 currency: 'VND',
-                minimumFractionDigits: 3
+                minimumFractionDigits: 0
             }).format(number);
         };
+
+        const message = () => {
+            confirm('Tính năng đang phát triển');
+        }
         document.addEventListener('DOMContentLoaded', function() {
             const modalElement = document.getElementById('voucherModal');
             const modal = new bootstrap.Modal(modalElement);

@@ -22,7 +22,7 @@ class OrderFactory extends Factory
             'user_id' => User::inRandomOrder()->first()?->id,
             'price' => $this->faker->randomFloat(3, 100, 10000), // giá từ 100 đến 1000
             'payment_method' => $this->faker->randomElement(['cod', 'paypal', 'momo', 'bank']),
-            'status' => $this->faker->randomElement(['pending', 'processing', 'completed', 'cancelled']),
+            'status' => $this->faker->randomElement(['pending', 'shipping', 'delivering', 'delivered', 'cancelled']),
         ];
     }
 }
