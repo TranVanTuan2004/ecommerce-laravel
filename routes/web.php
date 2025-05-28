@@ -15,10 +15,11 @@ use App\Http\Controllers\Top10Users\Top10UsersController;
 use App\Http\Controllers\Voucher\VoucherController;
 use App\Http\Controllers\Client\BlogClientController;
 use App\Http\Controllers\Category\CategoryController;
-
-
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Client\ClientChatController;
+use App\Http\Controllers\Admin\AdminChatController;
+use App\Http\Middleware\IsAdmin;
+use GuzzleHttp\Client;
 use App\Http\Controllers\Order\OrderController;
 
 // Client
@@ -42,9 +43,15 @@ Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
 // Client routes
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
-Route::post('/send-message', [ChatController::class, 'sendMessage'])->name('send.message');
 Route::get('/blogs', [BlogClientController::class, 'index'])->name('blogs');
 Route::get('/blogs/{id}', [BlogClientController::class, 'show'])->name('blogs.show');
+//chat
+Route::middleware('auth')->prefix('client/chat')->group(function () {
+    Route::get('/', [ClientChatController::class, 'index'])->name('client.chat.index');
+    Route::post('/send', [ClientChatController::class, 'sendMessage'])->name('client.chat.send');
+    Route::get('/messages', [ClientChatController::class, 'getMessages'])->name('client.chat.messages'); // ← Thêm middleware ở đây
+});
+
 
 
 
@@ -74,15 +81,15 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/order',
@@ -98,11 +105,11 @@ Route::group([
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () { });
+], function () {});
 
 
 
@@ -121,7 +128,7 @@ Route::group([
 });
 
 
-Route::post('/send-message', [ChatController::class, 'sendMessage'])->middleware('auth');
+Route::post('/send-message', [AdminChatController::class, 'sendMessage'])->middleware('auth');
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
 
@@ -198,10 +205,15 @@ Route::group([
         Route::put('/{id}', [VoucherController::class, 'update'])->name('voucher.update');
         Route::delete('/{id}', [VoucherController::class, 'destroy'])->name('voucher.destroy');
     });
-
+    Route::group(['prefix' => 'dashboard/chat'], function () {
+        Route::get('', [AdminChatController::class, 'adminView'])->name('admin.chat.index');
+        Route::get('users', [AdminChatController::class, 'getUsersChatting'])->name('admin.chat.users');
+        Route::get('messages/{userId}', [AdminChatController::class, 'getMessagesByUser'])->name('admin.chat.messages');
+        Route::post('messages/{userId}', [AdminChatController::class, 'sendAdminMessageToUser'])->name('admin.chat.sendToUser');
+    });
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () { });
+    ], function () {});
 
     //Chức năng quản lí danh mục_Quynh
     Route::group([
@@ -229,7 +241,7 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () { });
+    ], function () {});
 
     //Route danh cho top10
     Route::group(['prefix' => '/dashboard/top10'], function () {
