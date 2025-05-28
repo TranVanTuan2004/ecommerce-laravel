@@ -7,7 +7,6 @@
 @include('client.components.chat')
 
 <!-- Phần hiển thị sản phẩm như hiện tại -->
->>>>>>> 44208922116de257651089850493e7697c141733
 <div class="container my-4">
     <h2 class="mb-4">
         @if (request()->category_id)
@@ -57,11 +56,6 @@
         </div>
         @endforelse
     </div>
-    @empty
-    <div class="col-12">
-        <p class="text-center">Không có sản phẩm nào trong danh mục này.</p>
-    </div>
-    @endforelse
 </div>
 
 <!-- Pagination -->
