@@ -15,13 +15,14 @@ class OrderFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
     public function definition(): array
     {
         return [
             'user_id' => User::inRandomOrder()->first()?->id,
-            'total_price' => $this->faker->randomFloat(2, 100, 1000), // giá từ 100 đến 1000
+            'price' => $this->faker->randomFloat(3, 100, 10000), // giá từ 100 đến 1000
             'payment_method' => $this->faker->randomElement(['cod', 'paypal', 'momo', 'bank']),
-            'status' => $this->faker->randomElement(['pending', 'processing', 'completed', 'cancelled']),
+            'status' => $this->faker->randomElement(['pending', 'shipping', 'delivering', 'delivered', 'cancelled']),
         ];
     }
 }

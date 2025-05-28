@@ -65,6 +65,33 @@
                 </a>
             </li>
 
+            <li>
+                <a href={{ route('topusers.show') }}><i class="fa fa-th-large"></i> <span class="nav-label">Top 10
+                        Users</span>
+                    <span class="fa arrow"></span>
+                </a>
+            </li>
+
+            <li>
+                <a><i class="fa fa-th-large"></i> <span class="nav-label">Quản Lý
+                        Danh Mục</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li> <a href={{ route('category.index') }}>Quản lý Danh Mục</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a><i class="fa fa-th-large"></i> <span class="nav-label">Quản Lý
+                        Đơn Hàng</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li> <a href={{ route('order.index') }}>Quản lý Đơn Hàng</a></li>
+                </ul>
+            </li>
+
         </ul>
 
     </div>

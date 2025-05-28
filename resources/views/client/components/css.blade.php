@@ -1,6 +1,9 @@
 <link rel="apple-touch-icon" href="client/img/apple-icon.png">
 <link rel="shortcut icon" type="image/x-icon" href="client/img/favicon.ico">
 
+<!-- Remix Icon CDN -->
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
 <link rel="stylesheet" href={{ asset('client/css/bootstrap.min.css') }}>
 <link rel="stylesheet" href={{ asset('client/css/templatemo.css') }}>
 <link rel="stylesheet" href={{ asset('client/css/custom.css') }}>

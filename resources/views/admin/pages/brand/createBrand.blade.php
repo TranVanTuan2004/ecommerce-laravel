@@ -1,34 +1,69 @@
 @extends('admin.master')
 
 @section('content')
-    <form method="post" action={{ route('brand.store') }} enctype="multipart/form-data"
-        style="max-width: 800px; box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); margin-top: 80px; padding: 40px;" class="container">
-        @csrf
+    <style>
+        .brand-card {
+            box-shadow: 0 0 20px rgba(0, 0, 255, 0.2);
+            border-radius: 12px;
+        }
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+        .center-wrapper {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+    <div class="container center-wrapper">
+        <div class="card brand-card w-100" style="min-width: 800px; padding: 40px;">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0" style="padding: 20px"><i class="fa fa-plus-circle"></i> Thêm Brand Mới</h4>
             </div>
-        @endif
-        <h1 class="text-center text-primary">Thêm Brand</h1>
-        <div class="mb-3" style="margin-top: 12px">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" name="name" class="form-control" id="name">
-        </div>
-        <div class="mb-3" style="margin-top: 12px">
-            <label for="description" class="form-label">Description</label>
-            <input type="text" name="description" class="form-control" id="description">
-        </div>
+            <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-        <div class="mb-3" style="margin-top: 12px">
-            <label for="logo" class="form-label">Logo</label>
-            <input type="file" name="logo" class="form-control" id="logo">
-        </div>
+                <form method="POST" id="brand-form" action="{{ route('brand.store') }}" enctype="multipart/form-data">
+                    @csrf
 
-        <button type="submit" class="btn btn-primary" style="display: block; margin: 20px auto 0 auto;">Thêm</button>
-    </form>
+                    <div class="form-group mb-3">
+                        <label for="name">Tên Brand</label>
+                        <input type="text" name="name" class="form-control" id="name"
+                            placeholder="Nhập tên brand">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="description">Mô tả</label>
+                        <input type="text" name="description" class="form-control" id="description"
+                            placeholder="Nhập mô tả">
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="logo">Logo</label>
+                        <input type="file" name="logo" class="form-control" id="logo">
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('brand.index') }}" class="btn btn-secondary me-2">Quay lại</a>
+                        <button type="submit" id="submit-btn" class="btn btn-success">Thêm Brand</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('brand-form').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true; // disable button để tránh click lại
+            btn.innerText = 'Đang xử lý...'; // thay đổi text để người dùng biết
+        });
+    </script>
 @endsection

@@ -7,13 +7,14 @@ use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
-use Illuminate\Support\Str;
 
 class BrandController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Lấy dữ liệu paginate theo $page hợp lệ
         $brands = Brand::latest()->paginate(10);
+
         return view('admin.pages.brand.index', compact('brands'));
     }
 
@@ -25,9 +26,20 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'logo' => 'nullable|image'
+            'name' => 'required|string|max:50',
+            'description' => 'required|string|max:255',
+            'logo' => 'nullable|image|max:2048',
+        ], [
+            'name.required' => 'Tên thương hiệu là bắt buộc.',
+            'name.string' => 'Tên thương hiệu phải là chuỗi.',
+            'name.max' => 'Tên thương hiệu không được vượt quá 50 ký tự.',
+
+            'description.required' => 'Mô tả là bắt buộc.',
+            'description.string' => 'Mô tả phải là chuỗi.',
+            'description.max' => 'Mô tả không được vượt quá 255 ký tự.',
+
+            'logo.image' => 'Logo phải là một tệp hình ảnh.',
+            'logo.max' => 'Logo không được vượt quá 2MB.',
         ]);
 
         try {
@@ -59,14 +71,29 @@ class BrandController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'logo' => 'nullable|image'
+            'name' => 'required|string|max:50',
+            'description' => 'required|string|max:255',
+            'logo' => 'nullable|image|max:2048',
+        ], [
+            'name.required' => 'Tên thương hiệu là bắt buộc.',
+            'name.string' => 'Tên thương hiệu phải là chuỗi.',
+            'name.max' => 'Tên thương hiệu không được vượt quá 50 ký tự.',
+
+            'description.required' => 'Mô tả là bắt buộc.',
+            'description.string' => 'Mô tả phải là chuỗi.',
+            'description.max' => 'Mô tả không được vượt quá 255 ký tự.',
+
+            'logo.image' => 'Logo phải là một tệp hình ảnh.',
+            'logo.max' => 'Logo không được vượt quá 2MB.',
         ]);
 
         try {
-            $id = $request->id;
-            $brand = Brand::query()->find($id);
+            $brand = Brand::query()->find($request->id);
+            if ($brand->updated_at != $request->input('updated_at')) {
+                return back()->with([
+                    'error' => 'Tải lại trang trước khi update',
+                ]);
+            }
 
             if ($request->hasFile('logo')) {
                 $data['logo'] = Storage::put('brands', $request->file('logo'));
@@ -93,9 +120,12 @@ class BrandController extends Controller
             $id = $request->id;
 
             $brand = Brand::query()->find($id);
-            $brand->delete();
-
-            return back()->with('success', true);
+            if ($brand) {
+                $brand->delete();
+                return back()->with('success', 'Xóa brand ' . $brand->name . ' thành công');
+            } else {
+                return back()->with('error', 'Brand không tồn tại hoặc đã được xóa');
+            }
         } catch (Throwable $th) {
             return back()->with('success', false)->with('error', $th->getMessage());
         }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -56,7 +57,7 @@ class Product extends Model
     }
 
     // 1 sản phẩm có thể được thêm vào nhiều wishlist
-    public function wishedByUsers()
+    public function wishedByUsers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'wishlists')->withTimestamps();
     }

@@ -23,7 +23,23 @@
                 </div>
 
                 <div class="ibox-content">
-                    <div class="table-responsive">
+                    <div class="d-flex justify-content-center mb-4">
+                        <form action="{{ route('users.index') }}" method="GET" style="width: 100%; max-width: 600px;">
+                            <div class="input-group shadow-sm rounded overflow-hidden border">
+                                <input type="text" name="search" class="form-control border-0"
+                                    placeholder="Tìm kiếm theo tên, email hoặc điện thoại" value="{{ request('search') }}">
+                                <button class="btn btn-primary px-4" type="submit">
+                                    <i class="fa fa-search me-1"></i> Tìm kiếm
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+
+
+                    <div class="table-responsive mt-5">
                         <table class="table table-hover table-bordered align-middle text-center">
                             <thead class="thead-light">
                                 <tr>
@@ -45,10 +61,8 @@
                                             <td>{{ $user->phone }}</td>
                                             <td>{{ $user->address }}</td>
                                             <td>
-                                                <div class="btn-group d-flex align-items-center justify-evenly"
-                                                    role="group">
-                                                    <a href="{{ route('users.edit', $user->id) }}"
-                                                        class="btn btn-sm btn-success">
+                                                <div class="btn-group d-flex align-items-center justify-evenly" role="group">
+                                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-success">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <form action="{{ route('users.destroy', $user->id) }}" method="post"
