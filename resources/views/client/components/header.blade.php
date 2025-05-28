@@ -44,6 +44,7 @@
         <div class="col-lg-4 col-md-4 col-6">
             <div class="header-actions d-flex justify-content-end">
                 <a href="#" class="me-3">Contacts</a>
+                <a href="{{ route('blogs') }}" class="me-3">Blog</a>
                 <a href="#" class="me-3"><i class="fas fa-search"></i></a>
                 <a href={{ route('favorite.index') }} class="me-3 position-relative">
                     <i class="far fa-heart"></i>
@@ -75,15 +76,15 @@
                         <div class="dropdown-divider my-1"></div>
 
                         @if (Auth::check())
-                            <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-danger"
-                                href="{{ route('logout') }}">
-                                <i class="fa fa-sign-out-alt mr-2"></i> <span class="d-block ms-3">Logout</span>
-                            </a>
+                        <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-danger"
+                            href="{{ route('logout') }}">
+                            <i class="fa fa-sign-out-alt mr-2"></i> <span class="d-block ms-3">Logout</span>
+                        </a>
                         @else
-                            <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-success"
-                                href="{{ route('login') }}">
-                                <i class="fa fa-sign-in-alt mr-2"></i> <span class="d-block ms-3">Login</span>
-                            </a>
+                        <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-success"
+                            href="{{ route('login') }}">
+                            <i class="fa fa-sign-in-alt mr-2"></i> <span class="d-block ms-3">Login</span>
+                        </a>
                         @endif
 
                     </div>

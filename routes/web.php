@@ -42,7 +42,6 @@ Route::get('/category/{id}', [HomeController::class, 'showProduct'])->name('cate
 Route::get('/', [HomeController::class, 'showProduct'])->name('homePage');
 Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name('productDetail');
 // Client routes
-Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
 Route::get('/blogs', [BlogClientController::class, 'index'])->name('blogs');
 Route::get('/blogs/{id}', [BlogClientController::class, 'show'])->name('blogs.show');
 //chat

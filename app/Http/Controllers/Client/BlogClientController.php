@@ -4,12 +4,20 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use Illuminate\Http\Request;
 
 class BlogClientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::latest()->paginate(6);
+        $query = Blog::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $blogs = $query->latest()->paginate(6);
+
         return view('client.pages.blog.index', compact('blogs'));
     }
 
