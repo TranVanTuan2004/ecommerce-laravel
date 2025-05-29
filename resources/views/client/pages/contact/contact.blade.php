@@ -12,10 +12,8 @@
     </div>
 
     <div class="mb-6">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.7743743265597!2d106.761207!3d10.830338!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752723913b7f0f%3A0x8e84a5dc3f5e28fc!2zNTMgVsO1IFbEg24gTmcuLCBLaGFuaCB4w6MgUGjGsMahbmcsIFTDom4gVGjhu6sgRGnDqm4sIFRow6BuaCBwaOG7kSBI4buNYyBDaMOidSBNaW5o!5e0!3m2!1svi!2s!4v1716971857555!5m2!1svi!2s"
-            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.474909851613!2d106.75548917420699!3d10.851437757807325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752797e321f8e9%3A0xb3ff69197b10ec4f!2zVHLGsOG7nW5nIGNhbyDEkeG6s25nIEPDtG5nIG5naOG7hyBUaOG7pyDEkOG7qWM!5e0!3m2!1svi!2s!4v1748494379794!5m2!1svi!2s" width="100%"
+            height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 
     <form method="POST" action="{{ route('contact.send') }}" style="max-width: 500px;">
@@ -41,7 +39,7 @@
             <textarea class="form-control" id="message" name="message" rows="5" required>{{ old('message') }}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Gửi</button>
+        <button type="submit" class="btn btn-primary w-100 mb-3">Gửi</button>
     </form>
 
 

@@ -62,8 +62,9 @@
 
 <!-- Pagination -->
 <div class="pagination-container">
-    {{ $products->links('pagination::bootstrap-4') }}
+    {{ $products->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
 </div>
+
 </div>
 
 
