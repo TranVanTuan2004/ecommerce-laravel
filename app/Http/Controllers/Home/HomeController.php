@@ -62,9 +62,6 @@ class HomeController extends Controller
                 case 'popular':
                     $query->orderBy('views', 'desc');
                     break;
-                case 'discount':
-                    $query->orderBy('discount', 'desc');
-                    break;
             }
         }
 

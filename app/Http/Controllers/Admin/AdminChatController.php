@@ -12,7 +12,7 @@ class AdminChatController extends Controller
     // Trang admin chat: danh sách user đang chat
     public function adminView()
     {
-        return view('admin.pages.chat.admin'); // Tạo view chat/admin.blade.php
+        return view('admin.pages.chat.admin');
     }
 
     // Lấy danh sách user có tin nhắn (chatting)

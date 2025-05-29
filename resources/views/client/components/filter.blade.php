@@ -1,4 +1,10 @@
     <form method="GET" action="{{ route('product.shop') }}">
+        <!-- 🛠️ Giữ lại các filter hiện tại bằng hidden input -->
+        <input type="hidden" name="keyword" value="{{ request('keyword') }}">
+        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+        <input type="hidden" name="brand_id" value="{{ request('brand_id') }}">
+        <input type="hidden" name="min_price" value="{{ request('min_price') }}">
+        <input type="hidden" name="max_price" value="{{ request('max_price') }}">
         <div class="container my-4">
             <div class="row align-items-center">
                 <!-- SORTING -->
