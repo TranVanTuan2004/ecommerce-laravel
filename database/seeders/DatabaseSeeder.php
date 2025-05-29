@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
             ShippingSeeder::class,
             BlogSeeder::class,
+            MessageSeeder::class,
         ]);
     }
 }

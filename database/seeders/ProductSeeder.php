@@ -15,24 +15,6 @@ class ProductSeeder extends Seeder
     {
         $products = [
             [
-                'name' => 'Áo Chanel',
-                'description' => 'Áo chanel ',
-                'price' => rand(100, 1000) * 1000,
-                'category_id' => 1,
-                'brand_id' => 1,
-                'image' => 'storage/product/chanel/aochanel.jpg',
-                'views' => rand(1000, 5000),
-            ],
-            [
-                'name' => 'Quần Chanel',
-                'description' => 'Quần chanel',
-                'price' => rand(100, 1000) * 1000,
-                'category_id' => 2,
-                'brand_id' => 1,
-                'image' => 'storage/product/chanel/quan.jpg',
-                'views' => rand(1000, 5000),
-            ],
-            [
                 'name' => 'Giày chanel',
                 'description' => 'Giày chanel',
                 'price' => rand(100, 1000) * 1000,
