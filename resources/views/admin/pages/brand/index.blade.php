@@ -14,10 +14,21 @@
     <div class="row mb-4 mt-4">
         <div class="col-lg-12">
             <div class="ibox">
-                <div class="ibox-title d-flex justify-content-between align-items-center">
-                    <a href="{{ route('brand.create') }}" class="btn btn-success">
-                        <i class="fa fa-plus"></i> Thêm Brand
-                    </a>
+                <div class="ibox-title d-flex justify-content-between align-items-center"
+                    style="display: flex; align-items: center; justify-content: space-between;">
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="{{ route('brand.create') }}" class="btn btn-success">
+                            <i class="fa fa-plus"></i>
+                            Thêm Brand
+                        </a>
+                    </div>
+                    <form method="GET" action="{{ route('brand.index') }}" class="form-inline mb-3">
+                        <input type="text" name="search" class="form-control mr-sm-2" placeholder="Tìm Brand..."
+                            style="width: 400px;" value="{{ old('search', $search) }}">
+                        <button type="submit" class="btn btn-outline-primary">
+                            <i class="fas fa-search"></i> Tìm
+                        </button>
+                    </form>
                 </div>
 
                 <div class="ibox-content">
@@ -52,7 +63,7 @@
                                             <td style="vertical-align: middle;">{{ $brand->name }}</td>
                                             <td style="vertical-align: middle;">
                                                 <img src={{ asset('storage/' . $brand->logo) }}
-                                                    style="width: 200px; height: 120px; object-fit: contain; border-radius: 6px"
+                                                    style="width: 120px; height: 100px; object-fit: contain; border-radius: 6px"
                                                     alt="Not found">
                                             </td>
                                             <td style="vertical-align: middle;">{{ $brand->description }}</td>
@@ -92,8 +103,8 @@
     <script>
         document.getElementById('brand-form').addEventListener('submit', function(e) {
             const btn = document.getElementById('submit-btn');
-            btn.disabled = true; // disable button để tránh click lại
-            btn.innerText = 'Đang xử lý...'; // thay đổi text để người dùng biết
+            btn.disabled = true;
+            btn.innerText = 'Đang xử lý...';
         });
     </script>
 @endsection

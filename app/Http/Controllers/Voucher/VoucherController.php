@@ -15,8 +15,6 @@ class VoucherController extends Controller
     {
         $search = $request->input('search');
 
-        // $vouchers = Coupons::latest()->paginate(10);
-
         $vouchers = Coupons::query()->when($search, function ($query, $search) {
             $query->where('code', 'like', "%{$search}%")->orWhere('discount', 'like', "%{$search}%")
                 ->orWhere('expiration_date', 'like', "%{$search}%")

@@ -12,10 +12,12 @@ class BrandController extends Controller
 {
     public function index(Request $request)
     {
-        // Lấy dữ liệu paginate theo $page hợp lệ
-        $brands = Brand::latest()->paginate(10);
-
-        return view('admin.pages.brand.index', compact('brands'));
+        $search = $request->input('search');
+        $brands = Brand::query()->when($search, function ($query, $search) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        })->latest()->paginate(10);
+        return view('admin.pages.brand.index', compact(['brands', 'search']));
     }
 
     public function create()
