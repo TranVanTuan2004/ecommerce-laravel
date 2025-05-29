@@ -25,6 +25,7 @@ use App\Http\Middleware\IsAdmin;
 use GuzzleHttp\Client;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Contact\ContactController;
+use App\Models\Product;
 
 // Client
 Route::group([
@@ -88,15 +89,15 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/order',
@@ -112,11 +113,11 @@ Route::group([
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {});
+], function () { });
 
 
 
@@ -164,7 +165,6 @@ Route::group([
     'middleware' => 'is_admin'
 ], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('is_admin');
-    Route::get('/dashboard', [AdminChatController::class, 'getMessageStatistics'])->name('dashboard');
     //hau chuc nang crud_user
     Route::group([
         'prefix' => '/dashboard/users',
@@ -233,7 +233,7 @@ Route::group([
     });
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () {});
+    ], function () { });
 
     //Chức năng quản lí danh mục_Quynh
     Route::group([
@@ -262,10 +262,15 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () {});
+    ], function () { });
 
     //Route danh cho top10
     Route::group(['prefix' => '/dashboard/top10'], function () {
         Route::get('/show', [Top10UsersController::class, 'showTopUsers'])->name('topusers.show');
     });
+
+    Route::group(['prefix' => '/dashboard'], function () {
+        Route::get('/statistics/product/top10', [ProductController::class, 'top10Product'])->name('product.top10');
+    });
+
 });
