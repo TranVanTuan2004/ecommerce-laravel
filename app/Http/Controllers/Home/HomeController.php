@@ -22,6 +22,7 @@ class HomeController extends Controller
 
     public function showProduct(Request $request)
     {
+        session()->forget('order_submitted');
         $query = Product::with('brand', 'category');
 
         // Tìm kiếm theo từ khóa (tên và mô tả)

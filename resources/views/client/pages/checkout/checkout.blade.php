@@ -117,12 +117,14 @@
                 $totalPrice = 0;
             @endphp
             <form action="{{ route('checkout.store') }}" method="POST">
-                @foreach ($products as $product)
-                    <input hidden type="checkbox" name="product_ids[]" value="{{ $product->id }}" checked>
+                @csrf
+                @if (isset($product))
                     @php
                         $totalProduct += $product->quantity;
                         $totalPrice += $product->price * $product->quantity;
                     @endphp
+                    <input hidden type="text" name="product_id" value="{{ $product->id }}">
+                    <input hidden type="text" name="quantity" value="{{ $quantity }}">
                     <div class="d-flex mb-2 align-products-start border-bottom pb-2">
                         <img src={{ asset($product->image) }} class="product-img me-2"
                             style="width: 80px; height: 80px; object-fit: cover;" alt="Sữa rửa mặt">
@@ -134,7 +136,27 @@
                         <div class="ms-3" style="min-width: 100px">
                             {{ number_format($product->price * $product->quantity, 0) }}</div>
                     </div>
-                @endforeach
+                @else
+                    @foreach ($products as $product)
+                        <input hidden type="checkbox" name="product_ids[]" value="{{ $product->id }}" checked>
+                        @php
+                            $totalProduct += $product->quantity;
+                            $totalPrice += $product->price * $product->quantity;
+                        @endphp
+                        <div class="d-flex mb-2 align-products-start border-bottom pb-2">
+                            <img src={{ asset($product->image) }} class="product-img me-2"
+                                style="width: 80px; height: 80px; object-fit: cover;" alt="Sữa rửa mặt">
+                            <div class="flex-grow-1">
+                                <div>{{ $product->name }}</div>
+                                <div class="text-small text-muted">₫{{ number_format($product->price, 0) }}</div>
+                            </div>
+                            <div class="me-3">{{ $product->quantity }}</div>
+                            <div class="ms-3" style="min-width: 100px">
+                                {{ number_format($product->price * $product->quantity, 0) }}</div>
+                        </div>
+                    @endforeach
+                @endif
+
 
                 <!-- Giao hàng và voucher -->
                 <div class="row g-3 align-items-center border-top pt-3">
@@ -150,7 +172,6 @@
         </div>
     </div>
     <div class="container border rounded p-4 my-4">
-        @csrf
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
                 <i class="bi bi-ticket-perforated text-danger me-2"></i>

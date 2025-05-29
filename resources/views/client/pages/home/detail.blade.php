@@ -289,54 +289,53 @@
 
                 <p class="product-description">{{ $product->description }}</p>
 
-                <!-- Size Selection -->
-                <div>
-                    <p class="size-label">Size M</p>
-                    <div class="size-options">
-                        <a href="#">L</a>
-                        <a href="#" class="active">M</a>
-                        <a href="#">S</a>
-                    </div>
-                    <a href="#" class="clear-link">Clear</a>
-                </div>
 
                 <!-- Quantity and Add to Cart -->
-                <div class="quantity-container">
-                    <div class="quantity-input">
-                        <button>-</button>
-                        <input type="text" value="1">
-                        <button>+</button>
+                <div style="display: flex !important;  gap: 50px;  width: 100% !important; margin-bottom: 12px">
+                    <div class="action-buttons">
+                        <form action={{ route('favorite.toggle') }} method="POST">
+                            @csrf
+                            <input type="text" hidden name="product_id" value={{ $product->id }}>
+                            <button type="submit" class="action-btn">
+                                @if (Auth::check())
+                                    @if (Auth::user()->wishlist->contains($product->id))
+                                        <i class="fas fa-heart text-danger"></i>
+                                    @else
+                                        <i class="fas fa-heart text-secondary"></i>
+                                    @endif
+                                @else
+                                    <i class="fas fa-heart text-secondary"></i>
+                                @endif
+                            </button>
+                        </form>
                     </div>
-                    <button class="add-to-cart-btn" style="border-radius: 6px">
-                        🛒 ADD TO CART
-                    </button>
+                    <form class="add-to-cart-btn" style="border-radius: 6px;" action="{{ route('cart.addToCart') }}"
+                        method="POST">
+                        @csrf
+                        <input type="text" hidden name="product_id" value="{{ $product->id }}">
+                        <button type="submit" class="add-to-cart-btn" style="border-radius: 6px;">
+                            🛒 ADD TO CART
+                        </button>
+                    </form>
+
                 </div>
 
                 <div class="or-divider">OR</div>
 
-                <div style="width: 100% !important; margin-bottom: 12px">
-                    <button class="add-to-cart-btn" style="display: block !important; width: 100%; border-radius: 6px">
+                <form action={{ route('checkout.index') }} method="POST"
+                    style="display: flex !important; gap: 50px;  width: 100% !important; margin-bottom: 12px">
+                    @csrf
+                    <div class="quantity-input">
+                        <input type="number" name="quantity" min="1" max="100" value="1">
+                    </div>
+                    <input hidden type="text" name="productId" value="{{ $product->id }}" checked>
+                    <button type="submit" class="add-to-cart-btn"
+                        style="display: block !important; width: 100% !important; border-radius: 6px">
                         🛒 BUY NOW
                     </button>
-                </div>
+                </form>
 
-                <div class="action-buttons">
-                    <form action={{ route('favorite.toggle') }} method="POST">
-                        @csrf
-                        <input type="text" hidden name="product_id" value={{ $product->id }}>
-                        <button type="submit" class="action-btn">
-                            @if (Auth::check())
-                                @if (Auth::user()->wishlist->contains($product->id))
-                                    <i class="fas fa-heart text-danger"></i>
-                                @else
-                                    <i class="fas fa-heart text-secondary"></i>
-                                @endif
-                            @else
-                                <i class="fas fa-heart text-secondary"></i>
-                            @endif
-                        </button>
-                    </form>
-                </div>
+
 
                 <!-- Payment Info -->
                 <div class="payment-info">

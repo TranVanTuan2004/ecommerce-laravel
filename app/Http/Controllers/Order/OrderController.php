@@ -16,6 +16,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        session()->forget('order_submitted');
         $status = $request->query('status');
         $query = Order::with(['voucher', 'orderProducts.product'])->where('user_id', Auth::id());
 
