@@ -43,7 +43,7 @@
         <!-- Actions -->
         <div class="d-flex align-items-center gap-3">
             <div class="header-actions d-flex justify-content-end gap-2">
-                <a href="#" class="me-3">Contacts</a>
+                <a href="{{ route('contact') }}" class="me-3">Contacts</a>
                 <a href="{{ route('blogs') }}" class="me-3">Blog</a>
                 <a href="#" class="me-3"><i class="fas fa-search"></i></a>
                 <a href={{ route('favorite.index') }} class="me-3 position-relative">
