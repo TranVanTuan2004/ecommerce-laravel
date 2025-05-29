@@ -54,7 +54,7 @@ class ClientChatController extends Controller
             ->get()
             ->map(function ($message) use ($user) {
                 // Nếu sender trong DB là 'user' thì giữ nguyên, còn không thì 'admin'
-                // hoặc bạn có thể check thêm logic khác nếu cần
+
                 $sender = $message->sender; // ví dụ: 'user' hoặc 'admin'
 
                 // Đảm bảo chỉ có 2 giá trị này
