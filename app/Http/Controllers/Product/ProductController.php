@@ -135,4 +135,18 @@ class ProductController extends Controller
         $product->save();
         return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công!');
     }
+
+    public function top10Product()
+    {
+        $topProducts = Product::withSum('orders as total_sold', 'order_products.quantity')
+            ->orderByDesc('total_sold')
+            ->limit(10)
+            ->get();
+
+        return view('admin.pages.productStatistics.bestseller', compact('topProducts'));
+    }
+
+
+
+
 }

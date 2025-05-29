@@ -13,6 +13,7 @@ use \App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Cruduser\UserController;
 use App\Http\Controllers\Admin\AdminChatController;
 use App\Http\Controllers\Contact\ContactController;
+use App\Models\Product;
 
 
 use App\Http\Controllers\Product\ProductController;
@@ -165,7 +166,6 @@ Route::group([
     'middleware' => 'is_admin'
 ], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('is_admin');
-    Route::get('/dashboard', [AdminChatController::class, 'getMessageStatistics'])->name('dashboard');
     //hau chuc nang crud_user
     Route::group([
         'prefix' => '/dashboard/users',
@@ -274,4 +274,8 @@ Route::group([
     Route::group(['prefix' => '/dashboard/productreviews'], function () {
         Route::get('/review-stats/all', [ReviewStatsController::class, 'allProductRatingStats'])->name('productreviews.show');
     });
+    Route::group(['prefix' => '/dashboard'], function () {
+        Route::get('/statistics/product/top10', [ProductController::class, 'top10Product'])->name('product.top10');
+    });
+
 });

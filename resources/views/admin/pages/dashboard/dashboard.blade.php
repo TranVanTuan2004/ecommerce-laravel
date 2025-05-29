@@ -3,19 +3,19 @@
 @section('content')
     <div class="wrapper wrapper-content">
         <div class="row">
-            <div class="col-lg-3">
+            <a href={{ route('product.top10') }} class="col-lg-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <span class="label label-success pull-right">Monthly</span>
-                        <h5>Income</h5>
+                        <span class="label label-success pull-right">Tất cả</span>
+                        <h5>Top 10 sản phẩm bán chạy nhất</h5>
                     </div>
                     <div class="ibox-content">
-                        <h1 class="no-margins">40 886,200</h1>
-                        <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
-                        <small>Total income</small>
+                        <h1 class="no-margins">{{ $totalSoldProducts }}</h1>
+                        <div class="stat-percent font-bold text-success">100%<i class="fa fa-bolt"></i></div>
+                        <small>Đã bán</small>
                     </div>
                 </div>
-            </div>
+            </a>
             <div class="col-lg-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -28,38 +28,6 @@
                         <small>New orders</small>
                     </div>
                 </div>
-                <a href={{ route('productreviews.show') }}>
-                    <div class="col-lg-3">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <span class="label label-primary pull-right">Today</span>
-                                <h5>Reviews</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <h1 class="no-margins">106,120</h1>
-                                <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
-                                <small>More Detail</small>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href={{ route('topusers.show') }}>
-                    <div class="col-lg-3">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <span class="label label-danger pull-right">Low value</span>
-                                <h5>Top 10 Users</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <h1 class="no-margins">36,000</h1>
-                                <div class="stat-percent font-bold text-danger">36% <i class="fa fa-level-down"></i>
-                                </div>
-                                <small>In first month</small>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
             </div>
             <div class="col-lg-3">
                 <div class="ibox float-e-margins">
@@ -101,7 +69,6 @@
                                 <button type="button" class="btn btn-xs btn-white active">Today</button>
                                 <button type="button" class="btn btn-xs btn-white">Monthly</button>
                                 <button type="button" class="btn btn-xs btn-white">Annual</button>
-
                             </div>
                         </div>
                     </div>
