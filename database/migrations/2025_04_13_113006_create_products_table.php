@@ -14,10 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->string('name', 50);
             $table->text('description')->nullable();
-            $table->decimal('price', 10, 2);
+            $table->decimal('price', 12, 2);
             $table->integer('category_id');
             $table->integer('brand_id');
-            $table->integer('slide_id');
             $table->string('image', 255)->nullable();
             $table->timestamps();
         });

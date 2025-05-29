@@ -17,7 +17,6 @@ class Product extends Model
         'price',
         'category_id',
         'brand_id',
-        'slide_id',
         'image'
     ];
     // 1 sản phẩm thuộc về 1 brand
@@ -38,10 +37,6 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function slides()
-    {
-        return $this->belongsTo(Category::class);
-    }
 
     public function cartItems()
     {
