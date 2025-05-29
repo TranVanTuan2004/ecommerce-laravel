@@ -9,27 +9,26 @@
                 <li><a href="{{ route('order.index') }}">Đơn hàng</a></li>
                 <li class="active"><strong>Chỉnh sửa</strong></li>
             </ol>
-        </div>
+        </div>php
     </div>
 
     <div class="row mb-4 mt-4">
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-content">
-                    <form action="{{ route('order.edit', $order->id) }}" method="POST">
+                    <form action="{{ route('order.update', $order->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
                         <div class="mb-3">
                             <label for="user_name" class="form-label">Khách hàng</label>
-                            <input type="text" id="user_name" class="form-control"
-                                value="{{ $order->user->name ?? 'Khách vãng lai' }}" disabled>
+                            <input type="text" id="user_name" class="form-control" value="{{ $order->user->name }}"
+                                disabled>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Sản phẩm</label>
-                            <ul class="list-unstyled"
-                                style="max-height: 150px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 4px;">
+                            <ul class="list-unstyled border rounded p-2" style="max-height: 150px; overflow-y: auto;">
                                 @foreach ($order->orderProducts as $orderProduct)
                                     <li>
                                         <strong>{{ $orderProduct->product->name }}</strong> - SL:
@@ -48,32 +47,28 @@
                         <div class="mb-3">
                             <label for="total_price" class="form-label">Tổng tiền (VNĐ)</label>
                             <input type="number" id="total_price" name="total_price" class="form-control"
-                                value="{{ old('total_price', $order->total_price) }}" required min="0"
-                                step="1000">
+                                value="{{ old('total_price', $order->price) }}" required min="0" step="1000">
                         </div>
 
                         <div class="mb-3">
                             <label for="status" class="form-label">Trạng thái</label>
-                            <select id="status" name="status" class="form-control form-control-sm" required>
+                            <select id="status" name="status" class="form-control" required>
                                 <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>Chờ xác nhận
                                 </option>
-                                <option value="confirmed" {{ $order->status == 'confirmed' ? 'selected' : '' }}>Đã xác
-                                    nhận
-                                    lý</option>
+                                <option value="confirmed" {{ $order->status == 'confirmed' ? 'selected' : '' }}>Đã xác nhận
+                                </option>
                                 <option value="shipping" {{ $order->status == 'shipping' ? 'selected' : '' }}>Đang giao
                                 </option>
                                 <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Đã giao
                                 </option>
                                 <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>Hủy đơn
-                                    hàng
-                                </option>
+                                    hàng</option>
                             </select>
-
                         </div>
 
                         <div class="mb-3">
                             <label for="payment_method" class="form-label">Phương thức thanh toán</label>
-                            <select id="payment_method" name="payment_method" class="form-control form-control-sm" required>
+                            <select id="payment_method" name="payment_method" class="form-control" required>
                                 <option value="cod" {{ $order->payment_method == 'cod' ? 'selected' : '' }}>Thanh toán
                                     khi nhận hàng</option>
                                 <option value="bank" {{ $order->payment_method == 'bank' ? 'selected' : '' }}>Chuyển
@@ -84,12 +79,9 @@
                         </div>
 
                         <div class="d-flex justify-content-between" style="max-width: 320px; margin: 30px auto 0 auto;">
-                            <a href="{{ route('order.index') }}" class="btn btn-secondary flex-fill"
-                                style="margin-right: 8px;">Hủy</a>
-                            <button type="submit" class="btn btn-primary flex-fill" style="margin-left: 8px;">Lưu thay
-                                đổi</button>
+                            <a href="{{ route('order.index') }}" class="btn btn-secondary flex-fill me-2">Hủy</a>
+                            <button type="submit" class="btn btn-primary flex-fill ms-2">Lưu thay đổi</button>
                         </div>
-
 
                     </form>
                 </div>

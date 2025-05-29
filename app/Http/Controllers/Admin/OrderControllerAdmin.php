@@ -30,7 +30,7 @@ class OrderControllerAdmin extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:pending,confirmed,shipping,delivering,delivered,cancelled,'
+            'status' => 'required|in:pending,confirmed,shipping,delivering,delivered,cancelled',
         ]);
 
         $order = Order::findOrFail($id);
@@ -67,5 +67,24 @@ class OrderControllerAdmin extends Controller
         $order->delete();
 
         return redirect()->route('order.index')->with('success', 'Đơn hàng đã được xóa.');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'shipping_address' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|in:pending,confirmed,shipping,delivering,delivered,cancelled,',
+            'payment_method' => 'required|in:cod,bank,online',
+        ]);
+
+        $order = Order::findOrFail($id);
+        $order->shipping_address = $request->shipping_address;
+        $order->price = $request->price;
+        $order->status = $request->status;
+        $order->payment_method = $request->payment_method;
+        $order->save();
+
+        return redirect()->route('order.index')->with('success', 'Cập nhật đơn hàng thành công.');
     }
 }
