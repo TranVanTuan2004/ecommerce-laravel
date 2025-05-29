@@ -29,19 +29,22 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-primary pull-right">Today</span>
-                        <h5>visits</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">106,120</h1>
-                        <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
-                        <small>New visits</small>
+            <a href={{ route('productreviews.show') }}>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Today</span>
+                            <h5>Reviews</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">106,120</h1>
+                            <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                            <small>More Detail</small>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
+
             <a href={{ route('topusers.show') }}>
                 <div class="col-lg-3">
                     <div class="ibox float-e-margins">
@@ -143,10 +146,10 @@
                             @foreach ($recentMessages as $message)
                                 <div class="feed-element">
                                     <div>
-                                        <small
-                                            class="pull-right text-navy">{{ $message->created_at->diffForHumans() }}</small>
+                                        <small class="pull-right text-navy">{{ $message->created_at->diffForHumans() }}</small>
                                         <strong>
-                                            {{-- Nếu bạn muốn hiển thị tên user gửi, bạn cần quan hệ User trong model Message --}}
+                                            {{-- Nếu bạn muốn hiển thị tên user gửi, bạn cần quan hệ User trong model Message
+                                            --}}
                                             {{ $message->sender === 'admin' ? 'Admin' : $message->user->name ?? 'User #' . $message->user_id }}
                                         </strong>
                                         <div>{{ Str::limit($message->content, 80) }}</div>
@@ -323,8 +326,7 @@
                                                     <td> Security doors
                                                     </td>
                                                     <td class="text-center small">16 Jun 2014</td>
-                                                    <td class="text-center"><span
-                                                            class="label label-primary">$483.00</span>
+                                                    <td class="text-center"><span class="label label-primary">$483.00</span>
                                                     </td>
 
                                                 </tr>
@@ -333,8 +335,7 @@
                                                     <td> Wardrobes
                                                     </td>
                                                     <td class="text-center small">10 Jun 2014</td>
-                                                    <td class="text-center"><span
-                                                            class="label label-primary">$327.00</span>
+                                                    <td class="text-center"><span class="label label-primary">$327.00</span>
                                                     </td>
 
                                                 </tr>
@@ -343,8 +344,7 @@
                                                     <td> Set of tools
                                                     </td>
                                                     <td class="text-center small">12 Jun 2014</td>
-                                                    <td class="text-center"><span
-                                                            class="label label-warning">$125.00</span>
+                                                    <td class="text-center"><span class="label label-warning">$125.00</span>
                                                     </td>
 
                                                 </tr>
@@ -352,24 +352,21 @@
                                                     <td class="text-center">4</td>
                                                     <td> Panoramic pictures</td>
                                                     <td class="text-center small">22 Jun 2013</td>
-                                                    <td class="text-center"><span
-                                                            class="label label-primary">$344.00</span>
+                                                    <td class="text-center"><span class="label label-primary">$344.00</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">5</td>
                                                     <td>Phones</td>
                                                     <td class="text-center small">24 Jun 2013</td>
-                                                    <td class="text-center"><span
-                                                            class="label label-primary">$235.00</span>
+                                                    <td class="text-center"><span class="label label-primary">$235.00</span>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">6</td>
                                                     <td>Monitors</td>
                                                     <td class="text-center small">26 Jun 2013</td>
-                                                    <td class="text-center"><span
-                                                            class="label label-primary">$100.00</span>
+                                                    <td class="text-center"><span class="label label-primary">$100.00</span>
                                                     </td>
                                                 </tr>
                                             </tbody>
