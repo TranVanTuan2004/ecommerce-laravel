@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('voucher_code')->nullable(); // Mã voucher
             $table->decimal('discount_price', 10, 3)->default(0); // Số tiền được giảm
 
-            $table->decimal('price', 10, 3)->default(0);
+            $table->decimal('price', 12, 3)->default(0);
             $table->string('payment_method')->nullable();
             $table->string('status')->default('pending');
             $table->timestamp('ordered_at')->nullable();
