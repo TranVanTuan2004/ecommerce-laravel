@@ -41,7 +41,7 @@
         <label>Ảnh hiện tại:</label>
         <div class="mb-2">
             @if ($product->image)
-                <img src="{{ asset($product->image) }}" alt="Ảnh" width="100">
+                <img src="{{ asset($product->image) }}" alt="Ảnh" width="50">
             @else
                 Không có ảnh
             @endif
@@ -49,7 +49,6 @@
 
         <label>Thay ảnh mới:</label>
         <input type="file" name="image" class="form-control">
-
-        <button type="submit" class="btn btn-primary mt-3">Cập nhật</button>
+        <button type="submit" class="btn btn-primary mt-3" >Cập nhật</button>
     </form>
 @endsection
