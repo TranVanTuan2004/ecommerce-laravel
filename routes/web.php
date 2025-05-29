@@ -1,30 +1,31 @@
 <?php
 
+use GuzzleHttp\Client;
+use App\Http\Middleware\IsAdmin;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Auth\AuthController;
-use \App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Cart\CartController;
-use App\Http\Controllers\Checkout\CheckoutController;
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Cruduser\UserController;
-use App\Http\Controllers\Favorite\FavoriteController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Admin\BlogController;
-use App\Http\Controllers\Admin\OrderControllerAdmin;
-use App\Http\Controllers\ReviewController;
-use App\Http\Controllers\Top10Users\Top10UsersController;
-use App\Http\Controllers\Voucher\VoucherController;
-use App\Http\Controllers\Product\ProductController;
-
-
-use App\Http\Controllers\Client\BlogClientController;
-use App\Http\Controllers\Category\CategoryController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Client\ClientChatController;
-use App\Http\Controllers\Admin\AdminChatController;
-use App\Http\Middleware\IsAdmin;
-use GuzzleHttp\Client;
 use App\Http\Controllers\Order\OrderController;
+use \App\Http\Controllers\Brand\BrandController;
+use App\Http\Controllers\Cruduser\UserController;
+use App\Http\Controllers\Admin\AdminChatController;
 use App\Http\Controllers\Contact\ContactController;
+
+
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Voucher\VoucherController;
+use App\Http\Controllers\Admin\OrderControllerAdmin;
+use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Checkout\CheckoutController;
+use App\Http\Controllers\Client\BlogClientController;
+use App\Http\Controllers\Client\ClientChatController;
+use App\Http\Controllers\Favorite\FavoriteController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Top10Users\Top10UsersController;
+use App\Http\Controllers\ReviewStats\ReviewStatsController;
 
 // Client
 Route::group([
@@ -88,15 +89,15 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/order',
@@ -112,11 +113,11 @@ Route::group([
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () {});
+], function () { });
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () {});
+], function () { });
 
 
 
@@ -233,7 +234,7 @@ Route::group([
     });
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () {});
+    ], function () { });
 
     //Chức năng quản lí danh mục_Quynh
     Route::group([
@@ -262,10 +263,15 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () {});
+    ], function () { });
 
     //Route danh cho top10
     Route::group(['prefix' => '/dashboard/top10'], function () {
         Route::get('/show', [Top10UsersController::class, 'showTopUsers'])->name('topusers.show');
+    });
+
+    //Route danh cho ProductReviews
+    Route::group(['prefix' => '/dashboard/productreviews'], function () {
+        Route::get('/review-stats/all', [ReviewStatsController::class, 'allProductRatingStats'])->name('productreviews.show');
     });
 });
