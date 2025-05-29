@@ -98,9 +98,15 @@ class CartController extends Controller
         try {
             $cart = Cart::where('user_id', Auth::id())->first();
             if ($cart) {
-                CartItem::where('cart_id', $cart->id)
+                $item = CartItem::where('cart_id', $cart->id)
                     ->where('product_id', $productId)
-                    ->delete();
+                    ->first();
+                if ($item) {
+                    $item->delete();
+                    return redirect()->back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng');
+                } else {
+                    return redirect()->back()->with('warning', 'Sản phẩm đã bị xóa hoặc không tồn tại trong giỏ hàng');
+                }
             }
             return redirect()->back();
         } catch (\Exception $e) {
@@ -112,10 +118,16 @@ class CartController extends Controller
     {
         try {
             $cart = Cart::where('user_id', Auth::id())->first();
+            // dd($cart);
             if ($cart) {
-                CartItem::where('cart_id', $cart->id)->delete();
+                $rs = CartItem::where('cart_id', $cart->id)->delete();
+                if ($rs) {
+                    return redirect()->back()->with('success', 'Đã xoá toàn bộ giỏ hàng!');
+                } else {
+                    return redirect()->back()->with('error', 'Giỏ hàng không còn gì để xóa hẹ hẹ!');
+                }
             }
-            return redirect()->back()->with('success', 'Đã xoá toàn bộ giỏ hàng!');
+            return redirect()->back()->with('error', 'Lỗi khi xóa giỏ hàng');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Lỗi khi xóa tất cả giỏ hàng ' . $e->getMessage());
         }

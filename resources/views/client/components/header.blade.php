@@ -8,11 +8,11 @@
         color: black !important;
     }
 </style>
-<header class="container">
-    <div class="row py-3 align-items-center">
-        <!-- Social Icons -->
-        <div class="col-lg-4 col-md-4 col-6 d-flex align-items-center">
-            <div class="social-icons">
+<header class="container py-3">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <!-- Social + Nav -->
+        <div class="d-flex align-items-center gap-1 flex-wrap">
+            <div class="social-icons d-flex gap-1">
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                 <a href="#"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-youtube"></i></a>
@@ -31,7 +31,7 @@
         </div>
 
         <!-- Logo -->
-        <div class="col-lg-4 col-md-4 text-center">
+        <div class="text-center">
             <div class="logo">
                 <a href="#">
                     <h1 class="m-0">Marseille</h1>
@@ -40,31 +40,53 @@
             </div>
         </div>
 
-        <!-- Navigation Right -->
-        <div class="col-lg-4 col-md-4 col-6">
-            <div class="header-actions d-flex justify-content-end">
-                <a href="#" class="me-3">Contacts</a>
+        <!-- Actions -->
+        <div class="d-flex align-items-center gap-3">
+            <div class="header-actions d-flex justify-content-end gap-2">
+                <a href="{{ route('contact') }}" class="me-3">Contacts</a>
+                <a href="{{ route('blogs') }}" class="me-3">Blog</a>
                 <a href="#" class="me-3"><i class="fas fa-search"></i></a>
-
-
-                <a href={{ route('favorite.index') }} class="me-3"><i class="far fa-heart"></i></a>
+                <a href={{ route('favorite.index') }} class="me-3 position-relative">
+                    <i class="far fa-heart"></i>
+                    <span class="cart-count">{{ $wishlistCount }}</span>
+                </a>
                 <a href={{ route('cart.index') }} class="position-relative">
                     <i class="fas fa-shopping-bag"></i>
-                    <span class="cart-count">3</span>
+                    <span class="cart-count">{{ $count }}</span>
                 </a>
                 <div class="ms-4">
                     <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
                         <i class="fa-solid fa-user" style="font-size: 20px"></i>
                     </div>
-                    <div class="dropdown-menu" style="width: 200px">
-                        <a class="dropdown-item" href="#">Profile</a>
-                        <a class="dropdown-item" href={{ route('orders.index') }}>Orders history</a>
-                        <div class="dropdown-divider"></div>
+                    <div class="dropdown-menu dropdown-menu-left shadow-sm border-0 rounded-lg p-2"
+                        style="width: 220px;">
+
+                        <a class="dropdown-item d-flex align-items-center justify-content-start py-2"
+                            href={{ route('auth.profile') }}>
+                            <i class="fa fa-user-circle mr-2 text-primary"></i> <span
+                                class="d-block ms-3">Profile</span>
+                        </a>
+
+                        <a class="dropdown-item d-flex align-items-center justify-content-start py-2"
+                            href="{{ route('orders.index') }}">
+                            <i class="fa fa-history mr-2 text-info"></i> <span class="d-block ms-3">Orders
+                                History</span>
+                        </a>
+
+                        <div class="dropdown-divider my-1"></div>
+
                         @if (Auth::check())
-                            <a class="dropdown-item" href={{ route('logout') }} class="me-3">Logout</a>
+                        <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-danger"
+                            href="{{ route('logout') }}">
+                            <i class="fa fa-sign-out-alt mr-2"></i> <span class="d-block ms-3">Logout</span>
+                        </a>
                         @else
-                            <a class="dropdown-item" href={{ route('login') }} class="me-3">Login</a>
+                        <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-success"
+                            href="{{ route('login') }}">
+                            <i class="fa fa-sign-in-alt mr-2"></i> <span class="d-block ms-3">Login</span>
+                        </a>
                         @endif
+
                     </div>
                 </div>
             </div>

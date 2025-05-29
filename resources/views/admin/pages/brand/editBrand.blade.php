@@ -33,10 +33,11 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('brand.update', $brand->id) }}" enctype="multipart/form-data">
+                <form method="POST" id="brand-form" action="{{ route('brand.update', $brand->id) }}"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-
+                    <input type="hidden" name="updated_at" value="{{ $brand->updated_at }}">
                     <div class="form-group mb-3">
                         <label for="name">Tên Brand</label>
                         <input type="text" name="name" id="name" class="form-control"
@@ -62,10 +63,17 @@
 
                     <div class="d-flex justify-content-end mt-4">
                         <a href="{{ route('brand.index') }}" class="btn btn-secondary me-2">Quay lại</a>
-                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                        <button type="submit" id="submit-btn" class="btn btn-success">Cập nhật</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('brand-form').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.innerText = 'Đang xử lý...';
+        });
+    </script>
 @endsection

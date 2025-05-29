@@ -189,25 +189,25 @@
                     <div class="form-group">
                         <input type="text" name="name" placeholder="Họ và Tên" value="{{ old('name') }}" />
                         @error('name')
-                        <div class="error-message">{{ $message }}</div>
+                            <div class="error-message">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <input type="email" name="email" placeholder="Your email" value="{{ old('email') }}" />
                         @error('email')
-                        <div class="error-message">{{ $message }}</div>
+                            <div class="error-message">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" placeholder="Mật khẩu" />
                         @error('password')
-                        <div class="error-message">{{ $message }}</div>
+                            <div class="error-message">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <input type="password" name="password_confirmation" placeholder="Xác nhận mật khẩu" />
                         @error('password_confirmation')
-                        <div class="error-message">>{{ $message }}</div>
+                            <div class="error-message">>{{ $message }}</div>
                         @enderror
                     </div>
                     <button type="submit" class="register">Register</button>

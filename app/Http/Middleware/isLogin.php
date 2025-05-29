@@ -16,7 +16,6 @@ class IsLogin
         if (!Auth::check()) {
             return redirect()->route('login')->with('warning', 'Vui lòng đăng nhập để tiếp tục');
         }
-
         return $next($request);
     }
 }

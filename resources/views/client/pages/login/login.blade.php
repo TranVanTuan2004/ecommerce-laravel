@@ -23,7 +23,7 @@
         }
 
 
-     /* .left-panel {
+        /* .left-panel {
             background-image: url('{{ asset('client/img/bg_login.png') }}');
             background-size: cover;
             background-repeat: no-repeat;
@@ -175,7 +175,9 @@
                 <form method="POST" action="{{ route('login') }}" class="form-card">
                     @csrf
                     <h3 style="text-align: center">Login Now</h3>
-                    <p style="text-align: center">Don't have an account? <a href="{{ route('register') }}">Register</a></p>
+                    <p style="text-align: center">Don't have an account? <a
+                            href="{{ route('register.show') }}">Register</a>
+                    </p>
                     <div class="social-btns">
                         <button class="facebook" type="button">Facebook</button>
                         <button class="google" type="button">Google</button>
@@ -186,14 +188,14 @@
                         <input type="email" name="email" placeholder="Your email" value="{{ old('email') }}"
                             class="@error('email') is-invalid @enderror" />
                         @if ($errors->has('email'))
-                        <span class="text-danger">{{ $errors->first('email') }}</span>
+                            <span class="text-danger">{{ $errors->first('email') }}</span>
                         @endif
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" placeholder="Your password" value="{{ old('password') }}"
                             class="@error('password') is-invalid @enderror" />
                         @if ($errors->has('password'))
-                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                            <span class="text-danger">{{ $errors->first('password') }}</span>
                         @endif
                     </div>
                     <button type="submit" class="login">Login</button>

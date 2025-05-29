@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             BrandSeeder::class,
             CategorySeeder::class,
-            SlideSeeder::class,
             ProductSeeder::class,
             WishlistSeeder::class,
             CouponsSeeder::class,
@@ -34,7 +33,8 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
             OrderProductSeeder::class,
             ReviewSeeder::class,
-            ShippingSeeder::class
+            ShippingSeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }

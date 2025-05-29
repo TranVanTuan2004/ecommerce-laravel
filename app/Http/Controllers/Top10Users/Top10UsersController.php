@@ -12,12 +12,12 @@ class Top10UsersController extends Controller
     {
         $topUsers = DB::table('users')
             ->join('orders', 'users.id', '=', 'orders.user_id')
-            ->where('orders.status', 'completed') // Chỉ lấy đơn đã thành công
+            ->where('orders.status', 'delivered')
             ->select(
                 'users.id',
                 'users.name',
                 'users.email',
-                DB::raw('SUM(orders.total_price) as total_spent')
+                DB::raw('SUM(orders.price) as total_spent')
             )
             ->groupBy('users.id', 'users.name', 'users.email')
             ->orderByDesc('total_spent')
