@@ -16,7 +16,6 @@
     @endif
 
     <div class="ibox float-e-margins">
-
         <div class="ibox-content">
             <table class="table table-bordered table-hover">
                 <thead>
