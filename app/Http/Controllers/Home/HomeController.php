@@ -68,8 +68,9 @@ class HomeController extends Controller
             }
         }
 
-        // Phân trang + giữ lại query string
-        $products = $query->paginate(8)->appends($request->query());
+        $perPage = $request->input('per_page', 8);
+        // Phân trang với số lượng sản phẩm được chọn + giữ query string
+        $products = $query->paginate($perPage)->appends($request->query());
 
         // Dữ liệu cho dropdown/filter
         $categories = Category::withCount('products')->get();
