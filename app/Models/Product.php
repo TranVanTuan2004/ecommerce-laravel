@@ -34,7 +34,7 @@ class Product extends Model
     // 1 sản phẩm có nhiều đánh giá
     public function reviews()
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(Review::class);
     }
 
     public function cartItems()

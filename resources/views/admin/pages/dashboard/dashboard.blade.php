@@ -29,19 +29,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <span class="label label-primary pull-right">Today</span>
-                        <h5>visits</h5>
-                    </div>
-                    <div class="ibox-content">
-                        <h1 class="no-margins">106,120</h1>
-                        <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
-                        <small>New visits</small>
+            <a href={{ route('productreviews.show') }}>
+                <div class="col-lg-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <span class="label label-primary pull-right">Today</span>
+                            <h5>Reviews</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h1 class="no-margins">106,120</h1>
+                            <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                            <small>More Detail</small>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
             <a href={{ route('topusers.show') }}>
                 <div class="col-lg-3">
                     <div class="ibox float-e-margins">
