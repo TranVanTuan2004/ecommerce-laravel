@@ -70,7 +70,25 @@
                             </tr>
                             <tr>
                                 <th>Tổng tiền</th>
-                                <td class="text-danger fw-bold">{{ number_format($order->total_price, 0, ',', '.') }}đ</td>
+                                <td>
+                                    @php
+                                        $hasDiscount = isset($order->discount_price) && $order->discount_price > 0;
+                                        $finalPrice = $hasDiscount
+                                            ? $order->total_price - $order->discount_price
+                                            : $order->total_price;
+                                    @endphp
+
+                                    @if ($hasDiscount)
+                                        <span class="text-muted" style="text-decoration: line-through;">
+                                            {{ number_format($order->total_price, 0, ',', '.') }}đ
+                                        </span><br>
+                                        <span class="text-success fw-bold">
+                                            {{ number_format($finalPrice, 0, ',', '.') }}đ
+                                        </span>
+                                    @else
+                                        {{ number_format($order->total_price, 0, ',', '.') }}đ
+                                    @endif
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -120,7 +138,7 @@
                                         <td class="text-start">
                                             <div class="d-flex align-items-center gap-2">
                                                 @if ($item->product->image)
-                                                    <img src="{{ $item->product->image }}" alt="image"
+                                                    <img src="{{ asset($item->product->image) }}" alt="image"
                                                         style="width: 40px; height: 40px; object-fit: cover;">
                                                 @endif
                                                 <div>
@@ -143,8 +161,17 @@
 
                     {{-- Tổng đơn hàng --}}
                     <div class="text-end fw-bold fs-5 mt-3">
-                        Tổng đơn hàng: <span
-                            class="text-danger">{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                        Tổng đơn hàng:
+                        @if ($hasDiscount)
+                            <span class="text-muted" style="text-decoration: line-through;">
+                                {{ number_format($order->total_price, 0, ',', '.') }}đ
+                            </span>
+                            <span class="text-success ms-2">
+                                {{ number_format($finalPrice, 0, ',', '.') }}đ
+                            </span>
+                        @else
+                            <span class="text-danger">{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                        @endif
                     </div>
 
                     {{-- Nút điều hướng --}}

@@ -93,8 +93,28 @@
                                                 @endif
                                             </ul>
                                         </td>
-                                        <td>{{ $order->user->address ?? 'Chưa có địa chỉ' }}</td>
-                                        <td>{{ number_format($order->total_price, 0, ',', '.') }}đ</td>
+                                        <td>{{ $order->shipping_address ?? $order->user->address }}</td>
+                                        <td>
+                                            @php
+                                                $hasDiscount =
+                                                    isset($order->discount_price) && $order->discount_price > 0;
+                                                $finalPrice = $hasDiscount
+                                                    ? $order->total_price - $order->discount_price
+                                                    : $order->total_price;
+                                            @endphp
+
+                                            @if ($hasDiscount)
+                                                <span class="text-muted" style="text-decoration: line-through;">
+                                                    {{ number_format($order->total_price, 0, ',', '.') }}đ
+                                                </span><br>
+                                                <span class="text-success fw-bold">
+                                                    {{ number_format($finalPrice, 0, ',', '.') }}đ
+                                                </span>
+                                            @else
+                                                {{ number_format($order->total_price, 0, ',', '.') }}đ
+                                            @endif
+                                        </td>
+
                                         <td>
                                             <form action="{{ route('order.updateStatus', $order->id) }}" method="POST">
                                                 @csrf
@@ -137,19 +157,29 @@
                                             @endphp
 
                                             <span
-                                                class="badge 
+                                                class="badge
                                                 @if ($order->status == 'pending') badge-warning
-                                                @elseif($order->status == 'confirmed') badge-secondary
-                                                @elseif($order->status == 'shipping') badge-info
-                                                @elseif($order->status == 'delivering') badge-primary
-                                                @elseif($order->status == 'delivered') badge-success
-                                                @elseif($order->status == 'cancelled') badge-danger @endif">
-                                                {{ $order->status_label }}
+                                                @elseif ($order->status == 'confirmed') badge-secondary
+                                                @elseif ($order->status == 'shipping') badge-info
+                                                @elseif ($order->status == 'delivering') badge-primary
+                                                @elseif ($order->status == 'delivered') badge-success
+                                                @elseif ($order->status == 'cancelled') badge-danger @endif
+    ">
+                                                {{ $statusLabels[$order->status] ?? ucfirst($order->status) }}
                                             </span>
-
-
                                         </td>
-                                        <td>{{ ucfirst($order->payment_method) }}</td>
+
+                                        @php
+                                            $paymentMethods = [
+                                                'cod' => 'Thanh toán khi nhận hàng',
+                                                'bank' => 'Chuyển khoản',
+                                                'online' => 'Thanh toán online',
+                                            ];
+                                        @endphp
+
+                                        <td>{{ $paymentMethods[$order->payment_method] ?? ucfirst($order->payment_method) }}
+                                        </td>
+
                                         <td>{{ \Carbon\Carbon::parse($order->ordered_at)->format('d/m/Y H:i') }}</td>
                                         <td>
                                             <div class="btn-group">
