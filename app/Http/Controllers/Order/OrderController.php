@@ -71,6 +71,7 @@ class OrderController extends Controller
 
         $order = Order::create([
             'user_id' => Auth::id(),
+            'shipping_address' => $request->shipping_address,
             'voucher_code' => $voucherCode,
             'discount_price' => $discount,
             'price' => $finalTotal,

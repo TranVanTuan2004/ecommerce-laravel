@@ -1,3 +1,77 @@
+<style>
+    /* Bo góc + đổ bóng cho form */
+    .ibox-content {
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        background-color: #fff;
+    }
+
+    /* Tiêu đề form */
+    .page-heading h2 {
+        font-size: 26px;
+        font-weight: 600;
+        color: #2f4050;
+    }
+
+    /* Label đẹp hơn */
+    .form-label {
+        font-weight: 500;
+        color: #34495e;
+        margin-bottom: 8px;
+    }
+
+    /* Input focus hiệu ứng */
+    .form-control:focus {
+        border-color: #1ab394;
+        box-shadow: 0 0 0 0.15rem rgba(26, 179, 148, 0.25);
+    }
+
+    /* List sản phẩm đẹp hơn */
+    ul.list-unstyled {
+        background-color: #f9f9f9;
+        border-color: #e0e0e0;
+        font-size: 15px;
+    }
+
+    ul.list-unstyled li {
+        padding: 5px 0;
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    ul.list-unstyled li:last-child {
+        border-bottom: none;
+    }
+
+    /* Nút lưu hủy */
+    .btn {
+        padding: 10px 16px;
+        font-weight: 500;
+    }
+
+    .btn-primary {
+        background-color: #1ab394;
+        border-color: #1ab394;
+    }
+
+    .btn-primary:hover {
+        background-color: #18a689;
+        border-color: #18a689;
+    }
+
+    .btn-secondary:hover {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    /* Ô tổng tiền sau giảm */
+    .form-control[disabled],
+    .form-control:disabled {
+        background-color: #eef2f7;
+        font-weight: 600;
+        color: #1c1c1c;
+    }
+</style>
 @extends('admin.master')
 
 @section('content')
@@ -47,8 +121,26 @@
                         <div class="mb-3">
                             <label for="total_price" class="form-label">Tổng tiền (VNĐ)</label>
                             <input type="number" id="total_price" name="total_price" class="form-control"
-                                value="{{ old('total_price', $order->price) }}" required min="0" step="1000">
+                                value="{{ old('total_price', $order->total_price) }}" required min="0"
+                                step="1000">
                         </div>
+
+                        <div class="mb-3">
+                            <label for="discount_amount" class="form-label">Giảm giá (VNĐ)</label>
+                            <input type="number" id="discount_amount" name="discount_amount" class="form-control"
+                                value="{{ old('discount_amount', $order->discount_price) }}" min="0" step="1000">
+                        </div>
+
+                        @php
+                            $finalAmount = $order->total_price - $order->discount_price;
+                        @endphp
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Thành tiền sau giảm</label>
+                            <input type="text" class="form-control bg-light"
+                                value="{{ number_format($finalAmount, 0, ',', '.') }}đ" disabled>
+                        </div>
+
 
                         <div class="mb-3">
                             <label for="status" class="form-label">Trạng thái</label>
