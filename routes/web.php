@@ -88,15 +88,15 @@ Route::group([
 
 Route::group([
     'prefix' => '/user',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/order',
@@ -112,11 +112,11 @@ Route::group([
 
 Route::group([
     'prefix' => '/dashboard/product',
-], function () { });
+], function () {});
 
 Route::group([
     'prefix' => '/dashboard/category',
-], function () { });
+], function () {});
 
 
 
@@ -233,7 +233,7 @@ Route::group([
     });
     Route::group([
         'prefix' => '/dashboard/product',
-    ], function () { });
+    ], function () {});
 
     //Chức năng quản lí danh mục_Quynh
     Route::group([
@@ -254,6 +254,7 @@ Route::group([
         Route::get('', [OrderControllerAdmin::class, 'index'])->name('order.index');
         Route::get('{id}/show', [OrderControllerAdmin::class, 'show'])->name('order.show');
         Route::get('{id}/edit', [OrderControllerAdmin::class, 'edit'])->name('order.edit');
+        Route::put('{id}', [OrderControllerAdmin::class, 'update'])->name('order.update');
         Route::put('{id}/update-status', [OrderControllerAdmin::class, 'updateStatus'])->name('order.updateStatus');
         Route::put('/order/{id}/cancel', [OrderControllerAdmin::class, 'cancel'])->name('order.cancel');
         Route::delete('{id}', [OrderControllerAdmin::class, 'destroy'])->name('order.destroy');
@@ -261,7 +262,7 @@ Route::group([
 
     Route::group([
         'prefix' => '/dashboard/category',
-    ], function () { });
+    ], function () {});
 
     //Route danh cho top10
     Route::group(['prefix' => '/dashboard/top10'], function () {
