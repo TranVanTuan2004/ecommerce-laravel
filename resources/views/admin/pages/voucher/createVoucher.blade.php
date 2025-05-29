@@ -27,7 +27,7 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <form action="{{ route('voucher.store') }}" method="POST">
+                <form action="{{ route('voucher.store') }}" id="voucher-form" method="POST">
                     @csrf
                     <div class="form-group mb-3">
                         <label>Mã Voucher</label>
@@ -60,10 +60,17 @@
 
                     <div class="d-flex justify-content-end">
                         <a href={{ route('voucher.index') }} class="btn btn-secondary me-2">Quay lại</a>
-                        <button type="submit" class="btn btn-success">Tạo Voucher</button>
+                        <button type="submit" id="submit-btn" class="btn btn-success">Tạo Voucher</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('voucher-form').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.innerText = 'Đang xử lý...';
+        });
+    </script>
 @endsection

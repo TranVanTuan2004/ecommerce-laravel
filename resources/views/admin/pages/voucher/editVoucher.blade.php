@@ -24,7 +24,7 @@
             </div>
 
             <div class="card-body">
-                <form method="POST" action="{{ route('voucher.update', $voucher->id) }}">
+                <form method="POST" id="voucher-form" action="{{ route('voucher.update', $voucher->id) }}">
                     @csrf
                     @method('PUT')
 
@@ -60,10 +60,17 @@
 
                     <div class="d-flex justify-content-end mt-4">
                         <a href="{{ route('voucher.index') }}" class="btn btn-secondary me-2">Quay lại</a>
-                        <button type="submit" class="btn btn-success">Cập nhật</button>
+                        <button type="submit" id="submit-btn" class="btn btn-success">Cập nhật</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('voucher-form').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.innerText = 'Đang xử lý...';
+        });
+    </script>
 @endsection

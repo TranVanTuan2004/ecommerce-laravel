@@ -30,9 +30,25 @@ class VoucherController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'code' => 'required',
+            'code' => 'required|max:20',
             'discount' => 'required|integer|min:1|max:100',
             'expiration_date' => 'required|date|after_or_equal:today',
+            'description' => 'nullable|string|max:255',
+        ], [
+            'code.required' => 'Mã giảm giá là bắt buộc.',
+            'code.max' => 'Mã giảm giá không được vượt quá 20 ký tự.',
+
+            'discount.required' => 'Phần trăm giảm giá là bắt buộc.',
+            'discount.integer' => 'Phần trăm giảm giá phải là số nguyên.',
+            'discount.min' => 'Phần trăm giảm giá tối thiểu là 1%.',
+            'discount.max' => 'Phần trăm giảm giá tối đa là 100%.',
+
+            'expiration_date.required' => 'Ngày hết hạn là bắt buộc.',
+            'expiration_date.date' => 'Ngày hết hạn phải là định dạng ngày hợp lệ.',
+            'expiration_date.after_or_equal' => 'Ngày hết hạn phải là ngày hôm nay hoặc ngày trong tương lai.',
+
+            'description.string' => 'Mô tả phải là chuỗi ký tự.',
+            'description.max' => 'Mô tả không được vượt quá 255 ký tự.',
         ]);
         try {
             $isCode = Coupons::where('code', $data['code'])->exists();
@@ -66,9 +82,25 @@ class VoucherController extends Controller
     public function update(Request $request)
     {
         $data = $request->validate([
-            'code' => 'required',
+            'code' => 'required|max:20',
             'discount' => 'required|integer|min:1|max:100',
             'expiration_date' => 'required|date|after_or_equal:today',
+            'description' => 'nullable|string|max:255',
+        ], [
+            'code.required' => 'Mã giảm giá là bắt buộc.',
+            'code.max' => 'Mã giảm giá không được vượt quá 20 ký tự.',
+
+            'discount.required' => 'Phần trăm giảm giá là bắt buộc.',
+            'discount.integer' => 'Phần trăm giảm giá phải là số nguyên.',
+            'discount.min' => 'Phần trăm giảm giá tối thiểu là 1%.',
+            'discount.max' => 'Phần trăm giảm giá tối đa là 100%.',
+
+            'expiration_date.required' => 'Ngày hết hạn là bắt buộc.',
+            'expiration_date.date' => 'Ngày hết hạn phải là định dạng ngày hợp lệ.',
+            'expiration_date.after_or_equal' => 'Ngày hết hạn phải là ngày hôm nay hoặc ngày trong tương lai.',
+
+            'description.string' => 'Mô tả phải là chuỗi ký tự.',
+            'description.max' => 'Mô tả không được vượt quá 255 ký tự.',
         ]);
         try {
             $id = $request->id;
