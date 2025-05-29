@@ -89,11 +89,11 @@
                             </tr>
                             <tr>
                                 <th>SĐT</th>
-                                <td>{{ $order->user->phone ?? 'Chưa cung cấp' }}</td>
+                                <td>{{ $order->user->phone }}</td>
                             </tr>
                             <tr>
                                 <th>Địa chỉ giao hàng</th>
-                                <td>{{ $order->shipping_address ?? 'Chưa có địa chỉ' }}</td>
+                                <td>{{ $order->shipping_address }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -118,7 +118,7 @@
                                         <td class="text-start">
                                             <div class="d-flex align-items-center gap-2">
                                                 @if ($item->product->image)
-                                                    <img src="{{ $item->product->image }}" alt="image"
+                                                    <img src="{{ asset($item->product->image) }}" alt="image"
                                                         style="width: 40px; height: 40px; object-fit: cover;">
                                                 @endif
                                                 <div>
