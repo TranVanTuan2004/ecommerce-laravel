@@ -16,13 +16,6 @@
     @endif
 
     <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <div style="display: flex; justify-content: space-between">
-                <div class="input-group">
-                    <input type="text" class="form-control" style="display: block; width: 300px;" placeholder="Tìm kiếm">
-                </div>
-            </div>
-        </div>
 
         <div class="ibox-content">
             <table class="table table-bordered table-hover">
