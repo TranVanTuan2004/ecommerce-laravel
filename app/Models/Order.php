@@ -15,6 +15,7 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
+        'shipping_address',
         'status',
         'ordered_at',
         'payment_method',
@@ -41,7 +42,7 @@ class Order extends Model
             ->withTimestamps();
     }
 
-    public function shipping()
+    public function shippingAddress()
     {
         return $this->hasOne(Shipping::class);
     }

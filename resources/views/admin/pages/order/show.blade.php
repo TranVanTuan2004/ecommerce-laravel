@@ -70,33 +70,53 @@
                             </tr>
                             <tr>
                                 <th>Tổng tiền</th>
-                                <td class="text-danger fw-bold">{{ number_format($order->total_price, 0, ',', '.') }}đ</td>
+                                <td>
+                                    @php
+                                        $hasDiscount = isset($order->discount_price) && $order->discount_price > 0;
+                                        $finalPrice = $hasDiscount
+                                            ? $order->total_price - $order->discount_price
+                                            : $order->total_price;
+                                    @endphp
+
+                                    @if ($hasDiscount)
+                                        <span class="text-muted" style="text-decoration: line-through;">
+                                            {{ number_format($order->total_price, 0, ',', '.') }}đ
+                                        </span><br>
+                                        <span class="text-success fw-bold">
+                                            {{ number_format($finalPrice, 0, ',', '.') }}đ
+                                        </span>
+                                    @else
+                                        {{ number_format($order->total_price, 0, ',', '.') }}đ
+                                    @endif
+                                </td>
                             </tr>
                         </tbody>
                     </table>
 
                     {{-- Thông tin khách hàng --}}
-                    <h5 class="mt-4 mb-3">Thông tin khách hàng</h5>
+                    @php
+                        $shippingName = $order->shipping_name ?: $order->user->name ?? 'Khách vãng lai';
+                        $shippingAddress = $order->shipping_address ?: $order->user->address ?? 'Chưa có địa chỉ';
+                        $shippingPhone = $order->shipping_phone ?: $order->user->phone ?? 'Chưa có số điện thoại';
+                    @endphp
+
                     <table class="table table-bordered w-50">
                         <tbody>
                             <tr>
-                                <th>Họ tên</th>
-                                <td>{{ $order->user->name ?? 'Khách vãng lai' }}</td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>{{ $order->user->email ?? '---' }}</td>
-                            </tr>
-                            <tr>
-                                <th>SĐT</th>
-                                <td>{{ $order->user->phone }}</td>
+                                <th>Người nhận</th>
+                                <td>{{ $shippingName }}</td>
                             </tr>
                             <tr>
                                 <th>Địa chỉ giao hàng</th>
-                                <td>{{ $order->shipping_address }}</td>
+                                <td>{{ $shippingAddress }}</td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại</th>
+                                <td>{{ $shippingPhone }}</td>
                             </tr>
                         </tbody>
                     </table>
+
 
                     {{-- Danh sách sản phẩm --}}
                     <h5 class="mt-4 mb-3">Danh sách sản phẩm</h5>
@@ -141,8 +161,17 @@
 
                     {{-- Tổng đơn hàng --}}
                     <div class="text-end fw-bold fs-5 mt-3">
-                        Tổng đơn hàng: <span
-                            class="text-danger">{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                        Tổng đơn hàng:
+                        @if ($hasDiscount)
+                            <span class="text-muted" style="text-decoration: line-through;">
+                                {{ number_format($order->total_price, 0, ',', '.') }}đ
+                            </span>
+                            <span class="text-success ms-2">
+                                {{ number_format($finalPrice, 0, ',', '.') }}đ
+                            </span>
+                        @else
+                            <span class="text-danger">{{ number_format($order->total_price, 0, ',', '.') }}đ</span>
+                        @endif
                     </div>
 
                     {{-- Nút điều hướng --}}
