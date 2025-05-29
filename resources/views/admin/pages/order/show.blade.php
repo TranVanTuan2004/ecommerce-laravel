@@ -76,27 +76,29 @@
                     </table>
 
                     {{-- Thông tin khách hàng --}}
-                    <h5 class="mt-4 mb-3">Thông tin khách hàng</h5>
+                    @php
+                        $shippingName = $order->shipping_name ?: $order->user->name ?? 'Khách vãng lai';
+                        $shippingAddress = $order->shipping_address ?: $order->user->address ?? 'Chưa có địa chỉ';
+                        $shippingPhone = $order->shipping_phone ?: $order->user->phone ?? 'Chưa có số điện thoại';
+                    @endphp
+
                     <table class="table table-bordered w-50">
                         <tbody>
                             <tr>
-                                <th>Họ tên</th>
-                                <td>{{ $order->user->name ?? 'Khách vãng lai' }}</td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>{{ $order->user->email ?? '---' }}</td>
-                            </tr>
-                            <tr>
-                                <th>SĐT</th>
-                                <td>{{ $order->user->phone ?? 'Chưa cung cấp' }}</td>
+                                <th>Người nhận</th>
+                                <td>{{ $shippingName }}</td>
                             </tr>
                             <tr>
                                 <th>Địa chỉ giao hàng</th>
-                                <td>{{ $order->shipping_address ?? 'Chưa có địa chỉ' }}</td>
+                                <td>{{ $shippingAddress }}</td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại</th>
+                                <td>{{ $shippingPhone }}</td>
                             </tr>
                         </tbody>
                     </table>
+
 
                     {{-- Danh sách sản phẩm --}}
                     <h5 class="mt-4 mb-3">Danh sách sản phẩm</h5>

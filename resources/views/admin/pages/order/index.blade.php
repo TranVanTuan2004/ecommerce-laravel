@@ -93,7 +93,7 @@
                                                 @endif
                                             </ul>
                                         </td>
-                                        <td>{{ $order->shipping_address ?? 'Chưa có địa chỉ' }}</td>
+                                        <td>{{ $order->user->address ?? 'Chưa có địa chỉ' }}</td>
                                         <td>{{ number_format($order->total_price, 0, ',', '.') }}đ</td>
                                         <td>
                                             <form action="{{ route('order.updateStatus', $order->id) }}" method="POST">
