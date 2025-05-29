@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\AdminChatController;
 use App\Http\Middleware\IsAdmin;
 use GuzzleHttp\Client;
 use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\Contact\ContactController;
 
 // Client
 Route::group([
@@ -44,6 +45,10 @@ Route::get('/product/{id}', [HomeController::class, 'showProductDetail'])->name(
 // Client routes
 Route::get('/blogs', [BlogClientController::class, 'index'])->name('blogs');
 Route::get('/blogs/{id}', [BlogClientController::class, 'show'])->name('blogs.show');
+//contact
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact/send', [ContactController::class, 'store'])->name('contact.send');
+
 //chat
 Route::middleware('auth')->prefix('client/chat')->group(function () {
     Route::get('/', [ClientChatController::class, 'index'])->name('client.chat.index');
