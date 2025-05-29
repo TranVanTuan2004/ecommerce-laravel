@@ -71,20 +71,26 @@ class OrderControllerAdmin extends Controller
 
     public function update(Request $request, $id)
     {
+        $order = Order::findOrFail($id);
+
+        // Validate dữ liệu nếu cần
         $request->validate([
-            'shipping_address' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'status' => 'required|in:pending,confirmed,shipping,delivering,delivered,cancelled,',
-            'payment_method' => 'required|in:cod,bank,online',
+            'shipping_address' => 'required|string|max:255',
+            'total_price' => 'required|numeric|min:0',
+            'discount_amount' => 'nullable|numeric|min:0',
+            'status' => 'required|string',
+            'payment_method' => 'required|string',
         ]);
 
-        $order = Order::findOrFail($id);
-        $order->shipping_address = $request->shipping_address;
-        $order->price = $request->price;
-        $order->status = $request->status;
-        $order->payment_method = $request->payment_method;
+        // Gán các giá trị mới từ form
+        $order->shipping_address = $request->input('shipping_address');
+        $order->price = $request->input('total_price');
+        $order->discount_price = $request->input('discount_amount');
+        $order->status = $request->input('status');
+        $order->payment_method = $request->input('payment_method');
+
         $order->save();
 
-        return redirect()->route('order.index')->with('success', 'Cập nhật đơn hàng thành công.');
+        return redirect()->route('order.index')->with('success', 'Cập nhật đơn hàng thành công!');
     }
 }

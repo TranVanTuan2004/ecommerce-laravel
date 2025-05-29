@@ -164,7 +164,7 @@ Route::group([
     'middleware' => 'is_admin'
 ], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('is_admin');
-
+    Route::get('/dashboard', [AdminChatController::class, 'getMessageStatistics'])->name('dashboard');
     //hau chuc nang crud_user
     Route::group([
         'prefix' => '/dashboard/users',

@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
-            $table->text('shipping_address')->nullable(); // Địa chỉ giao hàng
+            $table->text('shipping_address')->nullable();
 
             // Thêm voucher
             $table->string('voucher_code', 50)->nullable(); // Mã voucher

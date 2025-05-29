@@ -122,6 +122,40 @@
         box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
     }
 
+    /* === Địa chỉ giao hàng === */
+    .mb-4 {
+        max-width: 1000;
+        background-color: #f9fafb;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 0.05);
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+        color: #374151;
+    }
+
+    .mb-4 h5 {
+        font-weight: 700;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        color: #111827;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 0.5rem;
+    }
+
+    .mb-4 p {
+        margin: 0.4rem 0;
+        line-height: 1.5;
+    }
+
+    .mb-4 p strong {
+        display: inline-block;
+        width: 200px;
+        font-weight: 700;
+        color: #111827;
+    }
+
+
     /* === Sản phẩm trong đơn hàng === */
     .mb-3>h5 {
         font-weight: 700;
@@ -290,8 +324,21 @@
                     style="font-size: 0.875rem;">
                     {{ $order->status_label }}
                 </span>
-                x
 
+            </div>
+
+            {{-- Địa chỉ giao hàng --}}
+            <div class="mb-4">
+                <h5>Địa chỉ giao hàng</h5>
+                @php
+                    $shippingName = $order->shipping_name ?: $order->user->name;
+                    $shippingAddress = $order->shipping_address ?: $order->user->address;
+                    $shippingPhone = $order->shipping_phone ?: $order->user->phone;
+                @endphp
+
+                <p><strong>Người nhận:</strong> {{ $shippingName }}</p>
+                <p><strong>Địa chỉ:</strong> {{ $shippingAddress }}</p>
+                <p><strong>Số điện thoại:</strong> {{ $shippingPhone }}</p>
             </div>
 
             {{-- Thông tin sản phẩm --}}

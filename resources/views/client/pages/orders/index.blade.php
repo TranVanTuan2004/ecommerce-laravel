@@ -320,6 +320,7 @@
                 @endforeach
             </ul>
 
+
             {{-- Danh sách đơn hàng --}}
             @forelse ($orders as $order)
                 <div class="card mb-4 p-3">
@@ -355,8 +356,8 @@
                     {{-- Danh sách sản phẩm --}}
                     @foreach ($order->orderProducts as $item)
                         <div class="d-flex border-top pt-3 gap-3">
-                            <img src="{{ asset($item->product->image) }}" width="80" height="80" class="border rounded"
-                                alt="Product Image">
+                            <img src="{{ asset($item->product->image) }}" width="80" height="80"
+                                class="border rounded" alt="Product Image">
                             <div class="flex-grow-1">
                                 <p>
                                     <strong>
@@ -529,8 +530,7 @@
                 <span class="badge bg-secondary">{{ Auth::check() ? Auth::user()->role : 'Unknown' }}</span>
             </div>
             <div class="mb-2">
-                <textarea name="review_text" rows="4" placeholder="Viết đánh giá của bạn..." required
-                    class="form-control"></textarea>
+                <textarea name="review_text" rows="4" placeholder="Viết đánh giá của bạn..." required class="form-control"></textarea>
             </div>
             <input type="hidden" name="rating" id="ratingInput" value="0">
             <div class="rating" id="starContainer">
@@ -549,7 +549,8 @@
 <script>
     function openReviewForm(productId) {
         const form = document.getElementById('reviewForm');
-        form.action = `/order/comment/${productId}`; // hoặc dùng route nếu muốn: "{{ route('review.store', ':id') }}".replace(':id', productId)
+        form.action =
+            `/order/comment/${productId}`; // hoặc dùng route nếu muốn: "{{ route('review.store', ':id') }}".replace(':id', productId)
         document.getElementById('reviewProductId').value = productId;
         document.getElementById('reviewModal').style.display = 'block';
     }
@@ -565,7 +566,7 @@
     }
 
     document.querySelectorAll('.star').forEach(star => {
-        star.addEventListener('click', function () {
+        star.addEventListener('click', function() {
             const value = this.getAttribute('data-value');
             document.getElementById('ratingInput').value = value;
 
@@ -582,7 +583,7 @@
     });
 
     // Đóng khi click ngoài modal
-    window.addEventListener('click', function (e) {
+    window.addEventListener('click', function(e) {
         const modal = document.getElementById('reviewModal');
         if (e.target === modal) {
             closeReviewForm();
