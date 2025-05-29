@@ -59,24 +59,53 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:50',
-            'price' => 'required|numeric|min:0',
+        $validatedData = $request->validate([
+            'name' => 'required|string|min:3|max:50',
+            'description' => 'nullable|string|max:1000',
+            'price' => 'required|numeric|min:0|max:99999999.99',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+        ], [
+            'name.required' => 'Vui lòng nhập tên sản phẩm.',
+            'name.min' => 'Tên sản phẩm phải có ít nhất 3 ký tự.',
+            'name.max' => 'Tên sản phẩm không được vượt quá 50 ký tự.',
+
+            'description.max' => 'Mô tả của bạn đã hơn 1000 kí tự',
+
+            'price.required' => 'Vui lòng nhập giá sản phẩm.',
+            'price.numeric' => 'Giá sản phẩm phải là một số.',
+            'price.min' => 'Giá không được nhỏ hơn 0.',
+            'Giá sản phẩm không được vượt quá 99,999,999.99.',
+
+            'category_id.required' => 'Vui lòng chọn danh mục.',
+            'category_id.exists' => 'Danh mục không hợp lệ.',
+
+            'brand_id.required' => 'Vui lòng chọn thương hiệu.',
+            'brand_id.exists' => 'Thương hiệu không hợp lệ.',
+
+            'image.image' => 'Ảnh sản phẩm phải là tệp hợp lệ.',
+            'image.mimes' => 'Ảnh phải có định dạng: JPEG, PNG, JPG hoặc GIF.',
+            'image.required' => 'Vui lòng chọn ảnh cho sản phẩm'
         ]);
 
         $data = $request->only(['name', 'description', 'price', 'category_id', 'brand_id']);
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $file = $request->file('image');
 
-            // Lưu ảnh vào storage/app/public/product/
-            Storage::putFileAs('product', $image, $imageName);
+            $mimeType = $file->getMimeType();
+            $extension = $file->getClientOriginalExtension();
 
-            // Lưu đường dẫn đúng vào database
+            if (!str_starts_with($mimeType, 'image/') || !in_array(strtolower($extension), ['jpeg', 'png', 'jpg', 'gif'])) {
+                return back()->withErrors(['image' => 'File phải là hình ảnh hợp lệ (JPEG, PNG, JPG, GIF).']);
+            }
+
+            // Lưu ảnh mới
+            $imageName = time() . '_' . uniqid() . '.' . $extension;
+            Storage::putFileAs('product', $file, $imageName);
+
+            // Lưu đường dẫn vào database
             $data['image'] = 'storage/product/' . $imageName;
         }
 
@@ -89,12 +118,28 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:50',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
+            'name' => 'required|string|min:3|max:50',
+            'description' => 'nullable|string|max',
+            'price' => 'required|numeric|min:0|max:99999999.99',
+            'description' => 'nullable|string|max:1000',
             'category_id' => 'required|integer|exists:categories,id',
             'brand_id' => 'required|integer|exists:brands,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        ], [
+            'name.required' => 'Vui lòng nhập tên sản phẩm.',
+            'name.min' => 'Tên sản phẩm không ít hơn 3 ký tự.',
+            'name.max' => 'Tên sản phẩm không được vượt quá 50 ký tự.',
+            'price.required' => 'Vui lòng nhập giá sản phẩm.',
+            'price.numeric' => 'Giá phải là một số.',
+            'price.min' => 'Giá không được nhỏ hơn 0.',
+            'price.max' => 'Giá sản phẩm không được vượt quá 99,999,999.99.',
+            'category_id.required' => 'Vui lòng chọn danh mục.',
+            'description.max' => 'Mô tả của bạn đã hơn 1000 kí tự',
+            'category_id.exists' => 'Danh mục không hợp lệ.',
+            'brand_id.required' => 'Vui lòng chọn thương hiệu.',
+            'brand_id.exists' => 'Thương hiệu không hợp lệ.',
+            'image.image' => 'Tệp phải là hình ảnh.',
+            'image.mimes' => 'Ảnh phải có định dạng: jpeg, png, jpg, gif.',
         ]);
 
         $product = Product::findOrFail($id);
@@ -118,20 +163,31 @@ class ProductController extends Controller
         //     $user->avatar = $path;
         // }
 
-        if ($product->image) {
-            $imagePath = str_replace('storage/', '', $product->image); // Chuyển đường dẫn đúng format
-            if (Storage::disk('public')->exists($imagePath)) {
-                Storage::disk('public')->delete($imagePath); // Xóa ảnh cũ
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            // 🔹 Kiểm tra MIME Type và phần mở rộng để ngăn chặn PDF hoặc file giả dạng ảnh
+            $mimeType = $file->getMimeType();
+            $extension = $file->getClientOriginalExtension();
+
+            if (!str_starts_with($mimeType, 'image/') || !in_array(strtolower($extension), ['jpeg', 'png', 'jpg', 'gif'])) {
+                return back()->withErrors(['image' => 'File phải là hình ảnh hợp lệ (JPEG, PNG, JPG, GIF).']);
             }
+
+            // 🔹 Xóa ảnh cũ nếu có
+            if ($product->image) {
+                $imagePath = str_replace('storage/', '', $product->image);
+                if (Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->delete($imagePath);
+                }
+            }
+
+            // 🔹 Upload ảnh mới
+            $fileName = time() . '_' . uniqid() . '.' . $extension;
+            $path = $file->storeAs('product', $fileName, 'public');
+            $product->image = 'storage/' . $path;
         }
 
-        // Lưu ảnh mới
-        $file = $request->file('image');
-        $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-        Storage::putFileAs('product', $file, $fileName);
-
-        // Cập nhật đường dẫn ảnh mới vào database
-        $product->image = 'storage/product/' . $fileName;
         $product->save();
         return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công!');
     }
