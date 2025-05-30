@@ -9,7 +9,7 @@
     }
 </style>
 <header class="container py-3">
-    <div class="d-flex flex-wrap align-items-center justify-content-between">
+    <div class="" style="display: grid; grid-template-columns: repeat(3, 1fr); gap:20px">
         <!-- Social + Nav -->
         <div class="d-flex align-items-center gap-1 flex-wrap">
             <div class="social-icons d-flex gap-1">
@@ -22,10 +22,10 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Shop</a>
+                    <a href="{{ route('blogs') }}" class="nav-link">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About Us</a>
+                    <a href="{{ route('contact') }}" class="nav-link">Contacts</a>
                 </li>
             </ul>
         </div>
@@ -41,10 +41,9 @@
         </div>
 
         <!-- Actions -->
-        <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-3" style="justify-self: end;">
             <div class="header-actions d-flex justify-content-end gap-2">
-                <a href="{{ route('contact') }}" class="me-3">Contacts</a>
-                <a href="{{ route('blogs') }}" class="me-3">Blog</a>
+
                 <a href="#" class="me-3"><i class="fas fa-search"></i></a>
                 <a href={{ route('favorite.index') }} class="me-3 position-relative">
                     <i class="far fa-heart"></i>
@@ -76,15 +75,15 @@
                         <div class="dropdown-divider my-1"></div>
 
                         @if (Auth::check())
-                        <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-danger"
-                            href="{{ route('logout') }}">
-                            <i class="fa fa-sign-out-alt mr-2"></i> <span class="d-block ms-3">Logout</span>
-                        </a>
+                            <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-danger"
+                                href="{{ route('logout') }}">
+                                <i class="fa fa-sign-out-alt mr-2"></i> <span class="d-block ms-3">Logout</span>
+                            </a>
                         @else
-                        <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-success"
-                            href="{{ route('login') }}">
-                            <i class="fa fa-sign-in-alt mr-2"></i> <span class="d-block ms-3">Login</span>
-                        </a>
+                            <a class="dropdown-item d-flex align-items-center justify-content-start py-2 text-success"
+                                href="{{ route('login') }}">
+                                <i class="fa fa-sign-in-alt mr-2"></i> <span class="d-block ms-3">Login</span>
+                            </a>
                         @endif
 
                     </div>

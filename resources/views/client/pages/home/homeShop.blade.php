@@ -56,15 +56,13 @@
                 </div>
             @endforelse
         </div>
-
+        <!-- Pagination -->
+        <div style="display: flex; justify-content: end;">
+            <div class="pagination-container">
+                {{ $products->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
+            </div>
+        </div>
     </div>
-
-
-    <!-- Pagination -->
-    <div class="pagination-container">
-        {{ $products->appends(request()->except('page'))->links('pagination::bootstrap-4') }}
-    </div>
-
     </div>
 
 

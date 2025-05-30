@@ -16,7 +16,7 @@ class BrandController extends Controller
         $brands = Brand::query()->when($search, function ($query, $search) {
             $query->where('name', 'like', "%{$search}%")
                 ->orWhere('description', 'like', "%{$search}%");
-        })->latest()->paginate(10);
+        })->latest()->paginate(5);
         return view('admin.pages.brand.index', compact(['brands', 'search']));
     }
 
