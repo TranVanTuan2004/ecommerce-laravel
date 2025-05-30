@@ -170,62 +170,63 @@
                     </div>
                 </div>
         </div>
-    </div>
-    <div class="container border rounded p-4 my-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div>
-                <i class="bi bi-ticket-perforated text-danger me-2"></i>
-                <strong>Voucher</strong>
+        <div class="container border rounded p-4 my-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <i class="bi bi-ticket-perforated text-danger me-2"></i>
+                    <strong>Voucher</strong>
+                </div>
+                <div>
+                    <a href="#" id="open-voucher-modal" class="text-primary">Chọn Voucher</a>
+                </div>
             </div>
-            <div>
-                <a href="#" id="open-voucher-modal" class="text-primary">Chọn Voucher</a>
-            </div>
-        </div>
 
-        <!-- Hidden input để gửi mã voucher khi submit form -->
-        <input type="hidden" name="voucher_code" id="selected-voucher-code">
+            <!-- Hidden input để gửi mã voucher khi submit form -->
+            <input type="hidden" name="voucher_code" id="selected-voucher-code">
 
-        <!-- Modal -->
-        <div class="modal fade" id="voucherModal" tabindex="-1" aria-labelledby="voucherModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable" style="max-width: 600px;">
-                <div class="modal-content" style="max-height: 500px;">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Chọn Voucher</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body" id="voucher-list">
-                        <!-- AJAX sẽ load danh sách voucher ở đây -->
+            <!-- Modal -->
+            <div class="modal fade" id="voucherModal" tabindex="-1" aria-labelledby="voucherModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable" style="max-width: 600px;">
+                    <div class="modal-content" style="max-height: 500px;">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Chọn Voucher</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body" id="voucher-list">
+                            <!-- AJAX sẽ load danh sách voucher ở đây -->
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
-        <!-- Phương thức thanh toán -->
-        <div class="border-top border-bottom py-3 mb-3">
-            <h6>Phương thức thanh toán</h6>
-            <div class="btn-group mb-2" role="group">
-                <button onclick="return message()" type="button" class="btn btn-outline-secondary">Thẻ Tín dụng/Ghi
-                    nợ</button>
-                <button type="button" class="btn btn-outline-danger active">Thanh toán khi nhận hàng</button>
+            <!-- Phương thức thanh toán -->
+            <div class="border-top border-bottom py-3 mb-3">
+                <h6>Phương thức thanh toán</h6>
+                <div class="btn-group mb-2" role="group">
+                    <button onclick="return message()" type="button" class="btn btn-outline-secondary">Thẻ Tín dụng/Ghi
+                        nợ</button>
+                    <button type="button" class="btn btn-outline-danger active">Thanh toán khi nhận hàng</button>
+                </div>
             </div>
-        </div>
 
-        <!-- Tổng tiền -->
-        <div class="text-end">
-            <div class="mb-1">Tổng tiền hàng: <strong>đ{{ number_format($totalPrice, 0) }}</strong></div>
-            <div class="mb-1 discount">Giảm giá: <strong>₫0</strong></div>
-            <div class="h5 text-danger total">Tổng thanh toán:
-                <strong>₫{{ number_format($totalPrice, 0) }}</strong>
+            <!-- Tổng tiền -->
+            <div class="text-end">
+                <div class="mb-1">Tổng tiền hàng: <strong>đ{{ number_format($totalPrice, 0) }}</strong></div>
+                <div class="mb-1 discount">Giảm giá: <strong>₫0</strong></div>
+                <div class="h5 text-danger total">Tổng thanh toán:
+                    <strong>₫{{ number_format($totalPrice, 0) }}</strong>
+                </div>
             </div>
-        </div>
 
-        <!-- Ghi chú và nút đặt hàng -->
-        <div class="d-flex justify-content-end align-items-center mt-3">
-            <button type="submit" class="btn btn-danger px-4">Đặt hàng</button>
+            <!-- Ghi chú và nút đặt hàng -->
+            <div class="d-flex justify-content-end align-items-center mt-3">
+                <button type="submit" class="btn btn-danger px-4">Đặt hàng</button>
+            </div>
+            </form>
         </div>
-        </form>
     </div>
+
     <script>
         const formatCurrencyVN = (number) => {
             return new Intl.NumberFormat('vi-VN', {
