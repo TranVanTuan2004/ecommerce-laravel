@@ -199,7 +199,7 @@
                         @endif
                     </div>
                     <button type="submit" class="login">Login</button>
-                    <p class="terms">Terms & Conditions | Privacy Policy</p>
+                    <p class="terms">Terms & Conditions | Privacy Policy</p><a href="{{ route('password.request') }}">forgotpassword</a>
                 </form>
             </div>
         </div>

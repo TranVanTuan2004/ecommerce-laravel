@@ -151,6 +151,10 @@ Route::group([
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.show');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::get('/verify-email/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
 Route::group(['prefix' => 'auth', 'middleware' => 'is_login'], function () {
@@ -278,5 +282,7 @@ Route::group([
     Route::group(['prefix' => '/dashboard'], function () {
         Route::get('/statistics/product/top10', [ProductController::class, 'top10Product'])->name('product.top10');
     });
+
+
 
 });
