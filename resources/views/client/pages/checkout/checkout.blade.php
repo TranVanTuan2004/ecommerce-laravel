@@ -90,7 +90,6 @@
                 <span class="text-danger me-2">📍</span>
                 <strong class="text-danger">Địa Chỉ Nhận Hàng</strong>
             </div>
-
             <div class="">
                 <div class="me-2">
                     Tên: <strong>{{ $user->name }}</strong> <br> Số điện thoại: <strong>

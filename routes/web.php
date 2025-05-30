@@ -71,6 +71,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::group([
     'prefix' => '/checkout',
+    'middleware' => 'is_login'
 ], function () {
     Route::post('/', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::get('/getAllVouchers', [CheckoutController::class, 'getAllVouchers'])->name('checkout.voucher');
