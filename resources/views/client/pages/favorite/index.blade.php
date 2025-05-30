@@ -159,8 +159,14 @@
                         <div class="card-body text-center px-3">
                             <h6 class="product-title mb-2">{{ Str::limit($product->name, 30) }}</h6>
                             <p class="product-price mb-2">{{ number_format($product->price) }}đ</p>
-                            <a href="{{ route('cart.addToCart', $product->id) }}"
-                                class="btn btn-outline-success btn-sm btn-add-cart">Add to Cart</a>
+                            <form class="add-to-cart-btn" style="border-radius: 6px;" action="{{ route('cart.addToCart') }}"
+                                method="POST">
+                                @csrf
+                                <input type="text" hidden name="product_id" value="{{ $product->id }}">
+                                <button type="submit" class="add-to-cart-btn" style="border-radius: 6px;">
+                                    🛒 ADD TO CART
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
