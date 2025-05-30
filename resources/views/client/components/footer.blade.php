@@ -1,75 +1,66 @@
-<footer class="site-footer">
-    <div class="container">
-        <div class="row">
-            <!-- Footer Logo -->
-            <div class="col-12 text-center mb-4">
-                <div class="footer-logo">
-                    <h2 class="text-white mb-0">Marseille</h2>
-                    <div class="tagline">XSTORE THEME</div>
-                </div>
-            </div>
+<style>
+    .footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 40px 20px;
+        position: relative;
+    }
 
-            <!-- Footer Links -->
-            <div class="col-lg-2 col-md-4 col-6 mb-4">
-                <h5 class="footer-heading mb-3">Home</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">Home</a></li>
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                </ul>
-            </div>
+    .footer a {
+        color: #fff;
+        margin: 0 10px;
+        font-weight: bold;
+        text-decoration: none;
+    }
 
-            <div class="col-lg-2 col-md-4 col-6 mb-4">
-                <h5 class="footer-heading mb-3">Elements</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                </ul>
-            </div>
+    .footer a:hover {
+        text-decoration: underline;
+    }
 
-            <div class="col-lg-2 col-md-4 col-6 mb-4">
-                <h5 class="footer-heading mb-3">Elements</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                </ul>
-            </div>
+    .payment-icons img {
+        height: 30px;
+        margin: 5px;
+        opacity: 0.6;
+    }
 
-            <div class="col-lg-2 col-md-4 col-6 mb-4">
-                <h5 class="footer-heading mb-3">Elements</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                </ul>
-            </div>
+    .scroll-top {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background: white;
+        color: black;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+    }
+</style>
+<footer class="footer">
+    <h3 class="mb-1">Marseille</h3>
+    <p class="mb-4" style="font-size: 14px;">XSTORE THEME</p>
 
-            <div class="col-lg-2 col-md-4 col-6 mb-4">
-                <h5 class="footer-heading mb-3">Elements</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                </ul>
-            </div>
+    <div class="mb-4">
+        <a href="#">Home</a>
+        <a href="#">Elements</a>
+        <a href="#">Shop</a>
+        <a href="#">Blog</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Compare</a>
+    </div>
 
-            <div class="col-lg-2 col-md-4 col-6 mb-4">
-                <h5 class="footer-heading mb-3">Elements</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                    <li><a href="#" class="text-decoration-none">Elements</a></li>
-                </ul>
-            </div>
-
-            <!-- Payment Info -->
-            <div class="col-12 text-center mt-4">
-                <p>Guaranteed safe checkout</p>
-            </div>
-
-            <!-- Copyright -->
-            <div class="col-12 text-center mt-4">
-                <p class="copyright">
-                    Copyright © 2025 <a href="#" class="text-white">XStore theme</a>. Created by 8theme - <a
-                        href="#" class="text-white">WordPress WooCommerce themes</a>
-                </p>
-            </div>
-        </div>
+    <p class="mb-2">Guaranteed safe checkout</p>
+    <div class="payment-icons mb-4">
+        <img src="https://img.icons8.com/color/48/000000/amex.png" />
+        <img src="https://img.icons8.com/color/48/000000/discover.png" />
+        <img src="https://img.icons8.com/color/48/000000/mastercard-logo.png" />
+        <img src="https://img.icons8.com/color/48/000000/paypal.png" />
+        <img src="https://img.icons8.com/color/48/000000/visa.png" />
     </div>
 </footer>
