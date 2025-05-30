@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Password;
 
 
 use function Flasher\Toastr\Prime\toastr;
@@ -246,5 +247,71 @@ class AuthController extends Controller
         $user->save();
 
         return back()->with('success', 'Ảnh đại diện đã được cập nhật!');
+    }
+
+    public function showForgotPasswordForm()
+    {
+        return view('client.pages.forgotpassword.forgotpassword');
+    }
+    public function sendResetLink(Request $request)
+    {
+        $request->validate(
+            [
+                'email' => 'required|email|exists:users,email',
+            ],
+            [
+                'email.required' => 'Vui lòng nhập email.',
+                'email.email' => 'Email không hợp lệ.',
+                'email.exists' => 'Email không tồn tại trong hệ thống.'
+            ]
+        );
+
+        $status = Password::sendResetLink($request->only('email'));
+
+        if ($status === Password::RESET_LINK_SENT) {
+            toastr()->success('Liên kết đặt lại mật khẩu đã được gửi đến bạn.');
+            return back();
+        }
+        toastr()->error('Không thể gửi lại email đặt lại mật khẩu.');
+        return back()->withErrors(['email' => __($status)]);
+    }
+
+    public function showResetForm(Request $request, $token)
+    {
+        return view('client.pages.resetpassword.resetpassword', [
+            'token' => $token,
+            'email' => $request->query('email'),
+        ]);
+    }
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:6|max:14|confirmed|regex:/^\S*$/u',
+        ], [
+            'token.required' => 'Token không hợp lệ hoặc đã hết hạn.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.',
+            'email.exists' => 'Email không tồn tại trong hệ thống.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.min' => 'Mật khẩu không được ít hơn 6 ký tự.',
+            'password.max' => 'Mật khẩu không được quá 14 ký tự.',
+            'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
+            'password.regex' => 'Mật khẩu không được chứa khoảng trắng.',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                ])->save();
+            }
+        );
+
+        return $status === Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('status', 'Mật khẩu đã được đặt lại thành công.')
+            : back()->withErrors(['email' => [__($status)]]);
     }
 }
